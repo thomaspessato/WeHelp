@@ -14,11 +14,11 @@ Entra [aqui](http://tableless.com.br/contribuindo-em-projetos-open-source-com-o-
 ## Para começar a trabalhar com o projeto no seu computador: ##
 
 1. Ter o Git instalado na sua máquina.
-<br>2. Criar um [Fork](https://help.github.com/articles/fork-a-repo/) do projeto "WeHelp".
-<br>3. Dar um 'git clone' do SEU FORK. (no terminal)
-<br>4. Entrar na pasta que foi clonada (chamada WeHelp) e, no terminal, dar um "git remote add wehelp git@github.com:WeHelpApp/WeHelp.git"
+2. Criar um [Fork](https://help.github.com/articles/fork-a-repo/) do projeto "WeHelp".
+3. Dar um 'git clone' do SEU FORK. (no terminal)
+4. Entrar na pasta que foi clonada (chamada WeHelp) e, no terminal, dar um "git remote add wehelp git@github.com:WeHelpApp/WeHelp.git"
 A partir deste momento, sempre que for trabalhar em alguma coisa, é recomendado fazer "git pull wehelp master" e "git pull wehelp sprint", para verificar se há alguma modificação no projeto por alguma outra pessoa. Isto faz com que os arquivos alterados sejam 'mergeados' com os seus, criando uma versão mesclada e totalmente atualizada.
-<br>5. Após alterar os arquivos da pasta WeHelp com o que for necessário, se faz uso dos seguintes comandos:
+5. Após alterar os arquivos da pasta WeHelp com o que for necessário, se faz uso dos seguintes comandos:
 
    git add -A
    git commit -m "nome para o commit"
@@ -39,7 +39,7 @@ Exemplo de fluxo:
 E recomeça o ciclo, em 1.
 
 
-<br>## Divisão dos branches ##
+## Divisão dos branches ##
 
 A divisão dos branches, no repositório principal, será:
 
@@ -51,7 +51,7 @@ A divisão dos branches, no repositório principal, será:
 <br>
 "sprint" -> entregas de tarefas relacionadas ao sprint
 
-<br>### Por que usar um branch 'preview' e um branch 'review'? ###
+### Por que usar um branch 'preview' e um branch 'review'? ###
 
 O branch preview pode ser usado para qualquer publicação, seja ela relacionada ou não ao sprint.
 

@@ -17,12 +17,12 @@ Entra [aqui](http://tableless.com.br/contribuindo-em-projetos-open-source-com-o-
 2. Criar um [Fork](https://help.github.com/articles/fork-a-repo/) do projeto "WeHelp".
 3. Dar um 'git clone' do SEU FORK. (no terminal)
 4. Entrar na pasta que foi clonada (chamada WeHelp) e, no terminal, dar um "git remote add wehelp git@github.com:WeHelpApp/WeHelp.git"
-A partir deste momento, sempre que for trabalhar em alguma coisa, é recomendado fazer "git pull wehelp master" e "git pull wehelp sprint", para verificar se há alguma modificação no projeto por alguma outra pessoa. Isto faz com que os arquivos alterados sejam 'mergeados' com os seus, criando uma versão mesclada e totalmente atualizada.
+<br>A partir deste momento, sempre que for trabalhar em alguma coisa, é recomendado fazer "git pull wehelp master" e "git pull wehelp sprint", para verificar se há alguma modificação no projeto por alguma outra pessoa. Isto faz com que os arquivos alterados sejam 'mergeados' com os seus, criando uma versão mesclada e totalmente atualizada.
 5. Após alterar os arquivos da pasta WeHelp com o que for necessário, se faz uso dos seguintes comandos:
 
-   git add -A
-   git commit -m "nome para o commit"
-   git push origin "nome do branch"
+   git add -A<br>
+   git commit -m "nome para o commit"<br>
+   git push origin "nome do branch"<br>
 
 Exemplo de fluxo:
 

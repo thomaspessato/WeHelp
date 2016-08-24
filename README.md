@@ -2,15 +2,16 @@
 
 App to help people interact with good actions
 
-# Começando agora com Git? #
+<br># Começando agora com Git? #
 [Instalação](https://git-scm.com/book/pt-br/v1/Primeiros-passos-Instalando-Git)
+
 Não sabe usar direito ou não lembra bem? [Entra aqui](http://rogerdudler.github.io/git-guide/index.pt_BR.html), que tá bem explicado!
 
-## Pull Request? Fork? Que isso? ##
+<br>## Pull Request? Fork? Que isso? ##
 
 Entra [aqui](http://tableless.com.br/contribuindo-em-projetos-open-source-com-o-github/) e dá uma lida. É mais simples do que parece.
 
-## Para começar a trabalhar com o projeto no seu computador: ##
+<br>## Para começar a trabalhar com o projeto no seu computador: ##
 
 1. Ter o Git instalado na sua máquina.
 2. Criar um [Fork](https://help.github.com/articles/fork-a-repo/) do projeto "WeHelp".
@@ -21,8 +22,8 @@ A partir deste momento, sempre que for trabalhar em alguma coisa, é recomendado
 5. Após alterar os arquivos da pasta WeHelp com o que for necessário, se faz uso dos seguintes comandos:
 
 git add -A
-git commit -m "<nome para o commit>"
-git push origin <nome do branch>
+git commit -m "nome para o commit"
+git push origin "nome do branch"
 
 Exemplo de fluxo:
 
@@ -39,23 +40,26 @@ Exemplo de fluxo:
 E recomeça o ciclo, em 1.
 
 
-## Divisão dos branches ##
+<br>## Divisão dos branches ##
 
 A divisão dos branches, no repositório principal, será:
 
 "master" -> versão estável do aplicativo
+<br>
 "preview" -> modificações que irão rapidamente para o "master"
+<br>
 "hlg" -> modificações do sprint centralizadas com conflitos de código resolvidos, prontas para homologar
+<br>
 "sprint" -> entregas de tarefas relacionadas ao sprint
 
-### Por que usar um branch 'preview' e um branch 'review'? ###
+<br>### Por que usar um branch 'preview' e um branch 'review'? ###
 
 O branch preview pode ser usado para qualquer publicação, seja ela relacionada ou não ao sprint.
 
 Exemplo: aconteceu algum problema e encontramos um bug crítico que está no MASTER, mas foge do nosso SPRINT. Utilizamos o branch PREVIEW para enviarmos a correção emergencial, poluirmos nosso SPRINT com tarefas que não são relacionadas.
 
 
-## O que se usa para desenvolver o aplicativo? ##
+<br>## O que se usa para desenvolver o aplicativo? ##
 
 O aplicativo é feito usando a IDE Android Studio, na linguagem JAVA.
 Não tem prática com Java para Android?
@@ -64,7 +68,7 @@ A Google tem uma documentação bem boa, na parte de Training:
 
 [Google Android Training - Development](https://developer.android.com/training/index.html)
 
-## Code review ##
+<br>## Code review ##
 
 Todos serão responsáveis por averiguar o código. Thomas Pessato e Israel Jardim serão responsáveis por 'aceitar' os PULL REQUEST, mas apenas se obedecer o critério de 70% dos envolvidos darem "Approve" no mesmo.
 

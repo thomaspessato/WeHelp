@@ -2,33 +2,41 @@
 
 App to help people interact with good actions
 
-# Começando agora? Tá perdido? #
+# Começando agora com Git? #
+[Instalação](https://git-scm.com/book/pt-br/v1/Primeiros-passos-Instalando-Git)
+Não sabe usar direito ou não lembra bem? [Entra aqui](http://rogerdudler.github.io/git-guide/index.pt_BR.html), que tá bem explicado!
 
-Não sabe usar ainda? [Entra aqui](http://rogerdudler.github.io/git-guide/index.pt_BR.html), que tá bem explicado!
+## Pull Request? Fork? Que isso? ##
 
+Entra [aqui](http://tableless.com.br/contribuindo-em-projetos-open-source-com-o-github/) e dá uma lida. É mais simples do que parece.
 
-## Para pegar o projeto no seu computador: ##
+## Para começar a trabalhar com o projeto no seu computador: ##
 
 1. Ter o Git instalado na sua máquina.
-2. Criar um FORK do projeto "WeHelp".
-3. Dar um 'git clone' do SEU FORK.
+2. Criar um [Fork](https://help.github.com/articles/fork-a-repo/) do projeto "WeHelp".
+3. Dar um 'git clone' do SEU FORK. (no terminal)
+4. Entrar na pasta que foi clonada (chamada WeHelp) e, no terminal, dar um "git remote add wehelp git@github.com:WeHelpApp/WeHelp.git"
+A partir deste momento, sempre que for trabalhar em alguma coisa, é recomendado fazer "git pull wehelp master" e "git pull wehelp sprint", para verificar se há alguma modificação no projeto por alguma outra pessoa. Isto faz com que os arquivos alterados sejam 'mergeados' com os seus, criando uma versão mesclada e totalmente atualizada.
 
-A partir deste momento, para publicar qualquer alteração feita será necessário:
+5. Após alterar os arquivos da pasta WeHelp com o que for necessário, se faz uso dos seguintes comandos:
 
 git add -A
-git commit -m "nome do commit"
+git commit -m "<nome para o commit>"
 git push origin <nome do branch>
 
-## Como funciona o processo de desenvolvimento e publicação? ##
+Exemplo de fluxo:
 
-Exemplo:
+1. Pegar uma das tarefas, definidas no início do sprint.
+1. 'git pull wehelp master' e 'git pull wehelp sprint', para atualizar com as últimas modificações do projeto.
+2. Trabalha para resolver AQUELA feature / issue.
+3. Após resolver, faça um 'git add -A', para adicionar todos os arquivos alterados para o log de modificação.
+4. 'git commit -m "nome da feature / issue"'.
+5. 'git pull wehelp master' e 'git pull wehelp sprint' para verificar se não há alguma modificação no projeto desde que começou a trabalhar.
+6. Resolver conflitos de código (se houver) e realizar as etapas 3 e 4 novamente.
+7. 'git push origin <nome do branch que está trabalhando>'
+8. Ir no Github.com e abrir um Pull Request para "WeHelp/sprint".
 
-1. Pegar uma feature / issue para resolver (vinda do Trello).
-2. Faz 'git pull origin master', para atualizar com as últimas modificações do projeto.
-3. Trabalha para resolver AQUELA feature / issue.
-4. Após resolver, faça um 'git add -A', para adicionar todos os arquivos alterados para o log de modificação.
-5. Faça um 'git commit -m "nome da feature / issue"'.
-6. Faça 'git pull origin master' e 'git pull origin sprint' para verificar se não há alguma modificação no projeto.
+E recomeça o ciclo, em 1.
 
 
 ## Divisão dos branches ##
@@ -39,7 +47,6 @@ A divisão dos branches, no repositório principal, será:
 "preview" -> modificações que irão rapidamente para o "master"
 "hlg" -> modificações do sprint centralizadas com conflitos de código resolvidos, prontas para homologar
 "sprint" -> entregas de tarefas relacionadas ao sprint
-
 
 ### Por que usar um branch 'preview' e um branch 'review'? ###
 
@@ -61,5 +68,5 @@ A Google tem uma documentação bem boa, na parte de Training:
 
 Todos serão responsáveis por averiguar o código. Thomas Pessato e Israel Jardim serão responsáveis por 'aceitar' os PULL REQUEST, mas apenas se obedecer o critério de 70% dos envolvidos darem "Approve" no mesmo.
 
-Desta forma, todos os envolvidos entenderam de alguma forma o que está sendo modificado, reduzindo a chance de gerarmos algum tipo de bug por falta de análise.
+Desta forma, todos os envolvidos entenderão de alguma forma o que está sendo modificado, reduzindo a chance de gerarmos algum tipo de bug por falta de análise.
 

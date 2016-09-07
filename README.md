@@ -4,7 +4,7 @@ App to help people interact with good actions
 
 # Começando agora? Tá perdido? #
 
-Utilizamos GIT para o versionamento do nosso código. Não sabe usar ainda? Entra aqui, que tá bem explicado!
+Não sabe usar ainda? [Entra aqui](http://rogerdudler.github.io/git-guide/index.pt_BR.html), que tá bem explicado!
 
 
 ## Para pegar o projeto no seu computador: ##
@@ -55,7 +55,7 @@ Não tem prática com Java para Android?
 
 A Google tem uma documentação bem boa, na parte de Training:
 
-Google Android Training - Development
+[Google Android Training - Development](https://developer.android.com/training/index.html)
 
 ## Code review ##
 

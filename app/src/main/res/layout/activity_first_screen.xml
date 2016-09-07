@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    tools:context="com.wehelp.wehelp.FirstScreenActivity">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center">
+
+        <VideoView
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/videoView"
+            android:layout_alignParentBottom="true" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="WeHelp"
+                android:id="@+id/textView"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:textSize="60dp"
+                android:textIsSelectable="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/scrollView"
+                android:layout_below="@+id/textView"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:fillViewport="false">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Trabalhamos para tornar o mundo melhor de uma maneira colaborativa"
+                    android:id="@+id/first_desc"
+                    android:layout_below="@+id/textView"
+                    android:layout_centerHorizontal="true"
+                    android:textAlignment="center"
+                    android:textSize="30dp"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginRight="60dp"
+                    android:textColor="#ffffff" />
+            </ScrollView>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="282dp"
+                android:layout_height="wrap_content"
+                android:weightSum="1"
+                android:id="@+id/linearLayout"
+                android:layout_below="@+id/scrollView"
+                android:touchscreenBlocksFocus="true"
+                android:gravity="center_horizontal"
+                android:layout_alignRight="@+id/textView"
+                android:layout_alignEnd="@+id/textView"
+                android:layout_alignLeft="@+id/textView"
+                android:layout_alignStart="@+id/textView"
+                android:layout_marginTop="10dp">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="ENTRAR"
+                    android:id="@+id/btn_login"
+                    android:layout_weight="0.5"
+                    android:background="#3fbc5c"
+                    android:textColor="#ffffff"
+                    android:textSize="18dp"
+                    android:padding="10dp" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="CADASTRAR"
+                    android:id="@+id/btn_register"
+                    android:layout_weight="0.5"
+                    android:background="#ffffff"
+                    android:textSize="18dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:singleLine="false"
+                    android:padding="10dp"
+                    android:layout_marginTop="10dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

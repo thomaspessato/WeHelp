@@ -8,4 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="FullScreen" parent="@android:style/Theme.NoTitleBar.Fullscreen">
+    </style>
+
 </resources>

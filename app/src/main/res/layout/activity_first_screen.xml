@@ -85,7 +85,7 @@
                     android:text="ENTRAR"
                     android:id="@+id/btn_login"
                     android:layout_weight="0.5"
-                    android:background="#3fbc5c"
+                    android:background="@color/colorPrimary"
                     android:textColor="#ffffff"
                     android:textSize="18dp"
                     android:padding="10dp" />

@@ -19,6 +19,10 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import com.wehelp.wehelp.tabs.FragmentMap;
+import com.wehelp.wehelp.tabs.FragmentMyEvents;
+import com.wehelp.wehelp.tabs.FragmentTimeline;
+
 public class TabbedActivity extends AppCompatActivity {
 
     /**
@@ -135,9 +139,18 @@ public class TabbedActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+
+            switch(position) {
+                case 0:
+                    return new FragmentMap();
+                case 1:
+                    return new FragmentTimeline();
+                case 2:
+                    return new FragmentMyEvents();
+                default:
+                    return new FragmentTimeline();
+            }
+
         }
 
         @Override

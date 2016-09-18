@@ -10,21 +10,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView3"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:src="@drawable/poor_people"
         android:scaleType="centerCrop"
-        android:alpha="0.7" />
+        android:alpha="0.7"
+        android:layout_alignParentBottom="true" />
 
-    <LinearLayout
+    <ScrollView
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignParentTop="false"
         android:layout_alignParentLeft="false"
         android:layout_alignParentStart="true"
-        android:background="#b6000000">
+        android:background="#b6000000"
+        android:layout_alignParentBottom="true">
 
         <LinearLayout
             android:orientation="vertical"
@@ -80,16 +81,135 @@
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Senha"
-                android:id="@+id/textView18" />
+                android:text="Telefone"
+                android:id="@+id/text_phone" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:textColor="#ffffff"
+                android:layout_height="wrap_content"
+                android:id="@+id/input_phone"
+                android:inputType="text|phone" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Nacionalidade"
+                android:id="@+id/text_nationality" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:textColor="#ffffff"
+                android:layout_height="wrap_content"
+                android:id="@+id/input_nationality"
+                android:inputType="text" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="UF"
+                android:id="@+id/text_UF" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:textColor="#ffffff"
+                android:layout_height="wrap_content"
+                android:id="@+id/input_UF"
+                android:inputType="text" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Cidade"
+                android:id="@+id/text_city" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner"
+                android:spinnerMode="dropdown"
+                android:theme="@style/AppTheme"
+                android:touchscreenBlocksFocus="false" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Rua"
+                android:id="@+id/text_street" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:textColor="#ffffff"
                 android:layout_height="wrap_content"
 
-                android:id="@+id/editText8"
-                android:inputType="textPassword" />
+                android:id="@+id/input_street"
+                android:inputType="text" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Numero"
+                android:id="@+id/text_number" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:textColor="#ffffff"
+                android:layout_height="wrap_content"
+
+                android:id="@+id/input_number"
+                android:inputType="text|number" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Complemento"
+                android:id="@+id/text_complement" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:textColor="#ffffff"
+                android:layout_height="wrap_content"
+
+                android:id="@+id/input_complement"
+                android:inputType="text|number" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Nome responsável"
+                android:id="@+id/text_responsable" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:textColor="#ffffff"
+                android:layout_height="wrap_content"
+
+                android:id="@+id/input_responsable"
+                android:inputType="textPersonName" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="CPF responsável"
+                android:id="@+id/text_cpf" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:textColor="#ffffff"
+                android:layout_height="wrap_content"
+
+                android:id="@+id/input_cpf"
+                android:inputType="text|number" />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -129,11 +249,11 @@
                     android:textColor="#ffffff"
                     android:layout_gravity="center_horizontal"
                     android:paddingLeft="10dp"
-                    android:layout_marginTop="40dp"
+                    android:paddingTop="40dp"
                     android:paddingRight="10dp" />
             </RadioGroup>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

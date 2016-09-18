@@ -35,7 +35,14 @@
             android:name=".TabbedRegisterActivity"
             android:label="@string/title_activity_tabbed_register"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ForgotPassActivity"></activity>
+        <activity android:name=".ForgotPassActivity" />
+        <activity android:name=".EventDetailActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.wehelp.wehelp.TabbedActivity" />
+        </activity>
+        <activity android:name=".CreateEventActivity" />
+        <activity android:name=".ParticipateEventActivity"></activity>
     </application>
 
 </manifest>

@@ -40,6 +40,7 @@ public class FirstScreenActivity extends AppCompatActivity {
         });
 
         Button loginBtn = (Button)findViewById(R.id.btn_login);
+        Button registerBtn = (Button)findViewById(R.id.btn_register);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,5 +50,16 @@ public class FirstScreenActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(FirstScreenActivity.this, TabbedRegisterActivity.class);
+
+                startActivity(intent);
+            }
+        });
+
+
     }
 }

@@ -1,5 +1,6 @@
 package com.wehelp.wehelp;
 
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,13 +18,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.view.Window;
 import android.widget.TextView;
 
-import com.wehelp.wehelp.tabs.FragmentMap;
-import com.wehelp.wehelp.tabs.FragmentMyEvents;
-import com.wehelp.wehelp.tabs.FragmentTimeline;
+import com.wehelp.wehelp.tabs.tabs_register.FragmentOngRegister;
+import com.wehelp.wehelp.tabs.tabs_register.FragmentPersonRegister;
 
-public class TabbedActivity extends AppCompatActivity {
+public class TabbedRegisterActivity extends AppCompatActivity implements FragmentPersonRegister.OnFragmentInteractionListener, FragmentOngRegister.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -43,13 +44,16 @@ public class TabbedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tabbed);
+        setContentView(R.layout.activity_tabbed_register);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+
+//        getSupportActionBar().hide();
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -62,7 +66,7 @@ public class TabbedActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Implementar criação de novo evento", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Implement register for user", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -73,7 +77,7 @@ public class TabbedActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_tabbed, menu);
+        getMenuInflater().inflate(R.menu.menu_tabbed_register, menu);
         return true;
     }
 
@@ -90,6 +94,11 @@ public class TabbedActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+        System.out.println("ALOHA");
     }
 
     /**
@@ -120,7 +129,7 @@ public class TabbedActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_tabbed, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_tabbed_register, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
@@ -139,35 +148,31 @@ public class TabbedActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
             switch(position) {
                 case 0:
-                    return new FragmentMap();
+                    return new FragmentPersonRegister();
                 case 1:
-                    return new FragmentTimeline();
-                case 2:
-                    return new FragmentMyEvents();
+                    return new FragmentOngRegister();
                 default:
-                    return new FragmentTimeline();
+                    return null;
             }
-
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Mapa";
+                    return "PESSOA";
                 case 1:
-                    return "Eventos";
-                case 2:
-                    return "Meus eventos";
+                    return "ONG";
             }
             return null;
         }

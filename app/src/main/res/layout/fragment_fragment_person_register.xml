@@ -13,11 +13,11 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:src="@drawable/poor_people"
+        android:src="@drawable/hands_together"
         android:scaleType="centerCrop"
         android:alpha="0.7" />
 
-    <LinearLayout
+    <ScrollView
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Nome"
+                android:text="Nome completo"
                 android:textColor="#ffffff"
                 android:id="@+id/textView14" />
 
@@ -44,56 +44,58 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"
-                android:id="@+id/editText5" />
+                android:id="@+id/input_name" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff"
-                android:text="Sobrenome"
+                android:text="E-mail"
                 android:id="@+id/textView15" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"
-                android:id="@+id/editText6" />
+                android:id="@+id/input_mail" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="E-mail"
+                android:text="Telefone"
                 android:id="@+id/textView16" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:textColor="#ffffff"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText7" />
+                android:id="@+id/input_phone" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Senha"
+                android:text="Nascimento"
                 android:id="@+id/textView18" />
 
-            <EditText
-                android:layout_width="match_parent"
-                android:textColor="#ffffff"
+            <DatePicker
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:id="@+id/editText8"
-                android:inputType="textPassword" />
+                android:id="@+id/datePicker"
+                android:background="#fff"
+                android:spinnersShown="true"
+                android:contextClickable="true"
+                android:scrollIndicators="right" />
 
             <RadioGroup
                 android:layout_width="match_parent"
                 android:textColor="#ffffff"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:id="@+id/radio_genre">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -108,7 +110,7 @@
                     android:textColor="#ffffff"
                     android:layout_height="wrap_content"
                     android:text="Feminino"
-                    android:id="@+id/radioButton"
+                    android:id="@+id/radio_female"
                     android:checked="false" />
 
                 <RadioButton
@@ -116,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#ffffff"
                     android:text="Masculino"
-                    android:id="@+id/radioButton2"
+                    android:id="@+id/radio_male"
                     android:checked="false" />
 
                 <Button
@@ -134,5 +136,5 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

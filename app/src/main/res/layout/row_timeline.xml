@@ -77,8 +77,8 @@
             android:padding="10dp"
             android:textColor="@android:color/white"
             android:layout_below="@+id/linearLayout2"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignRight="@+id/linearLayout2"
+            android:layout_alignEnd="@+id/linearLayout2" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -121,6 +121,16 @@
                 android:text="Data: 19/03/2016 - Avenida Assis Brasil, 393"
                 android:id="@+id/textView4"
                 android:layout_marginTop="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Mais detalhes do evento"
+                android:id="@+id/btn_moreinfo"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/colorAccent" />
 
             <TextView
                 android:layout_width="wrap_content"

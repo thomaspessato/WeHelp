@@ -19,13 +19,30 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         Button loginBtn = (Button)findViewById(R.id.btn_login);
+        Button forgotBtn = (Button)findViewById(R.id.btn_forgot);
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
-                startActivity(intent);
-            }
-        });
+
+        if (loginBtn != null) {
+            loginBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+
+
+        if (forgotBtn != null) {
+            forgotBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(LoginActivity.this, ForgotPassActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+
+
     }
 }

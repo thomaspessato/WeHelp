@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_weight="0.16">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="74dp"
+            android:layout_height="match_parent"
+            android:weightSum="1"
+            android:layout_gravity="center"
+            android:gravity="center_vertical|center_horizontal">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="50dp"
+                android:id="@+id/imageView5"
+                android:scaleType="centerCrop"
+                android:src="@drawable/poor_people"
+                android:layout_gravity="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="15dp"
+                android:text="Thomas Pessato"
+                android:textColor="#000"
+                android:id="@+id/textView24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#333"
+                android:textSize="12dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="This is a comment that will be inside an event&apos;s detail"
+                android:id="@+id/textView25" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

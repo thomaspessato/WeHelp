@@ -26,39 +26,45 @@ public class FirstScreenActivity extends AppCompatActivity {
         VideoView mVideoView  = (VideoView)findViewById(R.id.videoView);
         MediaController videoMediaController = new MediaController(this);
 
-
         Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.seafront);
 
-        mVideoView.setVideoURI(uri);
-        mVideoView.requestFocus();
-        mVideoView.start();
-        mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
-                mediaPlayer.setLooping(true);
-            }
-        });
+        if (mVideoView != null) {
+            mVideoView.setVideoURI(uri);
+            mVideoView.requestFocus();
+            mVideoView.start();
+            mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mediaPlayer) {
+                    mediaPlayer.setLooping(true);
+                }
+            });
+        }
+
 
         Button loginBtn = (Button)findViewById(R.id.btn_login);
         Button registerBtn = (Button)findViewById(R.id.btn_register);
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(FirstScreenActivity.this, LoginActivity.class);
+        if (loginBtn != null) {
+            loginBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(FirstScreenActivity.this, LoginActivity.class);
 
-                startActivity(intent);
-            }
-        });
+                    startActivity(intent);
+                }
+            });
+        }
 
-        registerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(FirstScreenActivity.this, TabbedRegisterActivity.class);
+        if (registerBtn != null) {
+            registerBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(FirstScreenActivity.this, TabbedRegisterActivity.class);
 
-                startActivity(intent);
-            }
-        });
+                    startActivity(intent);
+                }
+            });
+        }
 
 
     }

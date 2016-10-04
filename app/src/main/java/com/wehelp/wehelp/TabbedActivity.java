@@ -145,8 +145,6 @@ public class TabbedActivity extends AppCompatActivity {
                     return new FragmentMap();
                 case 1:
                     return new FragmentTimeline();
-                case 2:
-                    return new FragmentMyEvents();
                 default:
                     return new FragmentTimeline();
             }
@@ -156,7 +154,7 @@ public class TabbedActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
@@ -166,8 +164,6 @@ public class TabbedActivity extends AppCompatActivity {
                     return "Mapa";
                 case 1:
                     return "Eventos";
-                case 2:
-                    return "Meus eventos";
             }
             return null;
         }

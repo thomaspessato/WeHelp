@@ -23,22 +23,22 @@ public class FirstScreenActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_first_screen);
 
-        VideoView mVideoView  = (VideoView)findViewById(R.id.videoView);
-        MediaController videoMediaController = new MediaController(this);
-
-        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.seafront);
-
-        if (mVideoView != null) {
-            mVideoView.setVideoURI(uri);
-            mVideoView.requestFocus();
-            mVideoView.start();
-            mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mediaPlayer) {
-                    mediaPlayer.setLooping(true);
-                }
-            });
-        }
+//        VideoView mVideoView  = (VideoView)findViewById(R.id.videoView);
+//        MediaController videoMediaController = new MediaController(this);
+//
+//        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.seafront);
+//
+//        if (mVideoView != null) {
+//            mVideoView.setVideoURI(uri);
+//            mVideoView.requestFocus();
+//            mVideoView.start();
+//            mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//                @Override
+//                public void onPrepared(MediaPlayer mediaPlayer) {
+//                    mediaPlayer.setLooping(true);
+//                }
+//            });
+//        }
 
 
         Button loginBtn = (Button)findViewById(R.id.btn_login);

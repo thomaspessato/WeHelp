@@ -82,14 +82,14 @@
                 android:text="Nascimento"
                 android:id="@+id/textView18" />
 
-            <DatePicker
-                android:layout_width="wrap_content"
+
+            <EditText
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/datePicker"
-                android:background="#fff"
-                android:spinnersShown="true"
-                android:contextClickable="true"
-                android:scrollIndicators="right" />
+                android:inputType="date"
+                android:ems="10"
+                android:id="@+id/whichdate"
+                android:textColor="#fff" />
 
             <RadioGroup
                 android:layout_width="match_parent"

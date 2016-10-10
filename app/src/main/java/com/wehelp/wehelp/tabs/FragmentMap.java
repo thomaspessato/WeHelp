@@ -5,13 +5,20 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.TextViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -22,7 +29,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.vision.barcode.Barcode;
-import com.wehelp.wehelp.Manifest;
+import com.google.android.gms.vision.text.Text;
+import android.Manifest;
 import com.wehelp.wehelp.R;
 
 import java.io.IOException;
@@ -36,10 +44,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class FragmentMap extends Fragment {
 
+    private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
     @Nullable
 
     MapView mMapView;
     private GoogleMap googleMap;
+    public GoogleApiClient mGoogleApiClient;
 
     public static FragmentTimeline newInstance() {
         FragmentTimeline fragment = new FragmentTimeline ();
@@ -83,8 +93,10 @@ public class FragmentMap extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_tab_map, container, false);
 
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
+        final TextView mLatitudeText = (TextView)rootView.findViewById((R.id.mLocationLat));
+        final TextView mLongitudeText= (TextView)rootView.findViewById((R.id.mLocationLong));
+        assert mMapView != null;
         mMapView.onCreate(savedInstanceState);
-
         mMapView.onResume();
 
         try {
@@ -92,6 +104,43 @@ public class FragmentMap extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+        mGoogleApiClient = new GoogleApiClient.Builder(getContext())
+                .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
+                    @Override
+                    public void onConnected(@Nullable Bundle bundle) {
+                        System.out.println("GOOGLE MAPS API CLIENT CONNECTED");
+                        if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            ActivityCompat.requestPermissions(getActivity(),
+                                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                    MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+
+                            mLatitudeText.setText("INSIDE REQUEST FOR LOCATION");
+                            Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                                    mGoogleApiClient);
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onConnectionSuspended(int i) {
+
+                    }
+                })
+                .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
+                    @Override
+                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+                    }
+                })
+                .addApi(LocationServices.API)
+                .build();
+
+
+        mGoogleApiClient.connect();
+
 
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
@@ -124,7 +173,7 @@ public class FragmentMap extends Fragment {
                 }
 
                 googleMap.addMarker(new MarkerOptions().position(marker).title("Creche Moranguinho | Educação").snippet("Necessitamos de 20 caixas de lápis, 30 pacotes de folhas"));
-//                googleMap.addMarker(new MarkerOptions()
+//                googleMap.addMarker(new MarkesrOptions()
 //                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.common_google_signin_btn_icon_dark_normal))
 //                        .snippet("Evento de ajuda | EDUCAÇÃO | MATERIAL ESCOLAR")
 //                        .anchor(0.0f, 1.0f) // Anchors the marker on the bottom left

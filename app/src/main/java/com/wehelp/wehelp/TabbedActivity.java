@@ -2,6 +2,7 @@ package com.wehelp.wehelp;
 
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -9,7 +10,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -24,6 +27,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -46,10 +51,18 @@ public class TabbedActivity extends AppCompatActivity {
      *
      */
 
-    private String[] mPlanetTitles;
+
+    private SectionsPagerAdapter mSectionsPagerAdapter;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private ActionBarDrawerToggle mDrawerToggle;
+
+    private CharSequence mDrawerTitle;
+    private CharSequence mTitle;
+    private String[] mDrawerItmes;
+
+    Toolbar mToolbar;
+//    NetworkImageView profileImg;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -65,9 +78,52 @@ public class TabbedActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        if(Build.VERSION.SDK_INT>=21){
+            mToolbar.setElevation(0);
+        }
+        mTitle = "WeHelp";
+        mDrawerTitle = getTitle();
+        mDrawerItmes = getResources().getStringArray(R.array.drawer_titles);
+        mDrawerList = (ListView)findViewById(R.id.left_drawer);
+        mDrawerLayout.setDrawerShadow(R.drawable.box_shadow, GravityCompat.START);
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        View headerView = inflater.inflate(R.layout.drawer_list_header, null);
+        mDrawerList.addHeaderView(headerView);
+
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawerItmes));
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                mDrawerLayout,
+                mToolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close
+        ) {
+            public void onDrawerClosed(View view) {
+                mToolbar.setTitle(mTitle);
+
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu
+            }
+            public void onDrawerOpened(View drawerView) {
+//                profileImg.setImageUrl(access.getBaseURL() + "pictures/profile/" + settings.getString("picture", "")+"?t="+settings.getString("image_timestamp",""), imageLoader);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu
+//                System.out.println(username.getText().toString());
+//                System.out.println(settings.getString("username",""));
+//                if(!username.getText().toString().equalsIgnoreCase(settings.getString("username",""))){
+//                    username.setText(settings.getString("username",""));
+//                }
+            }
+        };
+
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -75,6 +131,11 @@ public class TabbedActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +147,83 @@ public class TabbedActivity extends AppCompatActivity {
         });
 
     }
+
+    private class DrawerItemClickListener implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//            navigateTo(position);
+        }
+    }
+
+    private void navigateTo(int position) {
+
+//        switch(position) {
+//            case 1:
+//                getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.content_frame, ProfileActivity.newInstance(), ProfileActivity.TAG).commit();
+//                mTitle = "Meu perfil";
+//                break;
+//            case 2:
+//
+//                getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.content_frame, TabbedFragmentSocial.newInstance(), TabbedFragmentSocial.TAG).commit();
+//                mTitle = "Social";
+//                break;
+//            case 3:
+//                getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.content_frame, TabbedFragmentGames.newInstance(), TabbedFragmentGames.TAG).commit();
+//                mTitle = "Games";
+//                break;
+//
+//            case 4:
+//
+//                getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.content_frame, FragmentFriends.newInstance(), FragmentFriends.TAG).commit();
+//                mTitle = "Amigos";
+//                break;
+//
+//            case 5:
+//
+//                getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.content_frame, TopTenActivity.newInstance(), TopTenActivity.TAG).commit();
+//                mTitle = "Top colecionadores";
+//                break;
+//
+//            case 6:
+//                getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.content_frame, TalkToActivity.newInstance(), TalkToActivity.TAG).commit();
+//                mTitle = "Comente!";
+//                break;
+//
+//            case 7:
+//                Intent itLogoff = new Intent(this,LoginActivity.class);
+//                SharedPreferences settings = getSharedPreferences("UserInfo", 0);
+//
+//                SharedPreferences.Editor editor = settings.edit();
+//
+//                editor.clear();
+//                editor.commit();
+//
+//                EventBus.getDefault().unregister(this);
+//                startActivity(itLogoff);
+//                finish();
+//
+//                break;
+//
+//        }
+
+
+        mDrawerLayout.closeDrawer(mDrawerList);
+
+
+    }
+
 
 
     @Override

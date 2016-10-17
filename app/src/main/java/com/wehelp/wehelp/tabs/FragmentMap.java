@@ -93,8 +93,6 @@ public class FragmentMap extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_tab_map, container, false);
 
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
-        final TextView mLatitudeText = (TextView)rootView.findViewById((R.id.mLocationLat));
-        final TextView mLongitudeText= (TextView)rootView.findViewById((R.id.mLocationLong));
         assert mMapView != null;
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
@@ -117,7 +115,6 @@ public class FragmentMap extends Fragment {
                                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                                     MY_PERMISSIONS_REQUEST_READ_CONTACTS);
 
-                            mLatitudeText.setText("INSIDE REQUEST FOR LOCATION");
                             Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                                     mGoogleApiClient);
                             return;

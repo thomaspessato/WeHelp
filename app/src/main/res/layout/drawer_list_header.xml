@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="165dp"
+        android:paddingTop="20dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingBottom="20dp"
+
+
+        android:layout_weight="0.04">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:weightSum="1"
+            android:gravity="bottom">
+
+            <ImageView
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:id="@+id/profile_image"
+                android:scaleType="centerCrop"
+                android:background="#000" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="68dp"
+                android:gravity="bottom">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Thomas Pessato"
+                    android:id="@+id/username"
+                    android:textColor="#fff"
+                    android:layout_marginLeft="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="tpessato@gmail.com"
+                    android:id="@+id/email"
+                    android:textColor="#fff"
+                    android:layout_weight="0"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:layout_marginLeft="10dp">
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

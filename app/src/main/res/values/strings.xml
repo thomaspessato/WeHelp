@@ -2,11 +2,9 @@
 
     <string-array name="drawer_titles">
         <item>Perfil</item>
-        <item>Social</item>
-        <item>Meus Games</item>
-        <item>Amigos</item>
-        <item>Top colecionadores</item>
-        <item>Comente</item>
+        <item>Meus eventos</item>
+        <item>Eventos que participo</item>
+        <item>Configurações</item>
         <item>Sair</item>
     </string-array>
 

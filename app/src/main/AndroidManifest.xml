@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wehelp.wehelp">
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <service
         android:name=".FetchAddressIntentService"
-        android:exported="false"/>
+        android:exported="false" />
 
     <application
         android:allowBackup="true"
@@ -12,9 +14,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
-
         <activity android:name=".MainActivity" />
         <activity android:name=".FirstScreenActivity">
             <intent-filter>
@@ -41,13 +40,17 @@
             android:label="@string/title_activity_tabbed_register"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ForgotPassActivity" />
-        <activity android:name=".EventDetailActivity" >
+        <activity android:name=".EventDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.wehelp.wehelp.TabbedActivity" />
         </activity>
         <activity android:name=".CreateEventActivity" />
-        <activity android:name=".ParticipateEventActivity"></activity>
+        <activity android:name=".ParticipateEventActivity" />
+        <activity android:name=".MyEventsActivity" />
+        <activity android:name=".ParticipatingEventsActivity" />
+        <activity android:name=".ConfigurationActivity" />
+        <activity android:name=".ProfileActivity"></activity>
     </application>
 
 </manifest>

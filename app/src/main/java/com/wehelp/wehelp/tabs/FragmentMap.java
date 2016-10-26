@@ -1,5 +1,6 @@
 package com.wehelp.wehelp.tabs;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -27,10 +28,13 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.text.Text;
 import android.Manifest;
+
+import com.wehelp.wehelp.EventDetailActivity;
 import com.wehelp.wehelp.R;
 
 import java.io.IOException;
@@ -93,8 +97,6 @@ public class FragmentMap extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_tab_map, container, false);
 
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
-        final TextView mLatitudeText = (TextView)rootView.findViewById((R.id.mLocationLat));
-        final TextView mLongitudeText= (TextView)rootView.findViewById((R.id.mLocationLong));
         assert mMapView != null;
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
@@ -117,7 +119,6 @@ public class FragmentMap extends Fragment {
                                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                                     MY_PERMISSIONS_REQUEST_READ_CONTACTS);
 
-                            mLatitudeText.setText("INSIDE REQUEST FOR LOCATION");
                             Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                                     mGoogleApiClient);
                             return;
@@ -165,8 +166,17 @@ public class FragmentMap extends Fragment {
                         double longitude = addresses.get(i).getLongitude();
                         double latitude = addresses.get(i).getLatitude();
                         LatLng test = new LatLng(latitude,longitude);
+
                         googleMap.addMarker(new MarkerOptions().position(test).title("BLABLBALBA | Educação").snippet("TESTANDO"));
                     }
+
+                    googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                        @Override
+                        public void onInfoWindowClick(Marker marker) {
+                            Intent intentDetail = new Intent(getActivity(), EventDetailActivity.class);
+                            startActivity(intentDetail);
+                        }
+                    });
 
                 } catch (IOException e) {
                     e.printStackTrace();

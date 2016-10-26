@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.vision.text.Text;
 import com.wehelp.wehelp.EventDetailActivity;
+import com.wehelp.wehelp.HelpEventActivity;
 import com.wehelp.wehelp.R;
 import com.wehelp.wehelp.classes.Event;
 
@@ -37,12 +39,21 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
         }
 
         TextView linkInfoEvent = (TextView) convertView.findViewById(R.id.btn_moreinfo);
+        Button btnHelp = (Button)convertView.findViewById(R.id.btn_help);
 
         linkInfoEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), EventDetailActivity.class);
                 context.startActivity(intent);
+            }
+        });
+
+        btnHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentHelp = new Intent(getContext(), HelpEventActivity.class);
+                context.startActivity(intentHelp);
             }
         });
 

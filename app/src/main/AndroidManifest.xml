@@ -45,12 +45,36 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.wehelp.wehelp.TabbedActivity" />
         </activity>
-        <activity android:name=".CreateEventActivity" />
-        <activity android:name=".ParticipateEventActivity" />
-        <activity android:name=".MyEventsActivity" />
-        <activity android:name=".ParticipatingEventsActivity" />
-        <activity android:name=".ConfigurationActivity" />
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".CreateEventActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.wehelp.wehelp.TabbedActivity" />
+        </activity>
+        <activity android:name=".ParticipateEventActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.wehelp.wehelp.TabbedActivity" />
+        </activity>
+        <activity android:name=".MyEventsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.wehelp.wehelp.TabbedActivity" />
+        </activity>
+        <activity android:name=".ParticipatingEventsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.wehelp.wehelp.TabbedActivity" />
+        </activity>
+        <activity android:name=".ConfigurationActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.wehelp.wehelp.TabbedActivity" />
+        </activity>
+        <activity android:name=".ProfileActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.wehelp.wehelp.TabbedActivity" />
+        </activity>
     </application>
 
 </manifest>

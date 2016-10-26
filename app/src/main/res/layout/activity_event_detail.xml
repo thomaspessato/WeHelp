@@ -4,68 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context="com.wehelp.wehelp.EventDetailActivity">
-    <include layout="@layout/toolbar" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="150dp"
-        android:id="@+id/imageView4"
-        android:scaleType="centerCrop"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-
-        android:src="@drawable/poor_people" />
-
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="#c3000000"
-        android:padding="10dp"
-        android:layout_alignBottom="@+id/imageView4"
-        android:layout_alignLeft="@+id/imageView4"
-        android:layout_alignStart="@+id/imageView4"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Creche Moranguinho"
-            android:id="@+id/textView5"
-            android:layout_gravity="bottom"
-            android:textColor="#ffffff" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="educação"
-            android:id="@+id/textView10"
-
-            android:textColor="#ffffff"
-            android:padding="3dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="ONG Plicploc"
-            android:id="@+id/textView6"
-            android:layout_gravity="bottom"
-            android:textColor="@color/colorAccent" />
-
-    </LinearLayout>
 
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:id="@+id/scrollView2"
-        android:layout_below="@+id/imageView4"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
@@ -81,6 +25,60 @@
             android:layout_below="@+id/imageView4"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:id="@+id/imageView4"
+                android:scaleType="centerCrop"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+
+                android:src="@drawable/poor_people" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#c3000000"
+                android:padding="10dp"
+                android:layout_alignBottom="@+id/imageView4"
+                android:layout_alignLeft="@+id/imageView4"
+                android:layout_alignStart="@+id/imageView4"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Creche Moranguinho"
+                    android:id="@+id/textView5"
+                    android:layout_gravity="bottom"
+                    android:textColor="#ffffff" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="educação"
+                    android:id="@+id/textView10"
+
+                    android:textColor="#ffffff"
+                    android:padding="3dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="ONG Plicploc"
+                    android:id="@+id/textView6"
+                    android:layout_gravity="bottom"
+                    android:textColor="@color/colorAccent" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -126,7 +124,7 @@
 
             <ListView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/comment_list"
                 android:layout_gravity="center_horizontal" />
         </LinearLayout>

@@ -49,13 +49,13 @@ public class FragmentTimeline extends Fragment {
         listView.setAdapter(eventArrayAdapter);
 //        footer = View.inflate(getActivity(),R.layout.progress_bar,null); // to make lazy load
 
-//        swipeRefreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swipe_refresh_layout);
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                loadEvents();
-//            }
-//        });
+        swipeRefreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+//                IMPLEMENT REFRESH ON TIMELINE
+            }
+        });
 
         for(int i = 0; i<10; i++){
 //            JSONObject jb = (JSONObject) array.get(i);

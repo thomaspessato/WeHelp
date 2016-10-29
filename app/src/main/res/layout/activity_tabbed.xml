@@ -73,7 +73,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:choiceMode="singleChoice"
-            android:background="#333"
+            android:background="@color/colorPrimary"
             />
     </android.support.v4.widget.DrawerLayout>
 

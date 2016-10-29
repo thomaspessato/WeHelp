@@ -15,6 +15,10 @@ import com.wehelp.wehelp.R;
 import com.wehelp.wehelp.adapters.TimelineEventAdapter;
 import com.wehelp.wehelp.classes.Event;
 
+import java.sql.Date;
+import java.text.ParseException;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -62,18 +66,12 @@ public class FragmentTimeline extends Fragment {
 
             Event event = new Event();
 
-//            newsPost.setTitle(jb.getString("news_title"));
-//            newsPost.setPost(jb.getString("news_description"));
-//            newsPost.setFeed_id(jb.getString("feed_id"));
-//            newsPost.setFrom(jb.getString("feed_type"));
-//            newsPost.setNews_id(jb.getString("news_id"));
-//            newsPost.setNews_image_url(jb.getString("news_image_url"));
-//            newsPost.setNews_url(jb.getString("news_url"));
-//
-//
-//            newsPost.setDay(jb.getString("past_days"));
-//            newsPost.setHour(jb.getString("past_hours"));
-//            newsPost.setMinute(jb.getString("past_minutes"));
+            //set image
+            event.setTitle("Novo evento numero "+i);
+            event.setAddressCity("Porto Alegre");
+            String date = "12-12-2016"; //how to pass date variable to method? (setEndDate)
+            event.setCategory("Categoria "+i);
+            event.setCreator("Creator "+ i);
 
             eventList.add(event);
 

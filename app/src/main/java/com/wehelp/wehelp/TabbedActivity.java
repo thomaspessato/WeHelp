@@ -146,6 +146,12 @@ public class TabbedActivity extends AppCompatActivity {
             }
         };
 
+
+        TextView username = (TextView)headerView.findViewById(R.id.username);
+        TextView email = (TextView)headerView.findViewById(R.id.email);
+        username.setText("WeHelp Master");
+        email.setText("email@wehelp.com.br");
+
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
 
@@ -242,8 +248,9 @@ public class TabbedActivity extends AppCompatActivity {
                 startActivity(intentConfigure);
                 break;
             case 5:
-                Intent intentLogin = new Intent(this, LoginActivity.class);
-                startActivity(intentLogin);
+                Intent intentLogout = new Intent(this, LoginActivity.class);
+                intentLogout.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intentLogout);
 //                TEM QUE FAZER O DISCONNECT
             default:
                 break;

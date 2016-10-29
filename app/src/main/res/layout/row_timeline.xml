@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Creche Moranguinho"
-                android:id="@+id/textView5"
+                android:id="@+id/event_timeline_title"
                 android:layout_gravity="bottom"
                 android:textColor="#ffffff" />
 
@@ -51,8 +51,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="educação"
-                android:id="@+id/textView10"
-                android:textAlignment="viewEnd"
+                android:id="@+id/event_timeline_category"
                 android:textColor="#ffffff"
                 android:padding="3dp" />
 
@@ -61,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="ONG Plicploc"
-                android:id="@+id/textView6"
+                android:id="@+id/event_timeline_creator"
                 android:layout_gravity="bottom"
                 android:textColor="@color/colorAccent" />
 
@@ -119,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Data: 19/03/2016 - Avenida Assis Brasil, 393"
-                android:id="@+id/textView4"
+                android:id="@+id/event_timeline_date"
                 android:layout_marginTop="10dp" />
 
             <TextView

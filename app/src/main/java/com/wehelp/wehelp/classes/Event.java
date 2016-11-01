@@ -25,8 +25,26 @@ public class Event {
     private Character status;
     private Character certification;
     private String nationality;
+    private String category;
+    private String creator;
 
     public Event() {
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 
     public String getTitle() {

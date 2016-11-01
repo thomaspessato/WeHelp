@@ -55,7 +55,8 @@
                 android:id="@+id/editText"
                 android:layout_gravity="center_horizontal"
                 android:textColor="#ffffff"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:text="teste@teste.com" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -73,7 +74,9 @@
                 android:ems="10"
                 android:id="@+id/editText2"
                 android:password="true"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:text="12345" />
 
             <Button
                 android:layout_width="wrap_content"

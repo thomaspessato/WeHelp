@@ -34,6 +34,8 @@ public class EventDetailActivity extends AppCompatActivity {
         ListView commentListView = (ListView)findViewById(R.id.comment_list);
         commentListView.setAdapter(commentArrayAdapter);
 
+        commentListView.setFocusable(false);
+
         for(int i = 0; i<10; i++) {
             Comment comment = new Comment();
             commentList.add(comment);

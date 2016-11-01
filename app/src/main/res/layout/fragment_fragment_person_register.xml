@@ -1,0 +1,140 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.wehelp.wehelp.tabs.tabs_register.FragmentPersonRegister">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView3"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/hands_together"
+        android:scaleType="centerCrop"
+        android:alpha="0.7" />
+
+    <ScrollView
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="true"
+        android:background="#b6000000">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Nome completo"
+                android:textColor="#ffffff"
+                android:id="@+id/textView14" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:id="@+id/input_name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#ffffff"
+                android:text="E-mail"
+                android:id="@+id/textView15" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:id="@+id/input_mail" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Telefone"
+                android:id="@+id/textView16" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:textColor="#ffffff"
+                android:layout_height="wrap_content"
+                android:id="@+id/input_phone" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Nascimento"
+                android:id="@+id/textView18" />
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:ems="10"
+                android:id="@+id/whichdate"
+                android:textColor="#fff" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:textColor="#ffffff"
+                android:layout_height="match_parent"
+                android:id="@+id/radio_genre">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Gênero"
+                    android:id="@+id/textView17" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:textColor="#ffffff"
+                    android:layout_height="wrap_content"
+                    android:text="Feminino"
+                    android:id="@+id/radio_female"
+                    android:checked="false" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:text="Masculino"
+                    android:id="@+id/radio_male"
+                    android:checked="false" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CADASTRAR"
+                    android:id="@+id/button4"
+                    android:background="@color/colorPrimary"
+                    android:textColor="#ffffff"
+                    android:layout_gravity="center_horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_marginTop="40dp" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>

@@ -36,6 +36,7 @@ import android.Manifest;
 
 import com.wehelp.wehelp.EventDetailActivity;
 import com.wehelp.wehelp.R;
+import com.wehelp.wehelp.classes.Event;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -152,22 +153,29 @@ public class FragmentMap extends Fragment {
                 LatLng marker = new LatLng(-30.012054, -51.178840);
 
                 Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
-                List<Address> addresses = new ArrayList<Address>();
+                List<Event> events = new ArrayList<Event>();
 
                 try {
-                    addresses.add(geocoder.getFromLocationName("Rua Marechal José Inácio, Porto Alegre", 1).get(0));
-                    addresses.add(geocoder.getFromLocationName("Rua Padre Hildebrando, Porto Alegre", 1).get(0));
-                    addresses.add(geocoder.getFromLocationName("Avenida Assis Brasil, Porto Alegre", 1).get(0));
-                    addresses.add(geocoder.getFromLocationName("Avenida Sertório, Porto Alegre", 1).get(0));
-                    addresses.add(geocoder.getFromLocationName("Avenida Plínio Brasil Milano, Porto Alegre", 1).get(0));
-                    addresses.add(geocoder.getFromLocationName("Rua Novo Hamburgo, Porto Alegre", 1).get(0));
+                    Event event = new Event();
+                    event.setAddressCity("Porto Alegre");
+                    event.setAddressStreet("Rua Padre Hildebrando");
+                    event.setAddressNumber("585");
+                    events.add(event);
+
+//                    addresses.add(geocoder.getFromLocationName("Rua Marechal José Inácio, Porto Alegre", 1).get(0));
+//                    addresses.add(geocoder.getFromLocationName("Rua Padre Hildebrando, Porto Alegre", 1).get(0));
+//                    addresses.add(geocoder.getFromLocationName("Avenida Assis Brasil, Porto Alegre", 1).get(0));
+//                    addresses.add(geocoder.getFromLocationName("Avenida Sertório, Porto Alegre", 1).get(0));
+//                    addresses.add(geocoder.getFromLocationName("Avenida Plínio Brasil Milano, Porto Alegre", 1).get(0));
+//                    addresses.add(geocoder.getFromLocationName("Rua Novo Hamburgo, Porto Alegre", 1).get(0));
 
                     for (int i = 0; i< addresses.size(); i++) {
-                        double longitude = addresses.get(i).getLongitude();
-                        double latitude = addresses.get(i).getLatitude();
-                        LatLng test = new LatLng(latitude,longitude);
 
-                        googleMap.addMarker(new MarkerOptions().position(test).title("BLABLBALBA | Educação").snippet("TESTANDO"));
+//                        double longitude = addresses.get(i).getLongitude();
+//                        double latitude = addresses.get(i).getLatitude();
+//                        LatLng test = new LatLng(latitude,longitude);
+
+//                        googleMap.addMarker(new MarkerOptions().position(test).title("BLABLBALBA | Educação").snippet("TESTANDO"));
                     }
 
                     googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {

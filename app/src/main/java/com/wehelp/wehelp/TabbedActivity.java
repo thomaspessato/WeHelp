@@ -98,6 +98,9 @@ public class TabbedActivity extends AppCompatActivity {
             window.setStatusBarColor(Color.rgb(197, 202, 233));
         }
 
+        onSupportNavigateUp();
+
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

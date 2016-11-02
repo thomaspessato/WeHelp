@@ -59,7 +59,8 @@
         <activity android:name=".MyEventsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.wehelp.wehelp.TabbedActivity" />
+                android:value="com.wehelp.wehelp.TabbedActivity"
+                android:persistent="true"/>
         </activity>
         <activity android:name=".ConfigurationActivity">
             <meta-data

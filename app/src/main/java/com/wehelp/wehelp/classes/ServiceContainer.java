@@ -23,24 +23,23 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 public class ServiceContainer {
 
     private RequestQueue requestQueue;
     private Context context;
+    private String baseUrl;
+    private SharedPreferences sharedPreferences;
+
+
 
     public static final String TAG = "WeHelpTag";
-    private static ServiceContainer instance;
 
-    private ServiceContainer(Context context) {
+    public ServiceContainer(Context context, SharedPreferences sharedPreferences) {
         this.context = context;
-    }
-
-    public static ServiceContainer getInstance(Context context)
-    {
-        if (ServiceContainer.instance == null) {
-            ServiceContainer.instance = new ServiceContainer(context);
-        }
-        return  ServiceContainer.instance;
+        this.baseUrl = "http://www.wehelp.tigrimigri.com/api/";
+        this.sharedPreferences = sharedPreferences;
     }
 
     public Context getContext() {
@@ -73,7 +72,8 @@ public class ServiceContainer {
     }
 
     public void PostRequest(String url, Map<String, String> params, final IServiceResponseCallback responseCallback, final IServiceErrorCallback errorCallback) {
-        JsonObjectRequest postRequest = new JsonObjectRequest(url, new JSONObject(params),
+        String resource = this.baseUrl + url;
+        JsonObjectRequest postRequest = new JsonObjectRequest(resource, new JSONObject(params),
                 new Response.Listener<JSONObject>()
                 {
                     @Override
@@ -103,7 +103,8 @@ public class ServiceContainer {
     }
 
     public void GetRequest(String url, final IServiceResponseCallback responseCallback, final IServiceErrorCallback errorCallback) {
-        JsonObjectRequest getRequest = new JsonObjectRequest(url, null,
+        String resource = this.baseUrl + url;
+        JsonObjectRequest getRequest = new JsonObjectRequest(resource, null,
                 new Response.Listener<JSONObject>()
                 {
                     @Override
@@ -141,12 +142,12 @@ public class ServiceContainer {
 
     public String GetAccessToken()
     {
-        SharedPreferences sharedPreferences = this.context.getSharedPreferences("com.wehelp.wehelp", Context.MODE_PRIVATE);
+        //SharedPreferences sharedPreferences = this.context.getSharedPreferences("com.wehelp.wehelp", Context.MODE_PRIVATE);
         return sharedPreferences.getString("WEHELP_ACCESS_TOKEN", "");
     }
 
     public void SaveAccessToken(String accessToken, String refreshToken) {
-        SharedPreferences sharedPreferences = this.context.getSharedPreferences("com.wehelp.wehelp", Context.MODE_PRIVATE);
+        //SharedPreferences sharedPreferences = this.context.getSharedPreferences("com.wehelp.wehelp", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("WEHELP_ACCESS_TOKEN", accessToken);
         editor.putString("WEHELP_REFRESH_TOKEN", refreshToken);

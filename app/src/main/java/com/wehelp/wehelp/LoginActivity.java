@@ -10,17 +10,26 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.wehelp.wehelp.classes.ServiceContainer;
+import com.wehelp.wehelp.classes.WeHelpApp;
+import com.wehelp.wehelp.controllers.UserController;
 import com.wehelp.wehelp.services.IExecuteCallback;
 import com.wehelp.wehelp.services.IServiceResponseCallback;
-import com.wehelp.wehelp.services.UsuarioService;
+import com.wehelp.wehelp.services.UserService;
 
 import org.json.JSONObject;
 
+import javax.inject.Inject;
+
 public class LoginActivity extends AppCompatActivity {
+
+    @Inject
+    public UserService userService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ((WeHelpApp) getApplication()).getNetComponent().inject(this);
 
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         getSupportActionBar().hide();
@@ -37,21 +46,24 @@ public class LoginActivity extends AppCompatActivity {
             loginBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    UsuarioService login = new UsuarioService(ServiceContainer.getInstance(getApplicationContext()));
                     String email = emailTxt.getText().toString();
                     String password = passwordTxt.getText().toString();
-                    login.login(email, password, new IServiceResponseCallback() {
-                        @Override
-                        public void execute(JSONObject response) {
-                            Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
-                            startActivity(intent);
-                        }
-                    }, new IExecuteCallback() {
-                        @Override
-                        public void execute() {
-                            Toast.makeText(getApplicationContext(), "Erro ao logar", Toast.LENGTH_LONG).show();
-                        }
-                    });
+                    UserController userController = new UserController(userService, getApplication());
+                    userController.login(email, password,
+                            new IServiceResponseCallback() {
+                                @Override
+                                public void execute(JSONObject response) {
+                                    Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
+                                    startActivity(intent);
+                                }
+                            },
+                            new IExecuteCallback() {
+                                @Override
+                                public void execute() {
+                                    Toast.makeText(getApplicationContext(), "Erro ao logar", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                    );
                 }
             });
         }

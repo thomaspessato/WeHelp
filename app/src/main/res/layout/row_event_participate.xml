@@ -4,101 +4,148 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <RelativeLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
-        android:padding="10dp">
+        android:background="@drawable/box_shadow"
+        android:weightSum="1"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentEnd="false"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_margin="10dp">
 
         <ImageView
-            android:layout_width="120dp"
-            android:layout_height="300dp"
+            android:layout_width="wrap_content"
+            android:layout_height="220dp"
             android:id="@+id/imageView2"
             android:src="@drawable/poor_people"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:layout_alignRight="@+id/linearLayout4"
+            android:layout_alignEnd="@+id/linearLayout4"
+            android:layout_alignLeft="@+id/linearLayout4"
+            android:layout_alignStart="@+id/linearLayout4" />
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp">
+            android:layout_alignBottom="@+id/imageView2"
+            android:layout_alignLeft="@+id/imageView2"
+            android:layout_alignStart="@+id/imageView2"
+            android:gravity="bottom"
+            android:layout_alignRight="@+id/imageView2"
+            android:layout_alignEnd="@+id/imageView2"
+            android:background="#c3000000">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Titulo do card de evento"
-                android:id="@+id/textView29" />
+                android:text="Juntar material escolar "
+                android:id="@+id/event_participate_title"
+                android:padding="10dp"
+                android:textColor="#fff" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Você vai contribuir com:"
-                android:id="@+id/textView28" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="5dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="20 cenouras"
-                android:id="@+id/textView27" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DESISTIR"
+                    android:id="@+id/button6"
+                    android:textColor="@color/colorAccent"
+                    android:layout_weight="1"
+                    android:layout_margin="2dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="10 cebolas"
-                android:id="@+id/textView30" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Horário"
-                android:id="@+id/textView31"
-                android:layout_marginTop="10dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="19:00"
-                android:id="@+id/textView32" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Local"
-                android:id="@+id/textView33"
-                android:layout_marginTop="10dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Avenida Assis Brasil, 3383"
-                android:id="@+id/textView34" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ver detalhes"
-                android:id="@+id/btn_seedetails" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="cancelar participação"
-                android:id="@+id/button6"
-                android:background="@color/colorAccent"
-                android:textColor="#fff"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VER DETALHES"
+                    android:id="@+id/btn_seedetails"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_weight="1"
+                    android:layout_margin="2dp" />
+            </LinearLayout>
 
         </LinearLayout>
-    </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout4"
+            android:layout_below="@+id/imageView2">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Você vai contribuir com:"
+                    android:id="@+id/textView28"
+                    android:textColor="#000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="20 cenouras"
+                    android:id="@+id/textView27" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="10 cebolas"
+                    android:id="@+id/textView30" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Data / Horário"
+                    android:id="@+id/textView31"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="20/12/2016 - 19:00"
+                    android:id="@+id/event_participate_time" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Local"
+                    android:id="@+id/textView33"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Avenida Assis Brasil, 3383"
+                    android:id="@+id/event_participate_address" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 </RelativeLayout>

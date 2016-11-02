@@ -159,7 +159,7 @@ public class FragmentTimeline extends Fragment {
                 "]";
 
 
-        System.out.println("BEFORE GET EVENTS LIST");
+
         eventoService.getEventsList(new IServiceResponseCallback() {
             @Override
             public void execute(JSONObject response) {
@@ -173,7 +173,6 @@ public class FragmentTimeline extends Fragment {
             }
         });
 
-        System.out.println("AFTER GET EVENTS LIST");
 
         listView = (ListView)rootView.findViewById(R.id.timeline_listview);
 

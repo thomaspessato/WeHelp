@@ -69,6 +69,8 @@ public class TabbedRegisterActivity extends AppCompatActivity implements Fragmen
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_tabbed_register, menu);
+
+
         return true;
     }
 

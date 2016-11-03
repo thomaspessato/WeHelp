@@ -272,13 +272,43 @@ public class TabbedActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         MenuInflater inflater = getMenuInflater();
         getMenuInflater().inflate(R.menu.menu_tabbed, menu);
+
 //
-//        SearchManager searchManager =
-//                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 //        SearchView searchView =
 //                (SearchView) menu.findItem(R.id.search).getActionView();
-//        searchView.setSearchableInfo(
-//                searchManager.getSearchableInfo(getComponentName()));
+//
+//        searchView.setQueryHint("Buscar evento");
+//        searchView.setIconified(false);
+//        searchView.clearFocus();
+//
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+////                JSONObject dataParams = new JSONObject();
+////                try {
+////                    dataParams.put("service","game");
+////                    dataParams.put("action","list");
+////                    dataParams.put("system",systemId);
+////                    dataParams.put("user_id",settings.getString("user_id",""));
+////                    dataParams.put("search",query);
+////                } catch (JSONException e) {
+////                    e.printStackTrace();
+////                }
+////                appController.search(dataParams,gameList,gameAdapter,new AppController.SearchCallback() {
+////                    @Override
+////                    public void execute(JSONObject response, ArrayAdapter adapter, ArrayList list) {
+////                        appController.initGameList(response,adapter,list);
+////                    }
+////                });
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                return false;
+//            }
+//        });
+
         return true;
     }
 

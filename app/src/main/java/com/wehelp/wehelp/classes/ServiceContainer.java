@@ -12,11 +12,14 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.wehelp.wehelp.services.IServiceArrayResponseCallback;
 import com.wehelp.wehelp.services.IServiceErrorCallback;
 import com.wehelp.wehelp.services.IServiceResponseCallback;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -128,6 +131,34 @@ public class ServiceContainer {
                 int mStatusCode = response.statusCode;
                 return super.parseNetworkResponse(response);
             }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + GetAccessToken());
+                return params;
+            }
+
+        };
+        this.addToRequestQueue(getRequest);
+    }
+
+    public void GetArrayRequest(String url, final IServiceArrayResponseCallback responseCallback, final IServiceErrorCallback errorCallback) {
+        String resource = this.baseUrl + url;
+        JsonArrayRequest getRequest = new JsonArrayRequest(resource, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.d("WeHelpWS", response.toString());
+                responseCallback.execute(response);
+            }
+        }, new Response.ErrorListener()
+        {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("WeHelpWs.Error", error.toString());
+                errorCallback.execute(error);
+            }
+        }) {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

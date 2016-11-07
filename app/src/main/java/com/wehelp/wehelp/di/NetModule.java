@@ -15,7 +15,10 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import com.wehelp.wehelp.adapters.GsonUTCDateAdapter;
+import com.wehelp.wehelp.classes.Event;
 import com.wehelp.wehelp.classes.ServiceContainer;
+import com.wehelp.wehelp.controllers.EventController;
+import com.wehelp.wehelp.services.EventService;
 import com.wehelp.wehelp.services.UserService;
 
 import java.io.IOException;
@@ -60,6 +63,22 @@ public class NetModule {
         UserService userService = new UserService(serviceContainer);
         return userService;
     }
+
+    @Provides
+    EventService provideEventService(ServiceContainer serviceContainer) {
+        EventService eventService = new EventService(serviceContainer);
+        return eventService;
+    }
+
+    @Provides
+    EventController provideEventController(EventService eventService, Gson gson) {
+        EventController eventController = new EventController(eventService, gson);
+        return eventController;
+    }
+
+
+
+
 
     private static final TypeAdapter<Boolean> booleanAsIntAdapter = new TypeAdapter<Boolean>() {
         @Override public void write(JsonWriter out, Boolean value) throws IOException {

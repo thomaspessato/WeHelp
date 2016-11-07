@@ -46,8 +46,8 @@ public class LoginActivity extends AppCompatActivity {
             loginBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String email = emailTxt.getText().toString();
-                    String password = passwordTxt.getText().toString();
+                    String email = "teste@teste.com";// emailTxt.getText().toString();
+                    String password = "12345"; //passwordTxt.getText().toString();
                     UserController userController = new UserController(userService, getApplication());
                     userController.login(email, password,
                             new IServiceResponseCallback() {

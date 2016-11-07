@@ -67,11 +67,11 @@ public class FragmentTimeline extends Fragment {
             Event event = new Event();
 
             //set image
-            event.setTitle("Novo evento numero "+i);
-            event.setAddressCity("Porto Alegre");
+//            event.setTitle("Novo evento numero "+i);
+//            event.setAddressCity("Porto Alegre");
             String date = "12-12-2016"; //how to pass date variable to method? (setEndDate)
-            event.setCategory("Categoria "+i);
-            event.setCreator("Creator "+ i);
+//            event.setCategory("Categoria "+i);
+//            event.setCreator("Creator "+ i);
 
             eventList.add(event);
 

@@ -134,7 +134,7 @@ public class FragmentMap extends Fragment {
                             ActivityCompat.requestPermissions(getActivity(),
                                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                                     MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-                            
+
                             Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                                     mGoogleApiClient);
                             return;

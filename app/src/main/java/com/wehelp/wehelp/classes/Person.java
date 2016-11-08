@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by Rael on 31/10/2016.
  */
-public class Pessoa {
+public class Person {
     private int id;
     private String nome;
     private String foto;

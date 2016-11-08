@@ -12,35 +12,37 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.wehelp.wehelp.services.IServiceArrayResponseCallback;
 import com.wehelp.wehelp.services.IServiceErrorCallback;
 import com.wehelp.wehelp.services.IServiceResponseCallback;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 public class ServiceContainer {
 
     private RequestQueue requestQueue;
     private Context context;
+    private String baseUrl;
+    private SharedPreferences sharedPreferences;
+
+
 
     public static final String TAG = "WeHelpTag";
-    private static ServiceContainer instance;
 
-    private ServiceContainer(Context context) {
+    public ServiceContainer(Context context, SharedPreferences sharedPreferences) {
         this.context = context;
-    }
-
-    public static ServiceContainer getInstance(Context context)
-    {
-        if (ServiceContainer.instance == null) {
-            ServiceContainer.instance = new ServiceContainer(context);
-        }
-        return  ServiceContainer.instance;
+        this.baseUrl = "http://www.wehelp.tigrimigri.com/api/";
+        this.sharedPreferences = sharedPreferences;
     }
 
     public Context getContext() {
@@ -73,7 +75,8 @@ public class ServiceContainer {
     }
 
     public void PostRequest(String url, Map<String, String> params, final IServiceResponseCallback responseCallback, final IServiceErrorCallback errorCallback) {
-        JsonObjectRequest postRequest = new JsonObjectRequest(url, new JSONObject(params),
+        String resource = this.baseUrl + url;
+        JsonObjectRequest postRequest = new JsonObjectRequest(resource, new JSONObject(params),
                 new Response.Listener<JSONObject>()
                 {
                     @Override
@@ -103,7 +106,8 @@ public class ServiceContainer {
     }
 
     public void GetRequest(String url, final IServiceResponseCallback responseCallback, final IServiceErrorCallback errorCallback) {
-        JsonObjectRequest getRequest = new JsonObjectRequest(url, null,
+        String resource = this.baseUrl + url;
+        JsonObjectRequest getRequest = new JsonObjectRequest(resource, null,
                 new Response.Listener<JSONObject>()
                 {
                     @Override
@@ -139,14 +143,42 @@ public class ServiceContainer {
         this.addToRequestQueue(getRequest);
     }
 
+    public void GetArrayRequest(String url, final IServiceArrayResponseCallback responseCallback, final IServiceErrorCallback errorCallback) {
+        String resource = this.baseUrl + url;
+        JsonArrayRequest getRequest = new JsonArrayRequest(resource, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.d("WeHelpWS", response.toString());
+                responseCallback.execute(response);
+            }
+        }, new Response.ErrorListener()
+        {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("WeHelpWs.Error", error.toString());
+                errorCallback.execute(error);
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + GetAccessToken());
+                return params;
+            }
+
+        };
+        this.addToRequestQueue(getRequest);
+    }
+
     public String GetAccessToken()
     {
-        SharedPreferences sharedPreferences = this.context.getSharedPreferences("com.wehelp.wehelp", Context.MODE_PRIVATE);
+        //SharedPreferences sharedPreferences = this.context.getSharedPreferences("com.wehelp.wehelp", Context.MODE_PRIVATE);
         return sharedPreferences.getString("WEHELP_ACCESS_TOKEN", "");
     }
 
     public void SaveAccessToken(String accessToken, String refreshToken) {
-        SharedPreferences sharedPreferences = this.context.getSharedPreferences("com.wehelp.wehelp", Context.MODE_PRIVATE);
+        //SharedPreferences sharedPreferences = this.context.getSharedPreferences("com.wehelp.wehelp", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("WEHELP_ACCESS_TOKEN", accessToken);
         editor.putString("WEHELP_REFRESH_TOKEN", refreshToken);

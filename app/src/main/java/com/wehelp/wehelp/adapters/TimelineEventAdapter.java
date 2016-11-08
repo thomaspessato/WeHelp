@@ -50,9 +50,9 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
         Button btnHelp = (Button)convertView.findViewById(R.id.btn_help);
 
 //        String address = timelineEvent.getAddressStreet()+timelineEvent.getAddressNumber()+" - "+timelineEvent.getEndDate().toString();
-        String category = timelineEvent.getCategory();
-        String title = timelineEvent.getTitle();
-        String creator = timelineEvent.getCreator();
+//        String category = timelineEvent.getCategory();
+//        String title = timelineEvent.getTitle();
+//        String creator = timelineEvent.getCreator();
 
         linkInfoEvent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,9 +70,9 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
             }
         });
 
-        eventTitle.setText(title);
-        eventCategory.setText(category);
-        eventCreator.setText(creator);
+//        eventTitle.setText(title);
+//        eventCategory.setText(category);
+//        eventCreator.setText(creator);
 //        eventDate.setText(address);
 //        eventCreator.setText(timelineEvent);
 

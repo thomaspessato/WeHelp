@@ -1,5 +1,6 @@
 package com.wehelp.wehelp.services;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**

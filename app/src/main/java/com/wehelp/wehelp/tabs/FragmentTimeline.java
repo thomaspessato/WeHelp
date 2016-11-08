@@ -205,12 +205,10 @@ public class FragmentTimeline extends Fragment {
                 event.setCreator("Creator "+ i);
 
                 eventList.add(event);
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
 
         eventArrayAdapter.notifyDataSetChanged();

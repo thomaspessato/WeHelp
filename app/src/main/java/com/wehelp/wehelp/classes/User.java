@@ -5,14 +5,14 @@ import java.util.Date;
 /**
  * Created by Rael on 29/10/2016.
  */
-public class Usuario {
+public class User {
     private int id;
     private String email;
     private int pessoa_id;
     private int ong_id;
     private Date created_at;
     private Date updated_at;
-    private Pessoa pessoa;
+    private Person pessoa;
 
 
     public int getId() {
@@ -64,11 +64,11 @@ public class Usuario {
     }
 
 
-    public Pessoa getPessoa() {
+    public Person getPessoa() {
         return pessoa;
     }
 
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
+    public void setPessoa(Person person) {
+        this.pessoa = person;
     }
 }

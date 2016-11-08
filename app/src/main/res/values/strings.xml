@@ -1,4 +1,14 @@
 <resources>
+
+    <string-array name="drawer_titles">
+        <item>Perfil</item>
+        <item>Meus eventos</item>
+        <item>Eventos que participo</item>
+        <item>Configurações</item>
+        <item>Sair</item>
+    </string-array>
+
+
     <string name="app_name">WeHelp</string>
     <string name="title_activity_tabbed">WeHelp</string>
     <string name="action_settings">Settings</string>
@@ -7,4 +17,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="navigation_drawer_close">drawer close</string>
+    <string name="navigation_drawer_open">drawer opened</string>
 </resources>

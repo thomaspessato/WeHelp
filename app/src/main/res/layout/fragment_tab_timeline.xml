@@ -3,11 +3,18 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f1f1f1">
-
-    <ListView
+    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/timeline_listview"
-        android:layout_gravity="center_horizontal"
-        android:divider="#00ffffff" />
+        android:layout_height="wrap_content">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/timeline_listview"
+            android:layout_gravity="center_horizontal"
+            android:divider="#00ffffff" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
 </LinearLayout>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wehelp.wehelp">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <service
+        android:name=".FetchAddressIntentService"
+        android:exported="false" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/wehelp_icon"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".FirstScreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".LoginActivity" />
+        <activity
+            android:name=".TabbedActivity"
+            android:label="@string/title_activity_tabbed"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyDszWR4Ix42DWZvY2h8p84Xn-DpPq57M8s" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".TabbedRegisterActivity"
+            android:label="@string/title_activity_tabbed_register"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ForgotPassActivity" />
+        <activity android:name=".EventDetailActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.wehelp.wehelp.TabbedActivity" />
+        </activity>
+        <activity android:name=".CreateEventActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.wehelp.wehelp.TabbedActivity" />
+        </activity>
+        <activity android:name=".ParticipateEventActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.wehelp.wehelp.TabbedActivity" />
+        </activity>
+        <activity android:name=".MyEventsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.wehelp.wehelp.TabbedActivity" />
+        </activity>
+        <activity android:name=".ParticipatingEventsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.wehelp.wehelp.TabbedActivity" />
+        </activity>
+        <activity android:name=".ConfigurationActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.wehelp.wehelp.TabbedActivity" />
+        </activity>
+        <activity android:name=".ProfileActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.wehelp.wehelp.TabbedActivity" />
+        </activity>
+        <activity android:name=".HelpActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.wehelp.wehelp.TabbedActivity" />
+        </activity>
+        <activity android:name=".HelpEventActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.wehelp.wehelp.TabbedActivity" />
+        </activity>
+    </application>
+
+</manifest>

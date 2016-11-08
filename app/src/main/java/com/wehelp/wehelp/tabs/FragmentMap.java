@@ -1,5 +1,7 @@
 package com.wehelp.wehelp.tabs;
 
+import android.app.Application;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -11,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.TextViewCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,11 +30,17 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.text.Text;
 import android.Manifest;
+
+import com.wehelp.wehelp.EventDetailActivity;
 import com.wehelp.wehelp.R;
+import com.wehelp.wehelp.classes.Event;
+import com.wehelp.wehelp.classes.WeHelpApp;
+import com.wehelp.wehelp.controllers.EventController;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,10 +48,17 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.inject.Inject;
+
 /**
  * Created by temp on 9/15/16.
  */
 public class FragmentMap extends Fragment {
+
+    @Inject
+    public EventController eventController;
+
+    public ArrayList<Event> listEvents;
 
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
     @Nullable
@@ -90,11 +106,13 @@ public class FragmentMap extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        ((WeHelpApp)getActivity().getApplication()).getNetComponent().inject(this);
+
+        this.eventController.getEvents(-30.034647, -51.217658, 50);
+
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_tab_map, container, false);
 
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
-//        final TextView mLatitudeText = (TextView)rootView.findViewById((R.id.mLocationLat));
-//        final TextView mLongitudeText= (TextView)rootView.findViewById((R.id.mLocationLong));
         assert mMapView != null;
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
@@ -116,8 +134,7 @@ public class FragmentMap extends Fragment {
                             ActivityCompat.requestPermissions(getActivity(),
                                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                                     MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-
-//                            mLatitudeText.setText("INSIDE REQUEST FOR LOCATION");
+                            
                             Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                                     mGoogleApiClient);
                             return;
@@ -149,24 +166,45 @@ public class FragmentMap extends Fragment {
                 // For showing a move to my location button
                 // For dropping a marker at a point on the Map
                 LatLng marker = new LatLng(-30.012054, -51.178840);
-
                 Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
-                List<Address> addresses = new ArrayList<Address>();
-
                 try {
-                    addresses.add(geocoder.getFromLocationName("Rua Marechal José Inácio, Porto Alegre", 1).get(0));
-                    addresses.add(geocoder.getFromLocationName("Rua Padre Hildebrando, Porto Alegre", 1).get(0));
-                    addresses.add(geocoder.getFromLocationName("Avenida Assis Brasil, Porto Alegre", 1).get(0));
-                    addresses.add(geocoder.getFromLocationName("Avenida Sertório, Porto Alegre", 1).get(0));
-                    addresses.add(geocoder.getFromLocationName("Avenida Plínio Brasil Milano, Porto Alegre", 1).get(0));
-                    addresses.add(geocoder.getFromLocationName("Rua Novo Hamburgo, Porto Alegre", 1).get(0));
+//                List<Address> addresses = new ArrayList<Address>();
+                    while (eventController.getListEvents() == null){
+                        Log.d("WeHelpWS", "Ainda carregando eventos ...");
+                    }
+                    List<Address> addresses = new ArrayList<Address>();
+                    if (eventController.getListEvents().size() == 0) {
+                        addresses.add(geocoder.getFromLocationName("Rua Marechal José Inácio, Porto Alegre", 1).get(0));
+                        addresses.add(geocoder.getFromLocationName("Rua Padre Hildebrando, Porto Alegre", 1).get(0));
+                        addresses.add(geocoder.getFromLocationName("Avenida Assis Brasil, Porto Alegre", 1).get(0));
+                        addresses.add(geocoder.getFromLocationName("Avenida Sertório, Porto Alegre", 1).get(0));
+                        addresses.add(geocoder.getFromLocationName("Avenida Plínio Brasil Milano, Porto Alegre", 1).get(0));
+                        addresses.add(geocoder.getFromLocationName("Rua Novo Hamburgo, Porto Alegre", 1).get(0));
+                    } else {
+                        ArrayList<Event> list = eventController.getListEvents();
+                        for (int i = 0; i < list.size(); i++)
+                        {
+                            addresses.add(geocoder.getFromLocation(list.get(i).getLat(), list.get(i).getLng(), 1).get(0));
+                        }
+                    }
+
+
 
                     for (int i = 0; i< addresses.size(); i++) {
                         double longitude = addresses.get(i).getLongitude();
                         double latitude = addresses.get(i).getLatitude();
                         LatLng test = new LatLng(latitude,longitude);
+
                         googleMap.addMarker(new MarkerOptions().position(test).title("BLABLBALBA | Educação").snippet("TESTANDO"));
                     }
+
+                    googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                        @Override
+                        public void onInfoWindowClick(Marker marker) {
+                            Intent intentDetail = new Intent(getActivity(), EventDetailActivity.class);
+                            startActivity(intentDetail);
+                        }
+                    });
 
                 } catch (IOException e) {
                     e.printStackTrace();

@@ -1,136 +1,141 @@
 package com.wehelp.wehelp.classes;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.util.Date;
 
-/**
- * Created by temp on 9/15/16.
- */
 public class Event {
 
-
-    private String addressCity;
-    private String addressStreet;
-    private String addressNumber;
-    private String addressComp;
-    private String email;
-    private String description;
-    private String title;
-    private Date createDate;
-    private Date startDate;
-    private Date endDate;
-    private Time startTime;
-    private Time endTime;
+    private int id;
+    private int categoria_id;
+    private String pais;
+    private String uf;
+    private String cidade;
+    private String rua;
+    private String numero;
+    private String complemento;
+    private String bairro;
+    private Float lat;
+    private Float lng;
+    private String descricao;
+    private Date data_inicio;
+    private Date data_fim;
     private int ranking;
-    private Character status;
-    private Character certification;
-    private String nationality;
+    private String status;
+    private boolean certificado;
+    private Date created_at;
+    private Date updated_at;
+    private User usuario;
 
-    public Event() {
+
+    public int getId() {
+        return id;
     }
 
-    public String getTitle() {
-        return title;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public int getCategoriaId() {
+        return categoria_id;
     }
 
-    public String getNationality() {
-        return nationality;
+    public void setCategoriaId(int categoria_id) {
+        this.categoria_id = categoria_id;
     }
 
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
+    public String getPais() {
+        return pais;
     }
 
-    public String getAddressCity() {
-        return addressCity;
+    public void setPais(String pais) {
+        this.pais = pais;
     }
 
-    public void setAddressCity(String addressCity) {
-        this.addressCity = addressCity;
+    public String getUf() {
+        return uf;
     }
 
-    public String getAddressStreet() {
-        return addressStreet;
+    public void setUf(String uf) {
+        this.uf = uf;
     }
 
-    public void setAddressStreet(String addressStreet) {
-        this.addressStreet = addressStreet;
+    public String getCidade() {
+        return cidade;
     }
 
-    public String getAddressNumber() {
-        return addressNumber;
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
     }
 
-    public void setAddressNumber(String addressNumber) {
-        this.addressNumber = addressNumber;
+    public String getRua() {
+        return rua;
     }
 
-    public String getAddressComp() {
-        return addressComp;
+    public void setRua(String rua) {
+        this.rua = rua;
     }
 
-    public void setAddressComp(String addressComp) {
-        this.addressComp = addressComp;
+    public String getNumero() {
+        return numero;
     }
 
-    public String getEmail() {
-        return email;
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getComplemento() {
+        return complemento;
     }
 
-    public String getDescription() {
-        return description;
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public String getBairro() {
+        return bairro;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public Float getLat() {
+        return lat;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public void setLat(Float lat) {
+        this.lat = lat;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public Float getLng() {
+        return lng;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public void setLng(Float lng) {
+        this.lng = lng;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public Time getStartTime() {
-        return startTime;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
-    public void setStartTime(Time startTime) {
-        this.startTime = startTime;
+    public Date getDataInicio() {
+        return data_inicio;
     }
 
-    public Time getEndTime() {
-        return endTime;
+    public void setDataInicio(Date data_inicio) {
+        this.data_inicio = data_inicio;
     }
 
-    public void setEndTime(Time endTime) {
-        this.endTime = endTime;
+    public Date getDataFim() {
+        return data_fim;
+    }
+
+    public void setDataFim(Date data_fim) {
+        this.data_fim = data_fim;
     }
 
     public int getRanking() {
@@ -141,19 +146,43 @@ public class Event {
         this.ranking = ranking;
     }
 
-    public Character getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Character status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public Character getCertification() {
-        return certification;
+    public boolean isCertificado() {
+        return certificado;
     }
 
-    public void setCertification(Character certification) {
-        this.certification = certification;
+    public void setCertificado(boolean certificado) {
+        this.certificado = certificado;
+    }
+
+    public Date getCreatedAt() {
+        return created_at;
+    }
+
+    public void setCreatedAt(Date created_at) {
+        this.created_at = created_at;
+    }
+
+    public Date getUpdatedAt() {
+        return updated_at;
+    }
+
+    public void setUpdatedAt(Date updated_at) {
+        this.updated_at = updated_at;
+    }
+
+    public User getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(User usuario) {
+        this.usuario = usuario;
     }
 }

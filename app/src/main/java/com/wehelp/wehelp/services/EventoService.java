@@ -18,7 +18,7 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import com.wehelp.wehelp.adapters.GsonUTCDateAdapter;
 import com.wehelp.wehelp.classes.ServiceContainer;
-import com.wehelp.wehelp.classes.Usuario;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;

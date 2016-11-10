@@ -1,6 +1,5 @@
 package com.wehelp.wehelp.tabs;
 
-import android.app.Application;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -12,13 +11,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.TextViewCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -27,21 +23,16 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.vision.barcode.Barcode;
-import com.google.android.gms.vision.text.Text;
 import android.Manifest;
-
 import com.wehelp.wehelp.EventDetailActivity;
 import com.wehelp.wehelp.R;
 import com.wehelp.wehelp.classes.Event;
 import com.wehelp.wehelp.classes.WeHelpApp;
 import com.wehelp.wehelp.controllers.EventController;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,9 +41,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.inject.Inject;
 
-/**
- * Created by temp on 9/15/16.
- */
+
 public class FragmentMap extends Fragment {
 
     @Inject

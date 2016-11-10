@@ -2,27 +2,34 @@ package com.wehelp.wehelp.tabs.tabs_register;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.games.GamesMetadata;
 import com.wehelp.wehelp.R;
+import com.wehelp.wehelp.classes.Person;
+import com.wehelp.wehelp.classes.User;
+import com.wehelp.wehelp.classes.WeHelpApp;
+import com.wehelp.wehelp.controllers.UserController;
 
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link FragmentPersonRegister.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link FragmentPersonRegister#newInstance} factory method to
- * create an instance of this fragment.
- */
+import javax.inject.Inject;
+
 public class FragmentPersonRegister extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,19 +42,15 @@ public class FragmentPersonRegister extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+
+    @Inject
+    UserController userController;
+
     public FragmentPersonRegister() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentPersonRegister.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static FragmentPersonRegister newInstance(String param1, String param2) {
         FragmentPersonRegister fragment = new FragmentPersonRegister();
         Bundle args = new Bundle();
@@ -66,14 +69,32 @@ public class FragmentPersonRegister extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ((WeHelpApp)getActivity().getApplication()).getNetComponent().inject(this);
+        User user = new User();
+        Person person = new Person();
+        user.setEmail("silvadasilva@teste.com");
+        user.setPassword("12345");
+        SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            person.setDataNascimento(sdf1.parse("02/02/1980"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        person.setFoto("");
+        person.setModerador(true);
+        person.setNome("lllllppppp");
+        person.setRanking(3);
+        person.setSexo("m");
+        person.setTelefone("5145784578");
+        user.setPessoa(person);
+        new CreatePersonTask().execute(user);
+
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_fragment_person_register, container, false);
         final EditText date = (EditText)rootView.findViewById(R.id.whichdate);
 
@@ -170,18 +191,39 @@ public class FragmentPersonRegister extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private class CreatePersonTask extends AsyncTask<User, Void, User> {
+
+        @Override
+        protected User doInBackground(User... user) {
+            try {
+                userController.createPessoa(user[0]);
+                while (userController.userTemp == null && !userController.errorService){}
+                if (userController.errorService) {
+                    return null;
+                }
+                User userReturned = userController.userTemp;
+                userController.userTemp = null;
+                return userReturned;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        protected void onPostExecute(User user) {
+            if (user == null) {
+                Toast.makeText(getActivity().getApplicationContext(), userController.errorMessages.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity().getApplicationContext(), "Erro ao registrar pessoa", Toast.LENGTH_LONG).show();
+                Log.d("WeHelpWS", userController.errorMessages.toString());
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), "Retorno: " + user.getPessoa().getNome(), Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

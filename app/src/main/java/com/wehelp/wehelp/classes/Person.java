@@ -89,4 +89,13 @@ public class Person {
     public void setUpdatedAt(Date updated_at) {
         this.updated_at = updated_at;
     }
+
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
 }

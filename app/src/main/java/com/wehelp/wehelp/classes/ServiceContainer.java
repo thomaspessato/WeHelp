@@ -101,6 +101,13 @@ public class ServiceContainer {
                 return super.parseNetworkResponse(response);
             }
 
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + GetAccessToken());
+                return params;
+            }
+
         };
         this.addToRequestQueue(postRequest);
     }
@@ -159,6 +166,12 @@ public class ServiceContainer {
                 errorCallback.execute(error);
             }
         }) {
+
+            @Override
+            protected Response<JSONArray> parseNetworkResponse(NetworkResponse response) {
+                int mStatusCode = response.statusCode;
+                return super.parseNetworkResponse(response);
+            }
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

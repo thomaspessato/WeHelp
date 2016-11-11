@@ -13,6 +13,7 @@ public class User {
     private Date created_at;
     private Date updated_at;
     private Person pessoa;
+    private String password;
 
 
     public int getId() {
@@ -70,5 +71,14 @@ public class User {
 
     public void setPessoa(Person person) {
         this.pessoa = person;
+    }
+
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

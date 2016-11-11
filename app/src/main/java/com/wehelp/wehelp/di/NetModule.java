@@ -18,6 +18,7 @@ import com.wehelp.wehelp.adapters.GsonUTCDateAdapter;
 import com.wehelp.wehelp.classes.Event;
 import com.wehelp.wehelp.classes.ServiceContainer;
 import com.wehelp.wehelp.controllers.EventController;
+import com.wehelp.wehelp.controllers.UserController;
 import com.wehelp.wehelp.services.EventService;
 import com.wehelp.wehelp.services.UserService;
 
@@ -68,6 +69,13 @@ public class NetModule {
     EventService provideEventService(ServiceContainer serviceContainer) {
         EventService eventService = new EventService(serviceContainer);
         return eventService;
+    }
+
+
+    @Provides
+    UserController provideUserController(UserService userService, Gson gson) {
+        UserController userController = new UserController(userService, gson);
+        return userController;
     }
 
     @Provides

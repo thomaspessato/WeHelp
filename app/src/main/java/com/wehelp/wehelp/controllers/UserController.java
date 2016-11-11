@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
@@ -13,8 +14,10 @@ import com.google.gson.stream.JsonWriter;
 import com.wehelp.wehelp.adapters.GsonUTCDateAdapter;
 import com.wehelp.wehelp.classes.ServiceContainer;
 import com.wehelp.wehelp.classes.User;
+import com.wehelp.wehelp.classes.Util;
 import com.wehelp.wehelp.classes.WeHelpApp;
 import com.wehelp.wehelp.services.IExecuteCallback;
+import com.wehelp.wehelp.services.IServiceErrorCallback;
 import com.wehelp.wehelp.services.IServiceResponseCallback;
 import com.wehelp.wehelp.services.UserService;
 
@@ -27,7 +30,6 @@ import javax.inject.Inject;
 
 public class UserController {
 
-    @Inject
     public Gson gson;
 
     @Inject
@@ -35,11 +37,13 @@ public class UserController {
 
     public WeHelpApp weHelpApp;
 
+    public User userTemp = null;
+    public boolean errorService = false;
+    public JSONObject errorMessages = null;
 
-    public UserController(UserService userService, Application application) {
+    public UserController(UserService userService, Gson gson) {
         this.userService = userService;
-        this.weHelpApp = (WeHelpApp) application;
-        this.weHelpApp.getNetComponent().inject(this);
+        this.gson = gson;
     }
 
     public void login(String email, String password, final IServiceResponseCallback serviceResponseCallback, final IExecuteCallback executeCallback) {
@@ -75,6 +79,31 @@ public class UserController {
         });
     }
 
+    public void createPessoa(User user) throws Exception {
+
+        this.userTemp = null;
+        this.errorService = false;
+        this.errorMessages = null;
+
+        if (user.getPessoa() == null) {
+            throw new Exception("Objeto pessoa é NULL");
+        }
+
+        this.userService.createPessoa(user, new IServiceResponseCallback() {
+            @Override
+            public void execute(JSONObject response) {
+                Log.d("WeHelpWs", response.toString());
+                userTemp = JsonToUser(response);
+            }
+        }, new IServiceErrorCallback() {
+            @Override
+            public void execute(VolleyError error) {
+                Log.d("WeHelpWS", "Error: " + error.getMessage());
+                errorService = true;
+                errorMessages = Util.ServiceErrorToJson(error);
+            }
+        });
+    }
 
     public User JsonToUser(JSONObject jsonObject) {
         User user = gson.fromJson(jsonObject.toString(), User.class);

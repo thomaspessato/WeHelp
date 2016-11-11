@@ -23,7 +23,7 @@ import javax.inject.Inject;
 public class LoginActivity extends AppCompatActivity {
 
     @Inject
-    public UserService userService;
+    public UserController userController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     String email = "teste@teste.com";// emailTxt.getText().toString();
                     String password = "12345"; //passwordTxt.getText().toString();
-                    UserController userController = new UserController(userService, getApplication());
                     userController.login(email, password,
                             new IServiceResponseCallback() {
                                 @Override

@@ -80,7 +80,7 @@ public class UserService {
         );
     }
 
-    public void createPessoa(User user, final IServiceResponseCallback serviceResponse, final IServiceErrorCallback serviceErrorCallback)  {
+    public void createPerson(User user, final IServiceResponseCallback serviceResponse, final IServiceErrorCallback serviceErrorCallback)  {
 
         Map<String, String>  params = new HashMap<>();
         params.put("nome", user.getPessoa().getNome());
@@ -94,6 +94,47 @@ public class UserService {
         params.put("password", user.getPassword());
 
         String url = "pessoas";
+        this.serviceContainer.PostRequest(url, params,
+                new IServiceResponseCallback() {
+                    @Override
+                    public void execute(JSONObject response) {
+                        serviceResponse.execute(response);
+                    }
+                },
+                new IServiceErrorCallback() {
+                    @Override
+                    public void execute(VolleyError error) {
+                        serviceErrorCallback.execute(error);
+                    }
+                }
+        );
+    }
+
+    public void createOng(User user, final IServiceResponseCallback serviceResponse, final IServiceErrorCallback serviceErrorCallback)  {
+
+        Map<String, String>  params = new HashMap<>();
+        params.put("nome", user.getOng().getNome());
+        params.put("cnpj", user.getOng().getCnpj());
+        params.put("foto", user.getOng().getFoto());
+        params.put("telefone", user.getOng().getTelefone());
+        params.put("nacionalidade", user.getOng().getNacionalidade());
+        params.put("uf", user.getOng().getUf());
+        params.put("cidade", user.getOng().getCidade());
+        params.put("rua", user.getOng().getRua());
+        params.put("numero", toString().valueOf(user.getOng().getNumero()));
+        params.put("complemento", user.getOng().getComplemento());
+        params.put("cep", user.getOng().getCep());
+        params.put("bairro", user.getOng().getBairro());
+        params.put("ranking", String.valueOf(user.getOng().getRanking()));
+        params.put("responsavel_nome", user.getOng().getResponsavelNome());
+        params.put("responsavel_cpf", user.getOng().getResponsavelCpf());
+        params.put("ativo", user.getOng().isAtivo() ? "1" : "0");
+        params.put("lat", String.valueOf(user.getOng().getLat()));
+        params.put("lng", String.valueOf(user.getOng().getLng()));
+        params.put("email", user.getEmail());
+        params.put("password", user.getPassword());
+
+        String url = "ongs";
         this.serviceContainer.PostRequest(url, params,
                 new IServiceResponseCallback() {
                     @Override

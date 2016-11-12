@@ -1,18 +1,9 @@
 package com.wehelp.wehelp.controllers;
 
-import android.app.Application;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonToken;
-import com.google.gson.stream.JsonWriter;
-import com.wehelp.wehelp.adapters.GsonUTCDateAdapter;
-import com.wehelp.wehelp.classes.ServiceContainer;
 import com.wehelp.wehelp.classes.User;
 import com.wehelp.wehelp.classes.Util;
 import com.wehelp.wehelp.classes.WeHelpApp;
@@ -22,9 +13,6 @@ import com.wehelp.wehelp.services.IServiceResponseCallback;
 import com.wehelp.wehelp.services.UserService;
 
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -79,7 +67,7 @@ public class UserController {
         });
     }
 
-    public void createPessoa(User user) throws Exception {
+    public void createPerson(User user) throws Exception {
 
         this.userTemp = null;
         this.errorService = false;
@@ -89,7 +77,33 @@ public class UserController {
             throw new Exception("Objeto pessoa é NULL");
         }
 
-        this.userService.createPessoa(user, new IServiceResponseCallback() {
+        this.userService.createPerson(user, new IServiceResponseCallback() {
+            @Override
+            public void execute(JSONObject response) {
+                Log.d("WeHelpWs", response.toString());
+                userTemp = JsonToUser(response);
+            }
+        }, new IServiceErrorCallback() {
+            @Override
+            public void execute(VolleyError error) {
+                Log.d("WeHelpWS", "Error: " + error.getMessage());
+                errorService = true;
+                errorMessages = Util.ServiceErrorToJson(error);
+            }
+        });
+    }
+
+    public void createOng(User user) throws Exception {
+
+        this.userTemp = null;
+        this.errorService = false;
+        this.errorMessages = null;
+
+        if (user.getOng() == null) {
+            throw new Exception("Objeto ONG é NULL");
+        }
+
+        this.userService.createOng(user, new IServiceResponseCallback() {
             @Override
             public void execute(JSONObject response) {
                 Log.d("WeHelpWs", response.toString());

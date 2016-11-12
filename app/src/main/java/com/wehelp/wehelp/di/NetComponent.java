@@ -4,6 +4,7 @@ import com.wehelp.wehelp.LoginActivity;
 import com.wehelp.wehelp.MainActivity;
 import com.wehelp.wehelp.controllers.UserController;
 import com.wehelp.wehelp.tabs.FragmentMap;
+import com.wehelp.wehelp.tabs.tabs_register.FragmentOngRegister;
 import com.wehelp.wehelp.tabs.tabs_register.FragmentPersonRegister;
 
 import javax.inject.Singleton;
@@ -18,5 +19,6 @@ public interface NetComponent {
     void inject(UserController controller);
     void inject(FragmentMap fragment);
     void inject(FragmentPersonRegister fragment);
+    void inject(FragmentOngRegister fragment);
     // void inject(MyService service);
 }

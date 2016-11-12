@@ -14,19 +14,15 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.games.GamesMetadata;
 import com.wehelp.wehelp.R;
 import com.wehelp.wehelp.classes.Person;
 import com.wehelp.wehelp.classes.User;
 import com.wehelp.wehelp.classes.WeHelpApp;
 import com.wehelp.wehelp.controllers.UserController;
 
-import org.json.JSONObject;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -93,7 +89,7 @@ public class FragmentPersonRegister extends Fragment {
         person.setSexo("m");
         person.setTelefone("5145784578");
         user.setPessoa(person);
-        new CreatePersonTask().execute(user);
+        //new CreatePersonTask().execute(user);
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_fragment_person_register, container, false);
         final EditText date = (EditText)rootView.findViewById(R.id.whichdate);
@@ -202,7 +198,7 @@ public class FragmentPersonRegister extends Fragment {
         @Override
         protected User doInBackground(User... user) {
             try {
-                userController.createPessoa(user[0]);
+                userController.createPerson(user[0]);
                 while (userController.userTemp == null && !userController.errorService){}
                 if (userController.errorService) {
                     return null;

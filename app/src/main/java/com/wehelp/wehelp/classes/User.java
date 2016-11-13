@@ -13,6 +13,8 @@ public class User {
     private Date created_at;
     private Date updated_at;
     private Person pessoa;
+    private Ong ong;
+    private String password;
 
 
     public int getId() {
@@ -63,12 +65,27 @@ public class User {
         this.updated_at = updatedAt;
     }
 
-
     public Person getPessoa() {
         return pessoa;
     }
 
     public void setPessoa(Person person) {
         this.pessoa = person;
+    }
+
+    public Ong getOng() {
+        return ong;
+    }
+
+    public void setOng(Ong ong) {
+        this.ong = ong;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

@@ -13,8 +13,8 @@ public class Event {
     private String numero;
     private String complemento;
     private String bairro;
-    private Float lat;
-    private Float lng;
+    private Double lat;
+    private Double lng;
     private String descricao;
     private Date data_inicio;
     private Date data_fim;
@@ -98,19 +98,19 @@ public class Event {
         this.bairro = bairro;
     }
 
-    public Float getLat() {
+    public Double getLat() {
         return lat;
     }
 
-    public void setLat(Float lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
 
-    public Float getLng() {
+    public Double getLng() {
         return lng;
     }
 
-    public void setLng(Float lng) {
+    public void setLng(Double lng) {
         this.lng = lng;
     }
 

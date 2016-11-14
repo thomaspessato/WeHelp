@@ -1,11 +1,13 @@
 package com.wehelp.wehelp.classes;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Event {
 
     private int id;
     private int categoria_id;
+    private int usuario_id;
     private String pais;
     private String uf;
     private String cidade;
@@ -24,6 +26,9 @@ public class Event {
     private Date created_at;
     private Date updated_at;
     private User usuario;
+    private Category categoria;
+    private ArrayList<EventRequirement> requisitos;
+    private String cep;
 
 
     public int getId() {
@@ -32,6 +37,14 @@ public class Event {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getUsuarioId() {
+        return usuario_id;
+    }
+
+    public void setUsuarioId(int usuario_id) {
+        this.usuario_id = usuario_id;
     }
 
     public int getCategoriaId() {
@@ -184,5 +197,32 @@ public class Event {
 
     public void setUsuario(User usuario) {
         this.usuario = usuario;
+    }
+
+
+    public Category getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Category categoria) {
+        this.categoria = categoria;
+    }
+
+
+    public ArrayList<EventRequirement> getRequisitos() {
+        return requisitos;
+    }
+
+    public void setRequisitos(ArrayList<EventRequirement> requisitos) {
+        this.requisitos = requisitos;
+    }
+
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
     }
 }

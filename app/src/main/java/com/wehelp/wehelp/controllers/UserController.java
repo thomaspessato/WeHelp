@@ -1,5 +1,6 @@
 package com.wehelp.wehelp.controllers;
 
+import android.app.Application;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
@@ -19,19 +20,17 @@ import javax.inject.Inject;
 public class UserController {
 
     public Gson gson;
-
-    @Inject
     public UserService userService;
-
     public WeHelpApp weHelpApp;
 
     public User userTemp = null;
     public boolean errorService = false;
     public JSONObject errorMessages = null;
 
-    public UserController(UserService userService, Gson gson) {
+    public UserController(UserService userService, Gson gson, Application application) {
         this.userService = userService;
         this.gson = gson;
+        this.weHelpApp = (WeHelpApp)application;
     }
 
     public void login(String email, String password, final IServiceResponseCallback serviceResponseCallback, final IExecuteCallback executeCallback) {

@@ -30,10 +30,17 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import android.Manifest;
 import com.wehelp.wehelp.EventDetailActivity;
 import com.wehelp.wehelp.R;
+import com.wehelp.wehelp.classes.Category;
 import com.wehelp.wehelp.classes.Event;
+import com.wehelp.wehelp.classes.EventRequirement;
 import com.wehelp.wehelp.classes.WeHelpApp;
 import com.wehelp.wehelp.controllers.EventController;
+
+import org.json.JSONException;
+
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -97,7 +104,46 @@ public class FragmentMap extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ((WeHelpApp)getActivity().getApplication()).getNetComponent().inject(this);
 
-        this.eventController.getEvents(-30.034647, -51.217658, 50);
+        // Exemplo cadastro de eventos
+        /*
+        Event event = new Event();
+        event.setUf("RS");
+        event.setRua("Longe");
+        event.setComplemento("");
+        event.setBairro("Centro");
+        event.setCategoriaId(1);
+        event.setCertificado(true);
+        event.setCidade("Porto Alegre");
+        event.setCep("91774845");
+        SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        try {
+            event.setDataFim(sdf1.parse("02/02/1980 14:30:00"));
+            event.setDataInicio(sdf1.parse("02/02/1980 15:30:00"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        event.setDescricao("teste de cadastro");
+        event.setLat(-30.034647);
+        event.setLng(-51.217658);
+        event.setNumero("100");
+        event.setPais("Brasil");
+        event.setRanking(1);
+        event.setStatus("A");
+        event.setUsuarioId(11);
+        ArrayList<EventRequirement> listReq = new ArrayList<>();
+        EventRequirement req = new EventRequirement();
+        req.setDescricao("Violão");
+        listReq.add(req);
+        event.setRequisitos(listReq);
+        try {
+            eventController.createEvent(event);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        */
+
+
+        //this.eventController.getEvents(-30.034647, -51.217658, 50);
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_tab_map, container, false);
 

@@ -33,6 +33,7 @@ import com.wehelp.wehelp.R;
 import com.wehelp.wehelp.classes.Category;
 import com.wehelp.wehelp.classes.Event;
 import com.wehelp.wehelp.classes.EventRequirement;
+import com.wehelp.wehelp.classes.User;
 import com.wehelp.wehelp.classes.WeHelpApp;
 import com.wehelp.wehelp.controllers.EventController;
 
@@ -105,7 +106,7 @@ public class FragmentMap extends Fragment {
         ((WeHelpApp)getActivity().getApplication()).getNetComponent().inject(this);
 
         // Exemplo cadastro de eventos
-
+        /*
         Event event = new Event();
         event.setNome("Teste de nome");
         event.setUf("RS");
@@ -142,9 +143,22 @@ public class FragmentMap extends Fragment {
             e.printStackTrace();
         }
 
+        */
 
+        // Exemplo para usuário participar de evento
+        /*
+        User user = new User();
+        user.setId(11);
+        Event event = new Event();
+        event.setId(11);
+        try {
+            this.eventController.addUser(event, user);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        */
 
-        //this.eventController.getEvents(-30.034647, -51.217658, 50);
+        this.eventController.getEvents(-30.034647, -51.217658, 50);
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_tab_map, container, false);
 

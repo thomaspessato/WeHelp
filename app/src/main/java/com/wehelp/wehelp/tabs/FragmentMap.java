@@ -145,18 +145,19 @@ public class FragmentMap extends Fragment {
 
         */
 
-        // Exemplo para usuário participar de evento
-        /*
+        // Exemplo para usuário participar/abandonar evento
+
         User user = new User();
         user.setId(11);
         Event event = new Event();
         event.setId(11);
         try {
-            this.eventController.addUser(event, user);
+            this.eventController.removeUser(event,user);
+            //this.eventController.addUser(event, user);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        */
+
 
         this.eventController.getEvents(-30.034647, -51.217658, 50);
 
@@ -219,9 +220,11 @@ public class FragmentMap extends Fragment {
                 Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
                 try {
 //                List<Address> addresses = new ArrayList<Address>();
+                    /*
                     while (eventController.getListEvents() == null){
                         Log.d("WeHelpWS", "Ainda carregando eventos ...");
                     }
+                    */
                     List<Address> addresses = new ArrayList<Address>();
                     if (eventController.getListEvents().size() == 0) {
                         addresses.add(geocoder.getFromLocationName("Rua Marechal José Inácio, Porto Alegre", 1).get(0));

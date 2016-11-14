@@ -112,6 +112,44 @@ public class ServiceContainer {
         this.addToRequestQueue(postRequest);
     }
 
+    public void PostRequest(String url, JSONObject jsonObject, final IServiceResponseCallback responseCallback, final IServiceErrorCallback errorCallback) {
+        String resource = this.baseUrl + url;
+        JsonObjectRequest postRequest = new JsonObjectRequest(resource, jsonObject,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("WeHelpWS", response.toString());
+                        responseCallback.execute(response);
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("WeHelpWs.Error", error.toString());
+                        errorCallback.execute(error);
+                    }
+                }
+        ) {
+
+            @Override
+            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                int mStatusCode = response.statusCode;
+                return super.parseNetworkResponse(response);
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + GetAccessToken());
+                return params;
+            }
+
+        };
+        this.addToRequestQueue(postRequest);
+    }
+
     public void GetRequest(String url, final IServiceResponseCallback responseCallback, final IServiceErrorCallback errorCallback) {
         String resource = this.baseUrl + url;
         JsonObjectRequest getRequest = new JsonObjectRequest(resource, null,

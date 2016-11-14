@@ -83,7 +83,7 @@ public class FragmentOngRegister extends Fragment {
 
         ((WeHelpApp)getActivity().getApplication()).getNetComponent().inject(this);
         User user = new User();
-        user.setEmail("onglalari4@onglalari.com");
+        user.setEmail("onglalari5@onglalari.com");
         user.setPassword("12345");
 
         Ong ong = new Ong();
@@ -94,7 +94,7 @@ public class FragmentOngRegister extends Fragment {
         ong.setBairro("Azenha");
         ong.setCep("81458254");
         ong.setCidade("Porto Alegre");
-        ong.setCnpj("35043834000162");
+        ong.setCnpj("35043834000168");
         ong.setComplemento("Atrás da caixa d'água");
         ong.setLat(-30.034647);
         ong.setLng(-51.217658);

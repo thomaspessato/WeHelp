@@ -60,21 +60,21 @@ public class NetModule {
     }
 
     @Provides
-    UserService provideUserService(ServiceContainer serviceContainer) {
-        UserService userService = new UserService(serviceContainer);
+    UserService provideUserService(ServiceContainer serviceContainer, Gson gson) {
+        UserService userService = new UserService(serviceContainer, gson);
         return userService;
     }
 
     @Provides
-    EventService provideEventService(ServiceContainer serviceContainer) {
-        EventService eventService = new EventService(serviceContainer);
+    EventService provideEventService(ServiceContainer serviceContainer, Gson gson) {
+        EventService eventService = new EventService(serviceContainer, gson);
         return eventService;
     }
 
 
     @Provides
-    UserController provideUserController(UserService userService, Gson gson) {
-        UserController userController = new UserController(userService, gson);
+    UserController provideUserController(UserService userService, Gson gson, Application application) {
+        UserController userController = new UserController(userService, gson, application);
         return userController;
     }
 

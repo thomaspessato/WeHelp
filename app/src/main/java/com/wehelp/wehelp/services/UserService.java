@@ -26,9 +26,11 @@ import java.util.Map;
 public class UserService {
 
     ServiceContainer serviceContainer;
+    Gson gson;
 
-    public UserService(ServiceContainer serviceContainer) {
+    public UserService(ServiceContainer serviceContainer, Gson gson) {
         this.serviceContainer = serviceContainer;
+        this.gson = gson;
     }
 
     public void login(String email, String password, final IServiceResponseCallback serviceResponse, final IExecuteCallback executeCallback)  {
@@ -110,7 +112,8 @@ public class UserService {
         );
     }
 
-    public void createOng(User user, final IServiceResponseCallback serviceResponse, final IServiceErrorCallback serviceErrorCallback)  {
+    public void createOng(User user, final IServiceResponseCallback serviceResponse, final IServiceErrorCallback serviceErrorCallback) throws JSONException {
+
 
         Map<String, String>  params = new HashMap<>();
         params.put("nome", user.getOng().getNome());
@@ -135,7 +138,10 @@ public class UserService {
         params.put("password", user.getPassword());
 
         String url = "ongs";
-        this.serviceContainer.PostRequest(url, params,
+
+        JSONObject json = new JSONObject(params);
+
+        this.serviceContainer.PostRequest(url, json,
                 new IServiceResponseCallback() {
                     @Override
                     public void execute(JSONObject response) {

@@ -29,6 +29,7 @@ public class Event {
     private Category categoria;
     private ArrayList<EventRequirement> requisitos;
     private String cep;
+    private String nome;
 
 
     public int getId() {
@@ -224,5 +225,14 @@ public class Event {
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 }

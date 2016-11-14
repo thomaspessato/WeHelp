@@ -37,6 +37,7 @@ public class EventService {
     public void createEvent(Event event, final IServiceResponseCallback serviceResponseCallback, final IServiceErrorCallback serviceErrorCallback) throws JSONException {
         String url = "eventos";
         JSONObject json = new JSONObject();
+        json.put("nome", event.getNome());
         json.put("descricao", event.getDescricao());
         json.put("usuario_id", event.getUsuarioId());
         json.put("categoria_id", event.getCategoriaId());

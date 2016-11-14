@@ -105,8 +105,9 @@ public class FragmentMap extends Fragment {
         ((WeHelpApp)getActivity().getApplication()).getNetComponent().inject(this);
 
         // Exemplo cadastro de eventos
-        /*
+
         Event event = new Event();
+        event.setNome("Teste de nome");
         event.setUf("RS");
         event.setRua("Longe");
         event.setComplemento("");
@@ -140,7 +141,7 @@ public class FragmentMap extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        */
+
 
 
         //this.eventController.getEvents(-30.034647, -51.217658, 50);

@@ -121,18 +121,19 @@
                     android:id="@+id/radio_male"
                     android:checked="false" />
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="CADASTRAR"
-                    android:id="@+id/button4"
-                    android:background="@color/colorPrimary"
-                    android:textColor="#ffffff"
-                    android:layout_gravity="center_horizontal"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:layout_marginTop="40dp" />
             </RadioGroup>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CADASTRAR"
+                android:id="@+id/btnSavePerson"
+                android:background="@color/colorPrimary"
+                android:textColor="#ffffff"
+                android:layout_gravity="center_horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginTop="40dp" />
 
         </LinearLayout>
 

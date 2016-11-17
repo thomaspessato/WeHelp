@@ -5,6 +5,7 @@ import android.util.Log;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.wehelp.wehelp.classes.Event;
+import com.wehelp.wehelp.classes.EventRequirement;
 import com.wehelp.wehelp.classes.User;
 import com.wehelp.wehelp.classes.Util;
 import com.wehelp.wehelp.services.EventService;
@@ -121,6 +122,25 @@ public class EventController {
             @Override
             public void execute(JSONObject response) {
                 Log.d("WeHelpWs", "Usuário " + user.getId() + " removido do evento " + event.getId());
+            }
+        }, new IServiceErrorCallback() {
+            @Override
+            public void execute(VolleyError error) {
+                Log.d("WeHelpWS", "Error: " + error.getMessage());
+                errorService = true;
+                errorMessages = Util.ServiceErrorToJson(error);
+            }
+        });
+    }
+
+    public void addRequirement(final Event event, final EventRequirement requirement) throws JSONException {
+        this.errorService = false;
+        this.errorMessages = null;
+        this.eventService.addRequirement(event, requirement, new IServiceResponseCallback() {
+            @Override
+            public void execute(JSONObject response) {
+                Log.d("WeHelpWs", "Requisito " + requirement.getDescricao() + " adicionado ao evento " + event.getId());
+                event.getRequisitos().add(gson.fromJson(response.toString(), EventRequirement.class));
             }
         }, new IServiceErrorCallback() {
             @Override

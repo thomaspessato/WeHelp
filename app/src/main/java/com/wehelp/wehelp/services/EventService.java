@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.wehelp.wehelp.classes.Event;
+import com.wehelp.wehelp.classes.EventRequirement;
 import com.wehelp.wehelp.classes.ServiceContainer;
 import com.wehelp.wehelp.classes.User;
 
@@ -80,6 +81,14 @@ public class EventService {
         String url = "remover_participante";
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("usuario_id", user.getId());
+        jsonObject.put("evento_id", event.getId());
+        this.serviceContainer.PostRequest(url, jsonObject, serviceResponseCallback, serviceErrorCallback);
+    }
+
+    public void addRequirement(Event event, EventRequirement requirement, final IServiceResponseCallback serviceResponseCallback, final IServiceErrorCallback serviceErrorCallback) throws JSONException {
+        String url = "requisitos";
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("descricao", requirement.getId());
         jsonObject.put("evento_id", event.getId());
         this.serviceContainer.PostRequest(url, jsonObject, serviceResponseCallback, serviceErrorCallback);
     }

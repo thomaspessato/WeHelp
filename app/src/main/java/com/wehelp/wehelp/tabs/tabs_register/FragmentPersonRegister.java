@@ -11,7 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.wehelp.wehelp.R;
@@ -41,6 +43,12 @@ public class FragmentPersonRegister extends Fragment {
 
     @Inject
     UserController userController;
+    EditText txtName;
+    EditText txtMail;
+    EditText txtPhone;
+    EditText txtDate;
+    RadioGroup radGenre;
+    Button btnSavePerson;
 
     public FragmentPersonRegister() {
         // Required empty public constructor
@@ -61,16 +69,20 @@ public class FragmentPersonRegister extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((WeHelpApp)getActivity().getApplication()).getNetComponent().inject(this);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        /*
         ((WeHelpApp)getActivity().getApplication()).getNetComponent().inject(this);
         User user = new User();
         Person person = new Person();
@@ -90,8 +102,43 @@ public class FragmentPersonRegister extends Fragment {
         person.setTelefone("5145784578");
         user.setPessoa(person);
         //new CreatePersonTask().execute(user);
+        */
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_fragment_person_register, container, false);
+        // Elements
+        txtName = (EditText)rootView.findViewById(R.id.input_name);
+        txtMail = (EditText)rootView.findViewById(R.id.input_mail);
+        txtPhone = (EditText)rootView.findViewById(R.id.input_phone);
+        txtDate = (EditText)rootView.findViewById(R.id.whichdate);
+        radGenre = (RadioGroup)rootView.findViewById(R.id.radio_genre);
+        btnSavePerson = (Button)rootView.findViewById(R.id.btnSavePerson);
+        btnSavePerson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // validar campos
+                User user = new User();
+                Person person = new Person();
+                SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy");
+
+                user.setEmail(txtMail.getText().toString());
+                user.setPassword("12345");
+                try {
+                    person.setDataNascimento(sdf1.parse(txtDate.getText().toString()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                person.setFoto("");
+                person.setModerador(false);
+                person.setNome(txtName.getText().toString());
+                person.setRanking(0);
+                person.setSexo(radGenre.indexOfChild(getView().findViewById(radGenre.getCheckedRadioButtonId())) == 1 ? "F" : "M" );
+                person.setTelefone(txtPhone.getText().toString());
+                user.setPessoa(person);
+                new CreatePersonTask().execute(user);
+            }
+        });
+
+
         final EditText date = (EditText)rootView.findViewById(R.id.whichdate);
 
         TextWatcher tw = new TextWatcher() {
@@ -196,6 +243,11 @@ public class FragmentPersonRegister extends Fragment {
     private class CreatePersonTask extends AsyncTask<User, Void, User> {
 
         @Override
+        protected void onPreExecute() {
+            // carregar loader
+        }
+
+        @Override
         protected User doInBackground(User... user) {
             try {
                 userController.createPerson(user[0]);
@@ -220,6 +272,8 @@ public class FragmentPersonRegister extends Fragment {
             } else {
                 Toast.makeText(getActivity().getApplicationContext(), "Retorno: " + user.getPessoa().getNome(), Toast.LENGTH_LONG).show();
             }
+
+            // remover loader
         }
     }
 }

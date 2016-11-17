@@ -80,7 +80,7 @@ public class FragmentOngRegister extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        /*
         ((WeHelpApp)getActivity().getApplication()).getNetComponent().inject(this);
         User user = new User();
         user.setEmail("onglalari5@onglalari.com");
@@ -107,6 +107,7 @@ public class FragmentOngRegister extends Fragment {
         ong.setNumero(100);
         user.setOng(ong);
         new CreateOngTask().execute(user);
+        */
 
 
         // Inflate the layout for this fragment

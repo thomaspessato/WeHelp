@@ -90,20 +90,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/input_phone"
                 android:inputType="text|phone" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#ffffff"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Nacionalidade"
-                android:id="@+id/text_nationality" />
 
-            <EditText
-                android:layout_width="match_parent"
-                android:textColor="#ffffff"
-                android:layout_height="wrap_content"
-                android:id="@+id/input_nationality"
-                android:inputType="text" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -127,13 +114,22 @@
                 android:text="Cidade"
                 android:id="@+id/text_city" />
 
-            <Spinner
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/spinner"
-                android:spinnerMode="dropdown"
-                android:theme="@style/AppTheme"
-                android:touchscreenBlocksFocus="false" />
+                android:textColor="@color/DividerColor"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Porto Alegre"
+                android:id="@+id/city_value_register" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/DividerColor"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Momentaneamente, apenas a cidade de Porto Alegre está disponível"
+                android:id="@+id/city_value_desc"
+                android:textSize="14sp"
+                android:layout_marginBottom="10dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -162,9 +158,9 @@
                 android:layout_width="match_parent"
                 android:textColor="#ffffff"
                 android:layout_height="wrap_content"
-
                 android:id="@+id/input_number"
                 android:inputType="text|number" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -177,81 +173,41 @@
                 android:layout_width="match_parent"
                 android:textColor="#ffffff"
                 android:layout_height="wrap_content"
-
                 android:id="@+id/input_complement"
                 android:inputType="text|number" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Nome responsável"
-                android:id="@+id/text_responsable" />
+                android:text="Senha"
+                android:id="@+id/textView123"
+                android:layout_marginTop="10dp" />
 
             <EditText
                 android:layout_width="match_parent"
-                android:textColor="#ffffff"
                 android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/register_password_ong"
+                android:textColor="#fff" />
 
-                android:id="@+id/input_responsable"
-                android:inputType="textPersonName" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="CPF responsável"
-                android:id="@+id/text_cpf" />
+                android:text="Repita a senha"
+                android:id="@+id/textView12333" />
 
             <EditText
                 android:layout_width="match_parent"
-                android:textColor="#ffffff"
                 android:layout_height="wrap_content"
-
-                android:id="@+id/input_cpf"
-                android:inputType="text|number" />
-
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:textColor="#ffffff"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#ffffff"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Gênero"
-                    android:id="@+id/textView17" />
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:textColor="#ffffff"
-                    android:layout_height="wrap_content"
-                    android:text="Feminino"
-                    android:id="@+id/radioButton"
-                    android:checked="false" />
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#ffffff"
-                    android:text="Masculino"
-                    android:id="@+id/radioButton2"
-                    android:checked="false" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="CADASTRAR"
-                    android:id="@+id/button4"
-                    android:background="@color/colorPrimary"
-                    android:textColor="#ffffff"
-                    android:layout_gravity="center_horizontal"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="40dp"
-                    android:paddingRight="10dp" />
-            </RadioGroup>
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/register_password_ong_verification"
+                android:textColor="#fff" />
 
         </LinearLayout>
 

@@ -65,63 +65,34 @@
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Telefone"
-                android:id="@+id/textView16" />
+                android:text="Senha"
+                android:id="@+id/register_pass_textview1"
+                android:layout_marginTop="10dp" />
 
             <EditText
                 android:layout_width="match_parent"
-                android:textColor="#ffffff"
                 android:layout_height="wrap_content"
-                android:id="@+id/input_phone" />
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/register_password_person"
+                android:textColor="#fff" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Nascimento"
-                android:id="@+id/textView18" />
-
+                android:text="Repita a senha"
+                android:id="@+id/register_pass_textview2" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="date"
+                android:inputType="textPassword"
                 android:ems="10"
-                android:id="@+id/whichdate"
+                android:id="@+id/register_password_person_verification"
                 android:textColor="#fff" />
 
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:textColor="#ffffff"
-                android:layout_height="match_parent"
-                android:id="@+id/radio_genre">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#ffffff"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Gênero"
-                    android:id="@+id/textView17" />
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:textColor="#ffffff"
-                    android:layout_height="wrap_content"
-                    android:text="Feminino"
-                    android:id="@+id/radio_female"
-                    android:checked="false" />
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#ffffff"
-                    android:text="Masculino"
-                    android:id="@+id/radio_male"
-                    android:checked="false" />
-
-            </RadioGroup>
 
             <Button
                 android:layout_width="wrap_content"

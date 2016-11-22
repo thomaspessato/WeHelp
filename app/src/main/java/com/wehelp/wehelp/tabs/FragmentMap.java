@@ -264,13 +264,6 @@ public class FragmentMap extends Fragment {
 //                }
 
                 googleMap.addMarker(new MarkerOptions().position(marker).title("Creche Moranguinho | Educação").snippet("Necessitamos de 20 caixas de lápis, 30 pacotes de folhas"));
-//                googleMap.addMarker(new MarkesrOptions()
-//                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.common_google_signin_btn_icon_dark_normal))
-//                        .snippet("Evento de ajuda | EDUCAÇÃO | MATERIAL ESCOLAR")
-//                        .anchor(0.0f, 1.0f) // Anchors the marker on the bottom left
-//                        .position(marker));
-
-
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(marker).zoom(12).build();
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 

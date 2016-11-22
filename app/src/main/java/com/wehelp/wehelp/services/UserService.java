@@ -87,11 +87,11 @@ public class UserService {
         Map<String, String>  params = new HashMap<>();
         params.put("nome", user.getPessoa().getNome());
         params.put("foto", user.getPessoa().getFoto());
-        params.put("telefone", user.getPessoa().getTelefone());
+//        params.put("telefone", user.getPessoa().getTelefone());
         params.put("ranking", String.valueOf(user.getPessoa().getRanking()));
         params.put("moderador", user.getPessoa().isModerador() ? "1" : "0");
-        params.put("sexo", user.getPessoa().getSexo().toUpperCase());
-        params.put("data_nascimento", new SimpleDateFormat("yyyy-MM-dd").format(user.getPessoa().getDataNascimento()));
+//        params.put("sexo", user.getPessoa().getSexo().toUpperCase());
+//        params.put("data_nascimento", new SimpleDateFormat("yyyy-MM-dd").format(user.getPessoa().getDataNascimento()));
         params.put("email", user.getEmail());
         params.put("password", user.getPassword());
 

@@ -105,7 +105,7 @@ public class FragmentOngRegister extends Fragment {
         ongComp = (EditText)rootView.findViewById(R.id.ong_complement);
         ongPassword = (EditText)rootView.findViewById(R.id.ong_register_password);
         ongPasswordValidation = (EditText)rootView.findViewById(R.id.ong_register_password_validation);
-        Button = (Button)rootView.findViewById(R.id.btn_register_ong);
+        registerBtn = (Button)rootView.findViewById(R.id.btn_register_ong);
 
         /*
         ((WeHelpApp)getActivity().getApplication()).getNetComponent().inject(this);

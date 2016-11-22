@@ -49,11 +49,13 @@ public class FragmentOngRegister extends Fragment {
     @Inject
     UserController userController;
     EditText ongName;
-    EditText CNPJ;
+    EditText ongCNPJ;
     EditText ongMail;
     EditText ongPhone;
     EditText ongUF;
+    EditText ongCEP;
 //    EditText ongCity;
+    EditText ongNumber;
     EditText ongStreet;
     EditText ongComp;
     EditText ongPassword;
@@ -96,49 +98,80 @@ public class FragmentOngRegister extends Fragment {
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_fragment_ong_register, container, false);
         ongName = (EditText)rootView.findViewById(R.id.ong_name);
-        CNPJ = (EditText)rootView.findViewById(R.id.ong_cnpj);
+        ongCNPJ = (EditText)rootView.findViewById(R.id.ong_cnpj);
         ongMail = (EditText)rootView.findViewById(R.id.ong_mail);
         ongPhone = (EditText)rootView.findViewById(R.id.ong_phone);
         ongUF = (EditText)rootView.findViewById(R.id.ong_UF);
-//        ongCity = (EditText)rootView.findViewById(R.id.ong_city);
         ongStreet = (EditText)rootView.findViewById(R.id.ong_street);
         ongComp = (EditText)rootView.findViewById(R.id.ong_complement);
+        ongCEP = (EditText)rootView.findViewById(R.id.ong_cep);
         ongPassword = (EditText)rootView.findViewById(R.id.ong_register_password);
         ongPasswordValidation = (EditText)rootView.findViewById(R.id.ong_register_password_validation);
-        registerBtn = (Button)rootView.findViewById(R.id.btn_register_ong);
+        registerBtn = (Button)rootView.findViewById(R.id.btn_register_ong_teste);
+        ongNumber = (EditText)rootView.findViewById(R.id.ong_number);
 
-        /*
         ((WeHelpApp)getActivity().getApplication()).getNetComponent().inject(this);
-        User user = new User();
-        user.setEmail("onglalari5@onglalari.com");
-        user.setPassword("12345");
 
-        Ong ong = new Ong();
-        ong.setFoto("");
-        ong.setNome("lllllppppp");
-        ong.setTelefone("5132487845");
-        ong.setAtivo(true);
-        ong.setBairro("Azenha");
-        ong.setCep("81458254");
-        ong.setCidade("Porto Alegre");
-        ong.setCnpj("35043834000168");
-        ong.setComplemento("Atrás da caixa d'água");
-        ong.setLat(-30.034647);
-        ong.setLng(-51.217658);
-        ong.setNacionalidade("Brasileira");
-        ong.setResponsavelNome("Carlos");
-        ong.setResponsavelCpf("17754886243");
-        ong.setRua("Av. Azenha");
-        ong.setUf("RS");
-        ong.setRanking(3);
-        ong.setNumero(100);
-        user.setOng(ong);
-        new CreateOngTask().execute(user);
-        */
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String password = ongPassword.getText().toString();
+                String passwordValidation = ongPasswordValidation.getText().toString();
+                String complement = ongComp.getText().toString();
+                String street = ongStreet.getText().toString();
+                String uf = ongUF.getText().toString();
+                String phone = ongPhone.getText().toString();
+                String name = ongName.getText().toString();
+                String email = ongMail.getText().toString();
+                String CNPJ = ongCNPJ.getText().toString();
+                String CEP = ongCEP.getText().toString();
+                int number = Integer.parseInt(ongNumber.getText().toString());
+
+                if(!password.equals("") &&
+                        !passwordValidation.equals("") &&
+                        !password.equals("") &&
+                        !complement.equals("") &&
+                        !street.equals("") &&
+                        !uf.equals("") &&
+                        !name.equals("") &&
+                        !phone.equals("") &&
+                        !CNPJ.equals("") &&
+                        !CEP.equals("") &&
+                        number != 0 &&
+                        !email.equals("")) {
+                    if(password.equals(passwordValidation)) {
+                        System.out.println("TESTING");
+                        User user = new User();
+                        Ong ong = new Ong();
+                        ong.setFoto("");
+                        ong.setNome(name);
+                        ong.setTelefone(phone);
+                        ong.setAtivo(true);
+                        ong.setCep(CEP);
+                        ong.setCidade("Porto Alegre");
+                        ong.setCnpj(CNPJ);
+                        ong.setComplemento(complement);
+                        ong.setLat(-30.034647);
+                        ong.setLng(-51.217658);
+                        ong.setRua(street);
+                        ong.setUf(uf);
+                        ong.setRanking(3);
+                        ong.setNumero(number);
+                        user.setEmail(email);
+                        user.setPassword(password);
+                        user.setOng(ong);
+                        new CreateOngTask().execute(user);
+                    }
+
+                }
+
+            }
+        });
 
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment_ong_register, container, false);
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

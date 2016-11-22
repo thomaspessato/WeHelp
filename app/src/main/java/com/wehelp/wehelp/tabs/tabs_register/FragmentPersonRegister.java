@@ -97,20 +97,33 @@ public class FragmentPersonRegister extends Fragment {
                 String name = txtName.getText().toString();
                 String email = txtMail.getText().toString();
 
-                if(password != "" && passwordValidation != "" && name != "" && email != "") {
-                    if(password == passwordValidation) {
+                if(!password.equals("") && !passwordValidation.equals("") && !name.equals("") && !email.equals("")) {
+                    if(password.equals(passwordValidation)) {
+                        System.out.println("PASSWORD: "+password);
+                        System.out.println("PASSWORD VALIDATION: "+passwordValidation);
                         User user = new User();
                         Person person = new Person();
+
                         user.setEmail(txtMail.getText().toString());
                         user.setPassword(txtPassword.getText().toString());
+
                         person.setFoto("");
                         person.setModerador(false);
                         person.setNome(txtName.getText().toString());
                         person.setRanking(0);
+//                        person.setSexo("m");
+//                        SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy");
+//                        try {
+//                            person.setDataNascimento(sdf1.parse("02/02/1980"));
+//                        } catch (ParseException e) {
+//                            e.printStackTrace();
+//                        }
+
                         user.setPessoa(person);
+
                         new CreatePersonTask().execute(user);
                     } else {
-                        Toast.makeText(getActivity().getApplicationContext(), "Senhas não conferem", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getActivity().getApplicationContext(), "Senhas não conferem", Toast.LENGTH_LONG).show();
                     }
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Por favor, preencha todos os campos.", Toast.LENGTH_LONG).show();
@@ -204,8 +217,8 @@ public class FragmentPersonRegister extends Fragment {
 
         protected void onPostExecute(User user) {
             if (user == null) {
-//                Toast.makeText(getActivity().getApplicationContext(), userController.errorMessages.toString(), Toast.LENGTH_LONG).show();
-                Toast.makeText(getActivity().getApplicationContext(), "Erro ao registrar pessoa", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity().getApplicationContext(), userController.errorMessages.toString(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity().getApplicationContext(), "Erro ao registrar pessoa", Toast.LENGTH_LONG).show();
 //                Log.d("WeHelpWS", userController.errorMessages.toString());
             } else {
                 Toast.makeText(getActivity().getApplicationContext(), "Retorno: " + user.getPessoa().getNome(), Toast.LENGTH_LONG).show();

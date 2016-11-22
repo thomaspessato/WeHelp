@@ -45,9 +45,8 @@ public class FragmentPersonRegister extends Fragment {
     UserController userController;
     EditText txtName;
     EditText txtMail;
-    EditText txtPhone;
-    EditText txtDate;
-    RadioGroup radGenre;
+    EditText txtPassword;
+    EditText txtPasswordVerification;
     Button btnSavePerson;
 
     public FragmentPersonRegister() {
@@ -82,6 +81,46 @@ public class FragmentPersonRegister extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_fragment_person_register, container, false);
+        // Elements
+        txtName = (EditText)rootView.findViewById(R.id.input_name);
+        txtMail = (EditText)rootView.findViewById(R.id.input_mail);
+        txtPassword = (EditText)rootView.findViewById(R.id.register_password_person);
+        txtPasswordVerification = (EditText)rootView.findViewById(R.id.register_password_person_verification);
+        btnSavePerson = (Button)rootView.findViewById(R.id.btnSavePerson);
+        btnSavePerson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // validar campos
+                String password = txtPassword.getText().toString();
+                String passwordValidation = txtPasswordVerification.getText().toString();
+                String name = txtName.getText().toString();
+                String email = txtMail.getText().toString();
+
+                if(password != "" && passwordValidation != "" && name != "" && email != "") {
+                    if(password == passwordValidation) {
+                        User user = new User();
+                        Person person = new Person();
+                        user.setEmail(txtMail.getText().toString());
+                        user.setPassword(txtPassword.getText().toString());
+                        person.setFoto("");
+                        person.setModerador(false);
+                        person.setNome(txtName.getText().toString());
+                        person.setRanking(0);
+                        user.setPessoa(person);
+                        new CreatePersonTask().execute(user);
+                    } else {
+                        Toast.makeText(getActivity().getApplicationContext(), "Senhas não conferem", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "Por favor, preencha todos os campos.", Toast.LENGTH_LONG).show();
+                }
+
+
+
+            }
+        });
+
         /*
         ((WeHelpApp)getActivity().getApplication()).getNetComponent().inject(this);
         User user = new User();
@@ -104,108 +143,7 @@ public class FragmentPersonRegister extends Fragment {
         //new CreatePersonTask().execute(user);
         */
 
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_fragment_person_register, container, false);
-        // Elements
-        txtName = (EditText)rootView.findViewById(R.id.input_name);
-        txtMail = (EditText)rootView.findViewById(R.id.input_mail);
-        txtPhone = (EditText)rootView.findViewById(R.id.input_phone);
-        txtDate = (EditText)rootView.findViewById(R.id.whichdate);
-        radGenre = (RadioGroup)rootView.findViewById(R.id.radio_genre);
-        btnSavePerson = (Button)rootView.findViewById(R.id.btnSavePerson);
-        btnSavePerson.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // validar campos
-                User user = new User();
-                Person person = new Person();
-                SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy");
 
-                user.setEmail(txtMail.getText().toString());
-                user.setPassword("12345");
-                try {
-                    person.setDataNascimento(sdf1.parse(txtDate.getText().toString()));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                person.setFoto("");
-                person.setModerador(false);
-                person.setNome(txtName.getText().toString());
-                person.setRanking(0);
-                person.setSexo(radGenre.indexOfChild(getView().findViewById(radGenre.getCheckedRadioButtonId())) == 1 ? "F" : "M" );
-                person.setTelefone(txtPhone.getText().toString());
-                user.setPessoa(person);
-                new CreatePersonTask().execute(user);
-            }
-        });
-
-
-        final EditText date = (EditText)rootView.findViewById(R.id.whichdate);
-
-        TextWatcher tw = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                System.out.println("BEFORE TEXT CHANGED");
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                System.out.println("TEXT BEING CHANGED");
-                if (!s.toString().equals(current)) {
-                    String clean = s.toString().replaceAll("[^\\d.]", "");
-                    String cleanC = current.replaceAll("[^\\d.]", "");
-
-                    int cl = clean.length();
-                    int sel = cl;
-                    for (int i = 2; i <= cl && i < 6; i += 2) {
-                        sel++;
-                    }
-                    //Fix for pressing delete next to a forward slash
-                    if (clean.equals(cleanC)) sel--;
-
-                    if (clean.length() < 8){
-                        clean = clean + ddmmyyyy.substring(clean.length());
-                    }else{
-                        //This part makes sure that when we finish entering numbers
-                        //the date is correct, fixing it otherwise
-                        int day  = Integer.parseInt(clean.substring(0,2));
-                        int mon  = Integer.parseInt(clean.substring(2,4));
-                        int year = Integer.parseInt(clean.substring(4,8));
-
-                        if(mon > 12) mon = 12;
-                        cal.set(Calendar.MONTH, mon-1);
-                        year = (year<1900)?1900:(year>2100)?2100:year;
-                        cal.set(Calendar.YEAR, year);
-                        // ^ first set year for the line below to work correctly
-                        //with leap years - otherwise, date e.g. 29/02/2012
-                        //would be automatically corrected to 28/02/2012
-
-                        day = (day > cal.getActualMaximum(Calendar.DATE))? cal.getActualMaximum(Calendar.DATE):day;
-                        clean = String.format("%02d%02d%02d",day, mon, year);
-                    }
-
-                    clean = String.format("%s/%s/%s", clean.substring(0, 2),
-                            clean.substring(2, 4),
-                            clean.substring(4, 8));
-
-                    sel = sel < 0 ? 0 : sel;
-                    current = clean;
-                    date.setText(current);
-                    date.setSelection(sel < current.length() ? sel : current.length());
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-
-            private String current = "";
-            private String ddmmyyyy = "DDMMYYYY";
-            private Calendar cal = Calendar.getInstance();
-        };
-
-
-        date.addTextChangedListener(tw);
 
         return rootView;
     }
@@ -266,9 +204,9 @@ public class FragmentPersonRegister extends Fragment {
 
         protected void onPostExecute(User user) {
             if (user == null) {
-                Toast.makeText(getActivity().getApplicationContext(), userController.errorMessages.toString(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity().getApplicationContext(), userController.errorMessages.toString(), Toast.LENGTH_LONG).show();
                 Toast.makeText(getActivity().getApplicationContext(), "Erro ao registrar pessoa", Toast.LENGTH_LONG).show();
-                Log.d("WeHelpWS", userController.errorMessages.toString());
+//                Log.d("WeHelpWS", userController.errorMessages.toString());
             } else {
                 Toast.makeText(getActivity().getApplicationContext(), "Retorno: " + user.getPessoa().getNome(), Toast.LENGTH_LONG).show();
             }

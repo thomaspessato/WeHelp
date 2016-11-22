@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.wehelp.wehelp.R;
@@ -46,6 +48,17 @@ public class FragmentOngRegister extends Fragment {
 
     @Inject
     UserController userController;
+    EditText ongName;
+    EditText CNPJ;
+    EditText ongMail;
+    EditText ongPhone;
+    EditText ongUF;
+//    EditText ongCity;
+    EditText ongStreet;
+    EditText ongComp;
+    EditText ongPassword;
+    EditText ongPasswordValidation;
+    Button registerBtn;
 
     /**
      * Use this factory method to create a new instance of
@@ -80,6 +93,20 @@ public class FragmentOngRegister extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_fragment_ong_register, container, false);
+        ongName = (EditText)rootView.findViewById(R.id.ong_name);
+        CNPJ = (EditText)rootView.findViewById(R.id.ong_cnpj);
+        ongMail = (EditText)rootView.findViewById(R.id.ong_mail);
+        ongPhone = (EditText)rootView.findViewById(R.id.ong_phone);
+        ongUF = (EditText)rootView.findViewById(R.id.ong_UF);
+//        ongCity = (EditText)rootView.findViewById(R.id.ong_city);
+        ongStreet = (EditText)rootView.findViewById(R.id.ong_street);
+        ongComp = (EditText)rootView.findViewById(R.id.ong_complement);
+        ongPassword = (EditText)rootView.findViewById(R.id.ong_register_password);
+        ongPasswordValidation = (EditText)rootView.findViewById(R.id.ong_register_password_validation);
+        Button = (Button)rootView.findViewById(R.id.btn_register_ong);
+
         /*
         ((WeHelpApp)getActivity().getApplication()).getNetComponent().inject(this);
         User user = new User();

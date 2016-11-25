@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:text="Ex: Sopão para os moradores de rua"
-            android:id="@+id/editText29"
+            android:id="@+id/register_event_title"
             android:textSize="14sp" />
         <TextView
             android:text="O que você precisa?"
@@ -44,13 +44,21 @@
             android:id="@+id/textview30"
             android:textSize="18sp" />
 
-        <EditText
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:text="Ex: 10 sacos de batata"
-            android:id="@+id/editText8"
-            android:textSize="14sp" />
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="298dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:id="@+id/editText8"
+                android:textSize="14sp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
         <TextView
             android:text="Sobre que assunto é seu evento?"
             android:layout_width="match_parent"
@@ -67,20 +75,22 @@
             android:inputType="textPersonName"
             android:text="Ex: Educação"
             android:ems="10"
-            android:id="@+id/editText32"
+            android:id="@+id/register_event_category"
             android:textSize="14sp" />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left">
+            android:gravity="left"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/cast_album_art_placeholder"
-                android:id="@+id/imageView6"
+                android:id="@+id/register_event_image"
                 android:layout_gravity="left" />
 
             <TextView
@@ -92,6 +102,25 @@
                 android:paddingLeft="10dp" />
 
         </LinearLayout>
+
+        <TextView
+            android:text="Quando será o evento?"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/txtDateEvent"
+            android:textSize="18sp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:text="Ex: 28/01/2016"
+            android:ems="10"
+            android:id="@+id/register_event_date"
+            android:textSize="14sp" />
     </LinearLayout>
 
 </RelativeLayout>

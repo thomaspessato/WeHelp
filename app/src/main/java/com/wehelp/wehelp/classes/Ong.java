@@ -6,17 +6,13 @@ public class Ong {
     private String cnpj;
     private String foto;
     private String telefone;
-    private String nacionalidade;
     private String uf;
     private String cidade;
     private String rua;
     private int numero;
     private String complemento;
     private String cep;
-    private String bairro;
     private int ranking;
-    private String responsavel_nome;
-    private String responsavel_cpf;
     private boolean ativo;
     private double lat;
     private double lng;
@@ -60,14 +56,6 @@ public class Ong {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
-    }
-
-    public String getNacionalidade() {
-        return nacionalidade;
-    }
-
-    public void setNacionalidade(String nacionalidade) {
-        this.nacionalidade = nacionalidade;
     }
 
     public String getUf() {
@@ -118,36 +106,12 @@ public class Ong {
         this.cep = cep;
     }
 
-    public String getBairro() {
-        return bairro;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
-
     public int getRanking() {
         return ranking;
     }
 
     public void setRanking(int ranking) {
         this.ranking = ranking;
-    }
-
-    public String getResponsavelNome() {
-        return responsavel_nome;
-    }
-
-    public void setResponsavelNome(String responsavel_nome) {
-        this.responsavel_nome = responsavel_nome;
-    }
-
-    public String getResponsavelCpf() {
-        return responsavel_cpf;
-    }
-
-    public void setResponsavelCpf(String responsavel_cpf) {
-        this.responsavel_cpf = responsavel_cpf;
     }
 
     public boolean isAtivo() {

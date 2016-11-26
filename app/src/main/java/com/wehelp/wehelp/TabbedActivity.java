@@ -171,8 +171,11 @@ public class TabbedActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Implementar criação de novo evento", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Implementar criação de novo evento", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+
+                Intent intentCreateEvent= new Intent(getApplicationContext(), CreateEventActivity.class);
+                startActivity(intentCreateEvent);
             }
         });
 

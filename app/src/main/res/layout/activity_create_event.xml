@@ -10,6 +10,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.wehelp.wehelp.CreateEventActivity">
 
+    <ScrollView
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true">
+
 
     <LinearLayout
         android:orientation="vertical"
@@ -53,10 +62,31 @@
                 android:layout_width="298dp"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:id="@+id/editText8"
+                android:id="@+id/register_event_requirement"
                 android:textSize="14sp"
                 android:layout_weight="1" />
 
+            <Button
+                android:text="+"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_new_requirement"
+                android:layout_weight="1"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="184dp"
+            android:id="@+id/linear_requirements">
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/listview_requirements" />
         </LinearLayout>
 
         <TextView
@@ -103,8 +133,68 @@
 
         </LinearLayout>
 
+
         <TextView
-            android:text="Quando será o evento?"
+            android:text="Rua"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/txtStreetEvent"
+            android:textSize="18sp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:text="Ex: Rua Marechal Rondon"
+            android:ems="10"
+            android:id="@+id/register_event_street"
+            android:textSize="14sp" />
+
+
+        <TextView
+            android:text="Número"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/txtNumberEvent"
+            android:textSize="18sp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:text="Ex: 588"
+            android:ems="10"
+            android:id="@+id/register_event_number"
+            android:textSize="14sp" />
+
+        <TextView
+            android:text="Complemento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/txtCompEvent"
+            android:textSize="18sp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:text="Ex: 203"
+            android:ems="10"
+            android:id="@+id/register_event_comp"
+            android:textSize="14sp" />
+
+
+        <TextView
+            android:text="Quando?"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -121,6 +211,15 @@
             android:ems="10"
             android:id="@+id/register_event_date"
             android:textSize="14sp" />
+
+        <Button
+            android:text="Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_register_event" />
+
     </LinearLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

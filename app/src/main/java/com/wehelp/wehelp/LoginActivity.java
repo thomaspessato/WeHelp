@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.wehelp.wehelp.classes.ServiceContainer;
@@ -40,7 +42,9 @@ public class LoginActivity extends AppCompatActivity {
         Button forgotBtn = (Button)findViewById(R.id.btn_forgot);
         final EditText emailTxt = (EditText)findViewById(R.id.editText);
         final EditText passwordTxt = (EditText)findViewById(R.id.editText2);
-
+        final RelativeLayout loadingPanel = (RelativeLayout) findViewById(R.id.loadingPanel);
+        assert loadingPanel != null;
+        loadingPanel.setVisibility(View.GONE);
 
         if (loginBtn != null) {
             loginBtn.setOnClickListener(new View.OnClickListener() {
@@ -48,18 +52,21 @@ public class LoginActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     String email = emailTxt.getText().toString();// emailTxt.getText().toString();
                     String password = passwordTxt.getText().toString(); //passwordTxt.getText().toString();
+                    loadingPanel.setVisibility(View.VISIBLE);
                     userController.login(email, password,
                             new IServiceResponseCallback() {
                                 @Override
                                 public void execute(JSONObject response) {
                                     Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
                                     startActivity(intent);
+                                    loadingPanel.setVisibility(View.GONE);
                                 }
                             },
                             new IExecuteCallback() {
                                 @Override
                                 public void execute() {
                                     Toast.makeText(getApplicationContext(), "Erro ao logar", Toast.LENGTH_LONG).show();
+                                    loadingPanel.setVisibility(View.GONE);
                                 }
                             }
                     );

@@ -28,6 +28,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import android.Manifest;
+import android.widget.RelativeLayout;
+
 import com.wehelp.wehelp.EventDetailActivity;
 import com.wehelp.wehelp.R;
 import com.wehelp.wehelp.classes.Category;
@@ -63,6 +65,7 @@ public class FragmentMap extends Fragment {
     MapView mMapView;
     private GoogleMap googleMap;
     public GoogleApiClient mGoogleApiClient;
+
 
     public static FragmentTimeline newInstance() {
         FragmentTimeline fragment = new FragmentTimeline ();
@@ -104,6 +107,8 @@ public class FragmentMap extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ((WeHelpApp)getActivity().getApplication()).getNetComponent().inject(this);
+
+
 
         // Exemplo cadastro de eventos
         /*
@@ -163,6 +168,10 @@ public class FragmentMap extends Fragment {
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_tab_map, container, false);
 
+        final RelativeLayout loadingPanel = (RelativeLayout)rootView.findViewById(R.id.loadingPanel);
+        assert loadingPanel != null;
+        loadingPanel.setVisibility(View.GONE);
+
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         assert mMapView != null;
         mMapView.onCreate(savedInstanceState);
@@ -170,6 +179,7 @@ public class FragmentMap extends Fragment {
 
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
+            loadingPanel.setVisibility(View.VISIBLE);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -179,7 +189,7 @@ public class FragmentMap extends Fragment {
                 .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
                     @Override
                     public void onConnected(@Nullable Bundle bundle) {
-                        System.out.println("GOOGLE MAPS API CLIENT CONNECTED");
+                        loadingPanel.setVisibility(View.GONE);
                         if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                             // TODO: Consider calling
                             ActivityCompat.requestPermissions(getActivity(),

@@ -41,8 +41,31 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:id="@+id/register_event_title"
-            android:textSize="14sp"
+            android:textSize="18sp"
             android:hint="Ex: Sopão para os moradores de rua" />
+
+        <TextView
+            android:text="Descreva seu evento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/textView002"
+            android:textIsSelectable="false"
+            android:textSize="18sp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:id="@+id/register_event_desc"
+            android:textSize="18sp"
+            android:hint="Ex: Este é um evento que irá ajudar!" />
+
+
+
+
         <TextView
             android:text="O que você precisa?"
             android:layout_width="match_parent"
@@ -63,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:id="@+id/register_event_requirement"
-                android:textSize="14sp"
+                android:textSize="18sp"
                 android:layout_weight="1"
                 android:hint="Ex: 2kg de batata" />
 
@@ -99,7 +122,7 @@
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/register_event_category"
-            android:textSize="14sp"
+            android:textSize="18sp"
             android:hint="Ex: Educação" />
 
         <!--<LinearLayout-->
@@ -144,7 +167,7 @@
             android:inputType="text"
             android:ems="10"
             android:id="@+id/register_event_street"
-            android:textSize="14sp"
+            android:textSize="18sp"
             android:hint="Ex: Rua Marechal Rondon" />
 
 
@@ -164,7 +187,7 @@
             android:inputType="date"
             android:ems="10"
             android:id="@+id/register_event_number"
-            android:textSize="14sp"
+            android:textSize="18sp"
             android:hint="Ex: 588" />
 
         <TextView
@@ -200,15 +223,15 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="date"
+            android:inputType="text"
             android:ems="10"
             android:id="@+id/register_event_date"
-            android:textSize="14sp"
+            android:textSize="18sp"
             android:hint="Ex: 28/01/2016" />
 
 
         <TextView
-            android:text="Data"
+            android:text="Hora"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -220,10 +243,10 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="date"
+            android:inputType="text"
             android:ems="10"
             android:id="@+id/register_event_hour"
-            android:textSize="14sp"
+            android:textSize="18sp"
             android:hint="Ex: 19:00" />
 
         <Button

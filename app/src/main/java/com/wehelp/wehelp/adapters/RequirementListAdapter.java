@@ -38,14 +38,15 @@ public class RequirementListAdapter extends ArrayAdapter<String> {
             System.out.println("timeline event: convertView was NULL");
         }
 
-        TextView requirementItem = (TextView)convertView.findViewById(R.id.requirement_text);
+        final TextView requirementItem = (TextView)convertView.findViewById(R.id.requirement_text);
         Button btnDeleteRequirement = (Button)convertView.findViewById(R.id.btn_requirement_delete);
 
         btnDeleteRequirement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println("CLICKED ON A REQUIREMENT ITEM! "+requirementItem.getText().toString());
                 requirementList.remove(position);
-                this.notify();
+                notifyDataSetChanged();
             }
         });
 

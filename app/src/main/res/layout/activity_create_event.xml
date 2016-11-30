@@ -34,7 +34,8 @@
             android:layout_alignParentStart="true"
             android:id="@+id/textView28"
             android:textIsSelectable="false"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="@android:color/black" />
 
         <EditText
             android:layout_width="match_parent"
@@ -42,7 +43,8 @@
             android:inputType="textPersonName"
             android:id="@+id/register_event_title"
             android:textSize="18sp"
-            android:hint="Ex: Sopão para os moradores de rua" />
+            android:hint="Ex: Sopão para os moradores de rua"
+            android:layout_marginBottom="15dp" />
 
         <TextView
             android:text="Descreva seu evento"
@@ -53,7 +55,8 @@
             android:layout_alignParentStart="true"
             android:id="@+id/textView002"
             android:textIsSelectable="false"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="@android:color/black" />
 
         <EditText
             android:layout_width="match_parent"
@@ -61,9 +64,8 @@
             android:inputType="textPersonName"
             android:id="@+id/register_event_desc"
             android:textSize="18sp"
-            android:hint="Ex: Este é um evento que irá ajudar!" />
-
-
+            android:hint="Ex: Este é um evento que irá ajudar!"
+            android:layout_marginBottom="15dp" />
 
 
         <TextView
@@ -74,7 +76,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:id="@+id/textview30"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="@android:color/black" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -104,7 +107,8 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/listview_requirements" />
+            android:id="@+id/listview_requirements"
+            android:layout_marginBottom="20dp" />
 
         <TextView
             android:text="Sobre que assunto é seu evento?"
@@ -114,7 +118,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:id="@+id/textView33"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="@android:color/black" />
 
         <EditText
             android:layout_width="match_parent"
@@ -123,7 +128,8 @@
             android:ems="10"
             android:id="@+id/register_event_category"
             android:textSize="18sp"
-            android:hint="Ex: Educação" />
+            android:hint="Ex: Educação"
+            android:layout_marginBottom="15dp" />
 
         <!--<LinearLayout-->
             <!--android:orientation="horizontal"-->
@@ -159,7 +165,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:id="@+id/txtStreetEvent"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="@android:color/black" />
 
         <EditText
             android:layout_width="match_parent"
@@ -168,7 +175,8 @@
             android:ems="10"
             android:id="@+id/register_event_street"
             android:textSize="18sp"
-            android:hint="Ex: Rua Marechal Rondon" />
+            android:hint="Ex: Rua Marechal Rondon"
+            android:layout_marginBottom="15dp" />
 
 
         <TextView
@@ -179,7 +187,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:id="@+id/txtNumberEvent"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="@android:color/black" />
 
         <EditText
             android:layout_width="match_parent"
@@ -188,7 +197,8 @@
             android:ems="10"
             android:id="@+id/register_event_number"
             android:textSize="18sp"
-            android:hint="Ex: 588" />
+            android:hint="Ex: 588"
+            android:layout_marginBottom="15dp" />
 
         <TextView
             android:text="Complemento"
@@ -198,7 +208,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:id="@+id/txtCompEvent"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="@android:color/black" />
 
         <EditText
             android:layout_width="match_parent"
@@ -207,7 +218,8 @@
             android:ems="10"
             android:id="@+id/register_event_comp"
             android:textSize="14sp"
-            android:hint="Ex: 203" />
+            android:hint="Ex: 203"
+            android:layout_marginBottom="15dp" />
 
 
         <TextView
@@ -218,7 +230,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:id="@+id/txtDateEvent"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="@android:color/black" />
 
         <EditText
             android:layout_width="match_parent"
@@ -227,7 +240,8 @@
             android:ems="10"
             android:id="@+id/register_event_date"
             android:textSize="18sp"
-            android:hint="Ex: 28/01/2016" />
+            android:hint="Ex: 28/01/2016"
+            android:layout_marginBottom="15dp" />
 
 
         <TextView
@@ -238,7 +252,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:id="@+id/txtHourEvent"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="@android:color/black" />
 
         <EditText
             android:layout_width="match_parent"
@@ -247,7 +262,8 @@
             android:ems="10"
             android:id="@+id/register_event_hour"
             android:textSize="18sp"
-            android:hint="Ex: 19:00" />
+            android:hint="Ex: 19:00"
+            android:layout_marginBottom="15dp" />
 
         <Button
             android:text="Button"

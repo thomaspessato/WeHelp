@@ -1,5 +1,6 @@
 package com.wehelp.wehelp.di;
 
+import com.wehelp.wehelp.CreateEventActivity;
 import com.wehelp.wehelp.LoginActivity;
 import com.wehelp.wehelp.MainActivity;
 import com.wehelp.wehelp.controllers.UserController;
@@ -20,5 +21,6 @@ public interface NetComponent {
     void inject(FragmentMap fragment);
     void inject(FragmentPersonRegister fragment);
     void inject(FragmentOngRegister fragment);
+    void inject(CreateEventActivity activity);
     // void inject(MyService service);
 }

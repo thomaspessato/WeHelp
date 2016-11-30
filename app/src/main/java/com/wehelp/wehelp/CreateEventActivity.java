@@ -16,19 +16,34 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wehelp.wehelp.adapters.RequirementListAdapter;
+import com.wehelp.wehelp.classes.Event;
+import com.wehelp.wehelp.classes.EventRequirement;
+import com.wehelp.wehelp.classes.WeHelpApp;
+import com.wehelp.wehelp.controllers.EventController;
+
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.inject.Inject;
+
 public class CreateEventActivity extends AppCompatActivity {
+
+
+    @Inject
+    public EventController eventController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
+        ((WeHelpApp)getApplication()).getNetComponent().inject(this);
 
         setTitle("Criar evento");
 
@@ -85,10 +100,12 @@ public class CreateEventActivity extends AppCompatActivity {
                 String addressComp = eventAddressComp.getText().toString();
                 String date = eventDate.getText().toString();
                 String hour = eventHour.getText().toString();
-                ArrayList requirementsArr = new ArrayList();
+                ArrayList<EventRequirement> requirementsArr = new ArrayList();
 
                 for (int i=0;i<requirementsArrayAdapter.getCount();i++){
-                    requirementsArr.add(i,requirementsArrayAdapter.getItem(i));
+                    EventRequirement req = new EventRequirement();
+                    req.setDescricao(requirementsArrayAdapter.getItem(i).toString());
+                    requirementsArr.add(req);
                 }
 
                 System.out.println("requirements: "+requirementsArr);
@@ -105,10 +122,11 @@ public class CreateEventActivity extends AppCompatActivity {
                 }
 
 
-
+                double latitude;
+                double longitude;
                 try {
-                    double latitude = geocoder.getFromLocationName(addressStreet+addressNumber+addressComp+", Porto Alegre",1).get(0).getLatitude();
-                    double longitude = geocoder.getFromLocationName(addressStreet+addressNumber+addressComp+", Porto Alegre",1).get(0).getLongitude();
+                    latitude = geocoder.getFromLocationName(addressStreet+addressNumber+addressComp+", Porto Alegre",1).get(0).getLatitude();
+                    longitude = geocoder.getFromLocationName(addressStreet+addressNumber+addressComp+", Porto Alegre",1).get(0).getLongitude();
                     System.out.println("lat: "+latitude);
                     System.out.println("lng: "+longitude);
                 } catch (IOException e) {
@@ -118,6 +136,36 @@ public class CreateEventActivity extends AppCompatActivity {
                 }
 
 //                IMPLEMENTAR CADASTRO DE EVENTO WS
+                Event event = new Event();
+                event.setNome(title);
+                event.setRua(addressStreet);
+                event.setComplemento(addressComp);
+                event.setCategoriaId(1);
+                event.setCertificado(true);
+                event.setCidade("Porto Alegre");
+                SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+                try {
+                    //event.setDataFim(sdf1.parse(date));
+                    event.setDataInicio(sdf1.parse(date + " " + hour + ":00"));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                event.setDescricao("");
+                event.setLat(latitude);
+                event.setLng(longitude);
+                event.setNumero(addressNumber);
+                event.setPais("Brasil");
+                event.setRanking(1);
+                event.setStatus("A");
+                event.setUsuarioId(((WeHelpApp)getApplication()).getUser().getId());
+                ArrayList<EventRequirement> listReq = new ArrayList<>();
+                event.setRequisitos(requirementsArr);
+                try {
+                    eventController.createEvent(event);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 

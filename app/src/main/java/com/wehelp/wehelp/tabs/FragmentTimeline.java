@@ -53,8 +53,8 @@ public class FragmentTimeline extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_tab_timeline, container, false);
-        /*
-        EventoService eventoService = new EventoService(ServiceContainer.getInstance(getContext()));
+
+//        EventoService eventoService = new EventoService(ServiceContainer.getInstance(getContext()));
 
         String data = "[\n" +
                 "  {\n" +
@@ -158,29 +158,23 @@ public class FragmentTimeline extends Fragment {
                 "  }\n" +
                 "]";
 
-
-        System.out.println("BEFORE GET EVENTS LIST");
-        eventoService.getEventsList(new IServiceResponseCallback() {
-            @Override
-            public void execute(JSONObject response) {
-
-            }
-
-        }, new IExecuteCallback() {
-            @Override
-            public void execute() {
-
-            }
-        });
-
-        System.out.println("AFTER GET EVENTS LIST");
+//        eventoService.getEventsList(new IServiceResponseCallback() {
+//            @Override
+//            public void execute(JSONObject response) {
+//
+//            }
+//
+//        }, new IExecuteCallback() {
+//            @Override
+//            public void execute() {
+//
+//            }
+//        });
 
         listView = (ListView)rootView.findViewById(R.id.timeline_listview);
-
         eventArrayAdapter = new TimelineEventAdapter(getContext(),eventList);
         listView.setAdapter(eventArrayAdapter);
 //        footer = View.inflate(getActivity(),R.layout.progress_bar,null); // to make lazy load
-
         swipeRefreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -196,13 +190,13 @@ public class FragmentTimeline extends Fragment {
                 Event event = new Event();
                 JSONObject dataEvent = (JSONObject) jsonArray.get(i);
                 //set image
-                event.setTitle(dataEvent.getString("descricao"));
-                event.setAddressCity(dataEvent.getString("cidade"));
-                event.setAddressNumber(dataEvent.getString("numero"));
-                event.setAddressCity("Porto Alegre");
+//                event.setTitle(dataEvent.getString("descricao"));
+                event.setCidade(dataEvent.getString("cidade"));
+                event.setNumero(dataEvent.getString("numero"));
+//                event.setAddressCity("Porto Alegre");
 //                String date = "12-12-2016"; //how to pass date variable to method? (setEndDate)
-                event.setCategory("Categoria "+i);
-                event.setCreator("Creator "+ i);
+//                event.setCategory("Categoria "+i);
+//                event.setUsuario("Creator "+ i);
 
                 eventList.add(event);
             }
@@ -210,9 +204,8 @@ public class FragmentTimeline extends Fragment {
             e.printStackTrace();
         }
 
-
         eventArrayAdapter.notifyDataSetChanged();
-        */
+
         return rootView;
     }
 }

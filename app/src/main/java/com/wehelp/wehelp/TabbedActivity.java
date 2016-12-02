@@ -147,10 +147,14 @@ public class TabbedActivity extends AppCompatActivity {
         };
 
 
-        TextView username = (TextView)headerView.findViewById(R.id.username);
-        TextView email = (TextView)headerView.findViewById(R.id.email);
-        username.setText("WeHelp Master");
-        email.setText("email@wehelp.com.br");
+        TextView usernameTxt = (TextView)headerView.findViewById(R.id.username);
+        TextView emailTxt = (TextView)headerView.findViewById(R.id.email);
+
+        String name = getIntent().getStringExtra("nome");
+        String email = getIntent().getStringExtra("email");
+
+        usernameTxt.setText(name);
+        emailTxt.setText(email);
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();

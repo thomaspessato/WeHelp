@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_new_requirement"
                 android:layout_weight="1"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -266,10 +266,11 @@
             android:layout_marginBottom="15dp" />
 
         <Button
-            android:text="Button"
+            android:text="CADASTRAR"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_register_event" />
+            android:id="@+id/btn_register_event"
+            style="@style/Widget.AppCompat.Button.Colored" />
 
     </LinearLayout>
 

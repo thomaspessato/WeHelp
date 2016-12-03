@@ -1,6 +1,7 @@
 package com.wehelp.wehelp;
 
 import android.location.Geocoder;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.wehelp.wehelp.adapters.RequirementListAdapter;
 import com.wehelp.wehelp.classes.Event;
 import com.wehelp.wehelp.classes.EventRequirement;
+import com.wehelp.wehelp.classes.User;
 import com.wehelp.wehelp.classes.WeHelpApp;
 import com.wehelp.wehelp.controllers.EventController;
 
@@ -57,7 +59,9 @@ public class CreateEventActivity extends AppCompatActivity {
         final EditText eventHour = (EditText)findViewById(R.id.register_event_hour);
         Button btnNewRequirement = (Button)findViewById(R.id.btn_new_requirement);
         Button btnRegisterEvent = (Button)findViewById(R.id.btn_register_event);
+        final EditText eventDesc = (EditText)findViewById(R.id.register_event_desc);
         final ListView lvRequirements = (ListView)findViewById(R.id.listview_requirements);
+
         final ArrayList<String> listItems=new ArrayList<String>();
 
         final ArrayAdapter requirementsArrayAdapter;
@@ -100,6 +104,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 String addressComp = eventAddressComp.getText().toString();
                 String date = eventDate.getText().toString();
                 String hour = eventHour.getText().toString();
+                String desc = eventDesc.getText().toString();
                 ArrayList<EventRequirement> requirementsArr = new ArrayList();
 
                 for (int i=0;i<requirementsArrayAdapter.getCount();i++){
@@ -115,6 +120,7 @@ public class CreateEventActivity extends AppCompatActivity {
                         addressStreet.equalsIgnoreCase("") ||
                         addressNumber.equalsIgnoreCase("") ||
                         addressComp.equalsIgnoreCase("") ||
+                        desc.equalsIgnoreCase("") ||
                         date.equalsIgnoreCase("") ||
                         hour.equalsIgnoreCase("")) {
                     Toast.makeText(getApplicationContext(), "Desculpe, todos os campos são necessários!", Toast.LENGTH_SHORT).show();
@@ -150,7 +156,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                event.setDescricao("");
+                event.setDescricao(desc);
                 event.setLat(latitude);
                 event.setLng(longitude);
                 event.setNumero(addressNumber);
@@ -160,12 +166,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 event.setUsuarioId(((WeHelpApp)getApplication()).getUser().getId());
                 ArrayList<EventRequirement> listReq = new ArrayList<>();
                 event.setRequisitos(requirementsArr);
-                try {
-                    eventController.createEvent(event);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
+                new CreateEventTask().execute(event);
             }
         });
 
@@ -193,6 +194,45 @@ public class CreateEventActivity extends AppCompatActivity {
         listView.setLayoutParams(params);
         listView.requestLayout();
 
-    };
+    }
+
+    private class CreateEventTask extends AsyncTask<Event, Void, Event> {
+
+        @Override
+        protected void onPreExecute() {
+            // carregar loader
+        }
+
+        @Override
+        protected Event doInBackground(Event... event) {
+            try {
+                eventController.createEvent(event[0]);
+                while (eventController.eventTemp == null && !eventController.errorService){}
+                if (eventController.errorService) {
+                    return null;
+                }
+                Event eventReturned = eventController.eventTemp;
+                eventController.eventTemp = null;
+                return eventReturned;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        protected void onPostExecute(Event event) {
+            if (event == null) {
+                Toast.makeText(getApplicationContext(), eventController.errorMessages.toString(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity().getApplicationContext(), "Erro ao registrar pessoa", Toast.LENGTH_LONG).show();
+//                Log.d("WeHelpWS", userController.errorMessages.toString());
+            } else {
+                Toast.makeText(getApplicationContext(), "Retorno: " + event.getNome(), Toast.LENGTH_LONG).show();
+            }
+
+            // remover loader
+        }
+    }
+
+
 
 }

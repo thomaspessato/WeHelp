@@ -14,19 +14,11 @@ import android.widget.ListView;
 import com.wehelp.wehelp.R;
 import com.wehelp.wehelp.adapters.TimelineEventAdapter;
 import com.wehelp.wehelp.classes.Event;
-import com.wehelp.wehelp.classes.ServiceContainer;
-import com.wehelp.wehelp.services.EventoService;
-import com.wehelp.wehelp.services.IExecuteCallback;
-import com.wehelp.wehelp.services.IServiceResponseCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Date;
-import java.text.ParseException;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**

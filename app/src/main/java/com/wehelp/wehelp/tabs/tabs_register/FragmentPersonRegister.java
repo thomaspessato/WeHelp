@@ -119,14 +119,6 @@ public class FragmentPersonRegister extends Fragment {
                         person.setModerador(false);
                         person.setNome(txtName.getText().toString());
                         person.setRanking(0);
-//                        person.setSexo("m");
-//                        SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy");
-//                        try {
-//                            person.setDataNascimento(sdf1.parse("02/02/1980"));
-//                        } catch (ParseException e) {
-//                            e.printStackTrace();
-//                        }
-
                         user.setPessoa(person);
 
                         new CreatePersonTask().execute(user);

@@ -2,7 +2,11 @@ package com.wehelp.wehelp;
 
 import android.content.DialogInterface;
 import android.location.Geocoder;
+
 import android.support.v7.app.AlertDialog;
+
+import android.os.AsyncTask;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -21,9 +25,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wehelp.wehelp.adapters.RequirementListAdapter;
+import com.wehelp.wehelp.classes.Event;
+import com.wehelp.wehelp.classes.EventRequirement;
+import com.wehelp.wehelp.classes.User;
+import com.wehelp.wehelp.classes.WeHelpApp;
+import com.wehelp.wehelp.controllers.EventController;
+
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
+
+import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,12 +45,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.inject.Inject;
+
 public class CreateEventActivity extends AppCompatActivity {
+
+
+    @Inject
+    public EventController eventController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
+        ((WeHelpApp)getApplication()).getNetComponent().inject(this);
 
         setTitle("Criar evento");
 
@@ -50,7 +71,9 @@ public class CreateEventActivity extends AppCompatActivity {
         final EditText eventHour = (EditText)findViewById(R.id.register_event_hour);
         Button btnNewRequirement = (Button)findViewById(R.id.btn_new_requirement);
         Button btnRegisterEvent = (Button)findViewById(R.id.btn_register_event);
+        final EditText eventDesc = (EditText)findViewById(R.id.register_event_desc);
         final ListView lvRequirements = (ListView)findViewById(R.id.listview_requirements);
+
         final ArrayList<String> listItems=new ArrayList<String>();
 
         final ArrayAdapter requirementsArrayAdapter;
@@ -248,10 +271,13 @@ public class CreateEventActivity extends AppCompatActivity {
                 String addressComp = eventAddressComp.getText().toString();
                 String date = eventDate.getText().toString();
                 String hour = eventHour.getText().toString();
-                ArrayList requirementsArr = new ArrayList();
+                String desc = eventDesc.getText().toString();
+                ArrayList<EventRequirement> requirementsArr = new ArrayList();
 
                 for (int i=0;i<requirementsArrayAdapter.getCount();i++){
-                    requirementsArr.add(i,requirementsArrayAdapter.getItem(i));
+                    EventRequirement req = new EventRequirement();
+                    req.setDescricao(requirementsArrayAdapter.getItem(i).toString());
+                    requirementsArr.add(req);
                 }
 
                 System.out.println("requirements: "+requirementsArr);
@@ -261,14 +287,18 @@ public class CreateEventActivity extends AppCompatActivity {
                         addressStreet.equalsIgnoreCase("") ||
                         addressNumber.equalsIgnoreCase("") ||
                         addressComp.equalsIgnoreCase("") ||
+                        desc.equalsIgnoreCase("") ||
                         date.equalsIgnoreCase("") ||
                         hour.equalsIgnoreCase("")) {
                     Toast.makeText(getApplicationContext(), "Desculpe, todos os campos são necessários!", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                double latitude;
+                double longitude;
                 try {
-                    double latitude = geocoder.getFromLocationName(addressStreet+addressNumber+addressComp+", Porto Alegre",1).get(0).getLatitude();
-                    double longitude = geocoder.getFromLocationName(addressStreet+addressNumber+addressComp+", Porto Alegre",1).get(0).getLongitude();
+                    latitude = geocoder.getFromLocationName(addressStreet+addressNumber+addressComp+", Porto Alegre",1).get(0).getLatitude();
+                    longitude = geocoder.getFromLocationName(addressStreet+addressNumber+addressComp+", Porto Alegre",1).get(0).getLongitude();
                     System.out.println("lat: "+latitude);
                     System.out.println("lng: "+longitude);
                 } catch (IOException e) {
@@ -278,6 +308,31 @@ public class CreateEventActivity extends AppCompatActivity {
                 }
 
 //                IMPLEMENTAR CADASTRO DE EVENTO WS
+                Event event = new Event();
+                event.setNome(title);
+                event.setRua(addressStreet);
+                event.setComplemento(addressComp);
+                event.setCategoriaId(1);
+                event.setCertificado(true);
+                event.setCidade("Porto Alegre");
+                SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+                try {
+                    //event.setDataFim(sdf1.parse(date));
+                    event.setDataInicio(sdf1.parse(date + " " + hour + ":00"));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                event.setDescricao(desc);
+                event.setLat(latitude);
+                event.setLng(longitude);
+                event.setNumero(addressNumber);
+                event.setPais("Brasil");
+                event.setRanking(1);
+                event.setStatus("A");
+                event.setUsuarioId(((WeHelpApp)getApplication()).getUser().getId());
+                ArrayList<EventRequirement> listReq = new ArrayList<>();
+                event.setRequisitos(requirementsArr);
+                new CreateEventTask().execute(event);
             }
         });
 
@@ -305,6 +360,45 @@ public class CreateEventActivity extends AppCompatActivity {
         listView.setLayoutParams(params);
         listView.requestLayout();
 
-    };
+    }
+
+    private class CreateEventTask extends AsyncTask<Event, Void, Event> {
+
+        @Override
+        protected void onPreExecute() {
+            // carregar loader
+        }
+
+        @Override
+        protected Event doInBackground(Event... event) {
+            try {
+                eventController.createEvent(event[0]);
+                while (eventController.eventTemp == null && !eventController.errorService){}
+                if (eventController.errorService) {
+                    return null;
+                }
+                Event eventReturned = eventController.eventTemp;
+                eventController.eventTemp = null;
+                return eventReturned;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        protected void onPostExecute(Event event) {
+            if (event == null) {
+                Toast.makeText(getApplicationContext(), eventController.errorMessages.toString(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity().getApplicationContext(), "Erro ao registrar pessoa", Toast.LENGTH_LONG).show();
+//                Log.d("WeHelpWS", userController.errorMessages.toString());
+            } else {
+                Toast.makeText(getApplicationContext(), "Retorno: " + event.getNome(), Toast.LENGTH_LONG).show();
+            }
+
+            // remover loader
+        }
+    }
+
+
 
 }

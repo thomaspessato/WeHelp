@@ -87,11 +87,8 @@ public class UserService {
         Map<String, String>  params = new HashMap<>();
         params.put("nome", user.getPessoa().getNome());
         params.put("foto", user.getPessoa().getFoto());
-//        params.put("telefone", user.getPessoa().getTelefone());
         params.put("ranking", String.valueOf(user.getPessoa().getRanking()));
         params.put("moderador", user.getPessoa().isModerador() ? "1" : "0");
-//        params.put("sexo", user.getPessoa().getSexo().toUpperCase());
-//        params.put("data_nascimento", new SimpleDateFormat("yyyy-MM-dd").format(user.getPessoa().getDataNascimento()));
         params.put("email", user.getEmail());
         params.put("password", user.getPassword());
 
@@ -120,17 +117,13 @@ public class UserService {
         params.put("cnpj", user.getOng().getCnpj());
         params.put("foto", user.getOng().getFoto());
         params.put("telefone", user.getOng().getTelefone());
-        params.put("nacionalidade", user.getOng().getNacionalidade());
         params.put("uf", user.getOng().getUf());
         params.put("cidade", user.getOng().getCidade());
         params.put("rua", user.getOng().getRua());
         params.put("numero", toString().valueOf(user.getOng().getNumero()));
         params.put("complemento", user.getOng().getComplemento());
         params.put("cep", user.getOng().getCep());
-        params.put("bairro", user.getOng().getBairro());
         params.put("ranking", String.valueOf(user.getOng().getRanking()));
-        params.put("responsavel_nome", user.getOng().getResponsavelNome());
-        params.put("responsavel_cpf", user.getOng().getResponsavelCpf());
         params.put("ativo", user.getOng().isAtivo() ? "1" : "0");
         params.put("lat", String.valueOf(user.getOng().getLat()));
         params.put("lng", String.valueOf(user.getOng().getLng()));

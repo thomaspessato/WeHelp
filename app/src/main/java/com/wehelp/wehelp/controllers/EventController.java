@@ -1,5 +1,6 @@
 package com.wehelp.wehelp.controllers;
 
+import android.app.Application;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
@@ -8,6 +9,7 @@ import com.wehelp.wehelp.classes.Event;
 import com.wehelp.wehelp.classes.EventRequirement;
 import com.wehelp.wehelp.classes.User;
 import com.wehelp.wehelp.classes.Util;
+import com.wehelp.wehelp.classes.WeHelpApp;
 import com.wehelp.wehelp.services.EventService;
 import com.wehelp.wehelp.services.IServiceArrayResponseCallback;
 import com.wehelp.wehelp.services.IServiceErrorCallback;
@@ -25,6 +27,7 @@ public class EventController {
     EventService eventService;
     public Gson gson;
     private ArrayList<Event> listEvents;
+    public WeHelpApp weHelpApp;
 
     public Event eventTemp = null;
     public boolean errorService = false;
@@ -38,10 +41,11 @@ public class EventController {
         this.listEvents = listEvents;
     }
 
-    public EventController(EventService eventService, Gson gson) {
+    public EventController(EventService eventService, Gson gson, Application application) {
 
         this.eventService = eventService;
         this.gson = gson;
+        this.weHelpApp = (WeHelpApp)application;
     }
 
     public void getEvents(double lat, double lng, int perimetro) {

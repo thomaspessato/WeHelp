@@ -49,22 +49,22 @@ public class EventService {
         json.put("rua", event.getRua());
         json.put("numero", event.getNumero());
         json.put("complemento", event.getComplemento());
-        json.put("cep", event.getCep());
-        json.put("bairro", event.getBairro());
         json.put("ranking", event.getRanking());
         json.put("status", event.getStatus());
         json.put("lat", event.getLat());
         json.put("lng", event.getLng());
         json.put("certificado", event.isCertificado() ? "1" : "0");
         json.put("data_inicio",  new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(event.getDataInicio()));
-        json.put("data_fim", new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(event.getDataFim()));
 
-        JSONObject jsonReq = new JSONObject();
-        jsonReq.put("descricao", "1 violão");
-        JSONArray jsonArray = new JSONArray();
-        jsonArray.put(jsonReq);
-
-        json.put("requisitos", jsonArray);
+        if (event.getRequisitos().size() > 0) {
+            JSONArray jsonArray = new JSONArray();
+            for (int i = 0; i < event.getRequisitos().size(); i++) {
+                JSONObject jsonReq = new JSONObject();
+                jsonReq.put("descricao", event.getRequisitos().get(i).getDescricao());
+                jsonArray.put(jsonReq);
+            }
+            json.put("requisitos", jsonArray);
+        }
 
         this.serviceContainer.PostRequest(url, json, serviceResponseCallback, serviceErrorCallback);
     }

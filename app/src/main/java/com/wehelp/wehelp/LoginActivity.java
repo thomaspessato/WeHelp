@@ -18,6 +18,7 @@ import com.wehelp.wehelp.services.IExecuteCallback;
 import com.wehelp.wehelp.services.IServiceResponseCallback;
 import com.wehelp.wehelp.services.UserService;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.inject.Inject;
@@ -58,6 +59,17 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void execute(JSONObject response) {
                                     Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
+                                    try {
+                                        System.out.println("RESPONSE FULL: "+response);
+                                        JSONObject pessoa = response.getJSONObject("pessoa");
+                                        intent.putExtra("nome",pessoa.getString("nome"));
+                                        intent.putExtra("email",response.getString("email"));
+                                        intent.putExtra("pessoa_id",pessoa.getString("pessoa_id"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+//                                    intent.putExtra("EXTRA_SESSION_ID", sessionId);
                                     startActivity(intent);
                                     loadingPanel.setVisibility(View.GONE);
                                 }

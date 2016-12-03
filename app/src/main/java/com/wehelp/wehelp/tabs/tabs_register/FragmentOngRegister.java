@@ -1,6 +1,7 @@
 package com.wehelp.wehelp.tabs.tabs_register;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,11 +15,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.wehelp.wehelp.R;
+import com.wehelp.wehelp.TabbedActivity;
 import com.wehelp.wehelp.classes.Ong;
 import com.wehelp.wehelp.classes.Person;
 import com.wehelp.wehelp.classes.User;
 import com.wehelp.wehelp.classes.WeHelpApp;
 import com.wehelp.wehelp.controllers.UserController;
+import com.wehelp.wehelp.services.IExecuteCallback;
+import com.wehelp.wehelp.services.IServiceResponseCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -238,6 +245,35 @@ public class FragmentOngRegister extends Fragment {
                 Log.d("WeHelpWS", userController.errorMessages.toString());
             } else {
                 Toast.makeText(getActivity().getApplicationContext(), "Retorno: " + user.getOng().getNome(), Toast.LENGTH_LONG).show();
+
+                String email = ongMail.getText().toString();
+                String password = ongPassword.getText().toString();
+
+                userController.login(email, password,
+                        new IServiceResponseCallback() {
+                            @Override
+                            public void execute(JSONObject response) {
+                                Intent intent = new Intent(getActivity(), TabbedActivity.class);
+                                try {
+                                    System.out.println("RESPONSE FULL: "+response);
+                                    JSONObject pessoa = response.getJSONObject("pessoa");
+                                    intent.putExtra("nome",pessoa.getString("nome"));
+                                    intent.putExtra("email",response.getString("email"));
+                                    intent.putExtra("pessoa_id",pessoa.getString("pessoa_id"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                startActivity(intent);
+                            }
+                        },
+                        new IExecuteCallback() {
+                            @Override
+                            public void execute() {
+                                Toast.makeText(getActivity(), "Erro ao logar", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                );
             }
         }
     }

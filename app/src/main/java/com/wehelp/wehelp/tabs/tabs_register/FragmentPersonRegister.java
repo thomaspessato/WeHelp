@@ -107,8 +107,6 @@ public class FragmentPersonRegister extends Fragment {
 
                 if(!password.equals("") && !passwordValidation.equals("") && !name.equals("") && !email.equals("")) {
                     if(password.equals(passwordValidation)) {
-                        System.out.println("PASSWORD: "+password);
-                        System.out.println("PASSWORD VALIDATION: "+passwordValidation);
                         User user = new User();
                         Person person = new Person();
 

@@ -48,6 +48,10 @@ public class EventController {
     }
 
     public void getEvents(double lat, double lng, int perimetro) {
+        this.errorService = false;
+        this.setListEvents(null);
+        this.errorMessages = null;
+
         this.eventService.getEvents(lat, lng, perimetro, new IServiceArrayResponseCallback() {
             @Override
             public void execute(JSONArray response) {
@@ -57,6 +61,8 @@ public class EventController {
             @Override
             public void execute(VolleyError error) {
                 setListEvents(new ArrayList<Event>());
+                errorService = true;
+                errorMessages = Util.ServiceErrorToJson(error);
             }
         });
     }

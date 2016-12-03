@@ -42,7 +42,6 @@ public class EventController {
     }
 
     public EventController(EventService eventService, Gson gson, Application application) {
-
         this.eventService = eventService;
         this.gson = gson;
         this.weHelpApp = (WeHelpApp)application;

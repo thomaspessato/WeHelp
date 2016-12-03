@@ -11,7 +11,7 @@
     <color name="SecondaryTextColor">#727272</color>
     <color name="LightPrimaryColor">#FFE0B2</color>
 
-    <color name="PriceTextColor">#99CC00</color>
+    <color name="PriceTextColor">#a3000000</color>
 
 
     <color name="tabBackgroundColor">#444</color>

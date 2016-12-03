@@ -236,12 +236,12 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
             android:ems="10"
             android:id="@+id/register_event_date"
             android:textSize="18sp"
             android:hint="Ex: 28/01/2016"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:inputType="date" />
 
 
         <TextView
@@ -258,12 +258,12 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
             android:ems="10"
             android:id="@+id/register_event_hour"
             android:textSize="18sp"
             android:hint="Ex: 19:00"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:inputType="time" />
 
         <Button
             android:text="CADASTRAR"

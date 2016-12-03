@@ -1,12 +1,20 @@
 package com.wehelp.wehelp;
 
+import android.content.DialogInterface;
 import android.location.Geocoder;
+
+import android.support.v7.app.AlertDialog;
+
 import android.os.AsyncTask;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,9 +35,13 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
+
 import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -75,28 +87,175 @@ public class CreateEventActivity extends AppCompatActivity {
         final int[] requirementsCounter = {0};
         lvRequirements.setAdapter(requirementsArrayAdapter);
 
-        btnNewRequirement.setOnClickListener(new View.OnClickListener() {
+
+        TextWatcher tw = new TextWatcher() {
             @Override
-            public void onClick(View view) {
-                String requirement = eventRequirement.getText().toString();
-                if(!requirement.equalsIgnoreCase("")) {
-                    listItems.add(requirementsCounter[0],requirement);
-                    requirementsArrayAdapter.notifyDataSetChanged();
-                    eventRequirement.setText("");
-                    requirementsCounter[0]++;
-                    setListViewHeightBasedOnChildren(lvRequirements);
-                } else {
-                    Toast.makeText(getApplicationContext(), "Por favor, preencha algo no requisito", Toast.LENGTH_SHORT).show();
-                }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!s.toString().equals(current)) {
+                    String clean = s.toString().replaceAll("[^\\d.]", "");
+                    String cleanC = current.replaceAll("[^\\d.]", "");
+
+                    int cl = clean.length();
+                    int sel = cl;
+                    for (int i = 2; i <= cl && i < 6; i += 2) {
+                        sel++;
+                    }
+                    //Fix for pressing delete next to a forward slash
+                    if (clean.equals(cleanC)) sel--;
+
+                    if (clean.length() < 8){
+                        clean = clean + ddmmyyyy.substring(clean.length());
+                    }else{
+                        //This part makes sure that when we finish entering numbers
+                        //the date is correct, fixing it otherwise
+                        int day  = Integer.parseInt(clean.substring(0,2));
+                        int mon  = Integer.parseInt(clean.substring(2,4));
+                        int year = Integer.parseInt(clean.substring(4,8));
+
+                        if(mon > 12) mon = 12;
+                        cal.set(Calendar.MONTH, mon-1);
+                        year = (year<1900)?1900:(year>2100)?2100:year;
+                        cal.set(Calendar.YEAR, year);
+                        // ^ first set year for the line below to work correctly
+                        //with leap years - otherwise, date e.g. 29/02/2012
+                        //would be automatically corrected to 28/02/2012
+
+                        day = (day > cal.getActualMaximum(Calendar.DATE))? cal.getActualMaximum(Calendar.DATE):day;
+                        clean = String.format("%02d%02d%02d",day, mon, year);
+                    }
+
+                    clean = String.format("%s/%s/%s", clean.substring(0, 2),
+                            clean.substring(2, 4),
+                            clean.substring(4, 8));
+
+                    sel = sel < 0 ? 0 : sel;
+                    current = clean;
+                    eventDate.setText(current);
+                    eventDate.setSelection(sel < current.length() ? sel : current.length());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+
+            private String current = "";
+            private String ddmmyyyy = "DDMMYYYY";
+            private Calendar cal = Calendar.getInstance();
+        };
+        TextWatcher twHour = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!s.toString().equals(current)) {
+                    String clean = s.toString().replaceAll("[^\\d.]", "");
+                    String cleanC = current.replaceAll("[^\\d.]", "");
+
+                    int cl = clean.length();
+                    int sel = cl;
+                    for (int i = 2; i <= cl && i < 4; i += 2) {
+                        sel++;
+                    }
+                    //Fix for pressing delete next to a forward slash
+                    if (clean.equals(cleanC)) sel--;
+
+                    if (clean.length() < 4){
+                        clean = clean + hhmm.substring(clean.length());
+                    }else{
+                        //This part makes sure that when we finish entering numbers
+                        //the date is correct, fixing it otherwise
+                        int hour  = Integer.parseInt(clean.substring(0,2));
+                        int min  = Integer.parseInt(clean.substring(2,4));
+//                        int year = Integer.parseInt(clean.substring(4,8));
+
+                        if(hour > 23) {
+                            hour = 23;
+                        }
+
+                        if(min > 59) {
+                            min = 59;
+                        }
+
+                        clean = String.format("%02d%02d",hour, min);
+                    }
+
+                    clean = String.format("%s:%s", clean.substring(0, 2),
+                            clean.substring(2, 4));
+
+                    sel = sel < 0 ? 0 : sel;
+                    current = clean;
+                    eventHour.setText(current);
+                    eventHour.setSelection(sel < current.length() ? sel : current.length());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+
+            private String current = "";
+            private String hhmm = "hhmm";
+            private Calendar cal = Calendar.getInstance();
+        };
+
+
+
+        eventHour.addTextChangedListener(twHour);
+        eventDate.addTextChangedListener(tw);
+
+
+        btnNewRequirement.setOnClickListener(new View.OnClickListener() {
+            @Override
+                public void onClick(View view) {
+                    String requirement = eventRequirement.getText().toString();
+                    if(!requirement.equalsIgnoreCase("")) {
+                        listItems.add(requirement);
+                        requirementsArrayAdapter.notifyDataSetChanged();
+                        eventRequirement.setText("");
+                        setListViewHeightBasedOnChildren(lvRequirements);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Por favor, preencha algo no requisito", Toast.LENGTH_SHORT).show();
+                    }
+                }
         });
+
+
+//
+//        lvRequirements.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+//
+//                System.out.println("clicked on item");
+//                AlertDialog.Builder adb=new AlertDialog.Builder(CreateEventActivity.this);
+//                adb.setTitle("Delete?");
+//                adb.setMessage("Are you sure you want to delete " + position);
+//                final int positionToRemove = position;
+//                adb.setNegativeButton("Cancel", null);
+//                adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        listItems.remove(positionToRemove);
+//                        requirementsArrayAdapter.notifyDataSetChanged();
+//                    }});
+//                adb.show();
+//            }
+//        });
+
 
 
         btnRegisterEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String title = eventTitle.getText().toString();
                 String category = eventCategory.getText().toString();
                 String addressStreet = eventAddressStreet.getText().toString();
@@ -126,7 +285,6 @@ public class CreateEventActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Desculpe, todos os campos são necessários!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
 
                 double latitude;
                 double longitude;

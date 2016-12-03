@@ -9,11 +9,8 @@ public class Person {
     private int id;
     private String nome;
     private String foto;
-    private String telefone;
     private int ranking;
     private boolean moderador;
-    private String sexo;
-    private Date data_nascimento;
     private Date created_at;
     private Date updated_at;
 
@@ -42,14 +39,6 @@ public class Person {
         this.foto = foto;
     }
 
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
     public int getRanking() {
         return ranking;
     }
@@ -66,14 +55,6 @@ public class Person {
         this.moderador = moderador;
     }
 
-    public Date getDataNascimento() {
-        return data_nascimento;
-    }
-
-    public void setDataNascimento(Date data_nascimento) {
-        this.data_nascimento = data_nascimento;
-    }
-
     public Date getCreatedAt() {
         return created_at;
     }
@@ -88,14 +69,5 @@ public class Person {
 
     public void setUpdatedAt(Date updated_at) {
         this.updated_at = updated_at;
-    }
-
-
-    public String getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
     }
 }

@@ -79,8 +79,8 @@ public class NetModule {
     }
 
     @Provides
-    EventController provideEventController(EventService eventService, Gson gson) {
-        EventController eventController = new EventController(eventService, gson);
+    EventController provideEventController(EventService eventService, Gson gson, Application application) {
+        EventController eventController = new EventController(eventService, gson, application);
         return eventController;
     }
 

@@ -158,7 +158,6 @@ public class FragmentOngRegister extends Fragment {
                         ong.setCep(CEP);
                         ong.setCidade("Porto Alegre");
                         ong.setCnpj(CNPJ);
-                        ong.setComplemento(complement);
                         ong.setLat(-30.034647);
                         ong.setLng(-51.217658);
                         ong.setRua(street);

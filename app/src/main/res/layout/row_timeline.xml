@@ -84,10 +84,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.8"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:id="@+id/linearLayout2"
             android:layout_below="@+id/imageView2"
-            android:id="@+id/linearLayout2">
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -99,19 +99,11 @@
                 android:layout_marginBottom="5dp"
                 android:textColor="@color/colorPrimary" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="10 caixas de lápis de cor"
-                android:id="@+id/textView8" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="20 pacotes de folhas A4"
-                android:id="@+id/textView9" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/event_requirements_layout"></LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -120,6 +112,12 @@
                 android:text="Data: 19/03/2016 - Avenida Assis Brasil, 393"
                 android:id="@+id/event_timeline_date"
                 android:layout_marginTop="10dp" />
+
+            <TextView
+                android:text="Horário: "
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/event_timeline_hour" />
 
             <TextView
                 android:layout_width="wrap_content"

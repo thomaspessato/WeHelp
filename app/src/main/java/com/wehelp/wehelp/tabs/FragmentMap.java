@@ -39,6 +39,7 @@ import android.widget.Toast;
 
 import com.wehelp.wehelp.EventDetailActivity;
 import com.wehelp.wehelp.R;
+import com.wehelp.wehelp.TabbedActivity;
 import com.wehelp.wehelp.classes.Category;
 import com.wehelp.wehelp.classes.Event;
 import com.wehelp.wehelp.classes.EventRequirement;
@@ -269,9 +270,12 @@ public class FragmentMap extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(), eventController.errorMessages.toString(), Toast.LENGTH_LONG).show();
             } else {
                 listEvents = events;
-                Toast.makeText(getActivity().getApplicationContext(), "Retorno: OK", Toast.LENGTH_LONG).show();
-            }
+                //Toast.makeText(getActivity().getApplicationContext(), "Retorno: OK", Toast.LENGTH_LONG).show();
+                // Adiciona lista de eventos a Activity principal
 
+            }
+            TabbedActivity tab = (TabbedActivity)getActivity();
+            tab.listEvents = listEvents;
 
             mMapView.getMapAsync(new OnMapReadyCallback() {
                 @Override

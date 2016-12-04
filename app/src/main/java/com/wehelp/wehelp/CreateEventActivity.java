@@ -1,6 +1,7 @@
 package com.wehelp.wehelp;
 
 import android.content.DialogInterface;
+import android.location.Address;
 import android.location.Geocoder;
 
 import android.support.v7.app.AlertDialog;
@@ -278,7 +279,6 @@ public class CreateEventActivity extends AppCompatActivity {
                         category.equalsIgnoreCase("") ||
                         addressStreet.equalsIgnoreCase("") ||
                         addressNumber.equalsIgnoreCase("") ||
-                        addressComp.equalsIgnoreCase("") ||
                         desc.equalsIgnoreCase("") ||
                         date.equalsIgnoreCase("") ||
                         hour.equalsIgnoreCase("")) {
@@ -286,17 +286,26 @@ public class CreateEventActivity extends AppCompatActivity {
                     return;
                 }
 
-                double latitude;
-                double longitude;
-                try {
-                    latitude = geocoder.getFromLocationName(addressStreet+addressNumber+addressComp+", Porto Alegre",1).get(0).getLatitude();
-                    longitude = geocoder.getFromLocationName(addressStreet+addressNumber+addressComp+", Porto Alegre",1).get(0).getLongitude();
-                    System.out.println("lat: "+latitude);
-                    System.out.println("lng: "+longitude);
-                } catch (IOException e) {
-                    Toast.makeText(getApplicationContext(), "Endereço inválido", Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
-                    return;
+                double latitude = 0;
+                double longitude = 0;
+                Address address;
+                int tentativas = 3;
+                while (tentativas > 0) {
+                    try {
+                        address = geocoder.getFromLocationName(addressStreet + ", " + addressNumber + ", " + addressComp + ", Porto Alegre", 1).get(0);
+                        latitude = address.getLatitude();
+                        longitude = address.getLongitude();
+                        System.out.println("lat: " + latitude);
+                        System.out.println("lng: " + longitude);
+                        break;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        tentativas--;
+                        if (tentativas == 0) {
+                            Toast.makeText(getApplicationContext(), "Endereço inválido", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
                 }
 
 //                IMPLEMENTAR CADASTRO DE EVENTO WS
@@ -304,9 +313,10 @@ public class CreateEventActivity extends AppCompatActivity {
                 event.setNome(title);
                 event.setRua(addressStreet);
                 event.setComplemento(addressComp);
-                event.setCategoriaId(1);
+                event.setCategoriaId(1); //pegar categoria selecionada
                 event.setCertificado(true);
                 event.setCidade("Porto Alegre");
+                event.setUf("RS");
                 SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
                 try {
                     //event.setDataFim(sdf1.parse(date));

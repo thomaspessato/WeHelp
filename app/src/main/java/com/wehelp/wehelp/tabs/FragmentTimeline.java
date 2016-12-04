@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.wehelp.wehelp.R;
+import com.wehelp.wehelp.TabbedActivity;
 import com.wehelp.wehelp.adapters.TimelineEventAdapter;
 import com.wehelp.wehelp.classes.Event;
 import com.wehelp.wehelp.classes.ServiceContainer;
@@ -39,6 +40,7 @@ public class FragmentTimeline extends Fragment {
     ListView listView;
     View footer; //lazy load
     private SwipeRefreshLayout swipeRefreshLayout;
+    ViewGroup rootView;
 
     public static FragmentTimeline newInstance() {
         FragmentTimeline fragment = new FragmentTimeline ();
@@ -52,10 +54,36 @@ public class FragmentTimeline extends Fragment {
     public EventController eventController;
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            TabbedActivity tab = (TabbedActivity)getActivity();
+            eventList = tab.listEvents != null ? tab.listEvents : new ArrayList<Event>();
+
+            listView = (ListView)rootView.findViewById(R.id.timeline_listview);
+            eventArrayAdapter = new TimelineEventAdapter(getContext(),eventList);
+            listView.setAdapter(eventArrayAdapter);
+            swipeRefreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_refresh_layout);
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+//                IMPLEMENT REFRESH ON TIMELINE
+                }
+            });
+            eventArrayAdapter.notifyDataSetChanged();
+        } else {
+            // Do your Work
+        }
+    }
+
+
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_tab_timeline, container, false);
+        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_tab_timeline, container, false);
 
-
+        TabbedActivity tab = (TabbedActivity)getActivity();
+        eventList = tab.listEvents != null ? tab.listEvents : new ArrayList<Event>();
 
         listView = (ListView)rootView.findViewById(R.id.timeline_listview);
         eventArrayAdapter = new TimelineEventAdapter(getContext(),eventList);

@@ -48,9 +48,12 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.wehelp.wehelp.classes.Event;
 import com.wehelp.wehelp.tabs.FragmentMap;
 import com.wehelp.wehelp.tabs.FragmentMyEvents;
 import com.wehelp.wehelp.tabs.FragmentTimeline;
+
+import java.util.ArrayList;
 
 public class TabbedActivity extends AppCompatActivity {
 
@@ -72,6 +75,8 @@ public class TabbedActivity extends AppCompatActivity {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private String[] mDrawerItmes;
+
+    public ArrayList<Event> listEvents = null;
 
     Toolbar mToolbar;
 //    NetworkImageView profileImg;

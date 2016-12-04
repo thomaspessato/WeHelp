@@ -242,6 +242,12 @@ public class FragmentMap extends Fragment {
                     location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
                 }
 
+                if (location == null) {
+                    location = new Location("");
+                    location.setLatitude(-30.034647);
+                    location.setLongitude(-51.217658);
+                }
+
                 double userLatitude = location.getLatitude();
                 double userLongitude = location.getLongitude();
                 eventController.getEvents(userLatitude, userLongitude, 50);
@@ -273,6 +279,10 @@ public class FragmentMap extends Fragment {
                     googleMap = mMap;
                     LatLng marker = new LatLng(-30.012054, -51.178840);
                     Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+
+
+
+                    googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                     try {
                         List<Address> addresses = new ArrayList<Address>();
                         if (listEvents == null && listEvents.size() == 0) {
@@ -297,7 +307,7 @@ public class FragmentMap extends Fragment {
                                 double latitude = listEvents.get(i).getLat();
                                 LatLng test = new LatLng(latitude, longitude);
 
-                                googleMap.addMarker(new MarkerOptions().position(test).title(listEvents.get(i).getNome() + " | " + listEvents.get(i).getCategoria().getDescricao()).snippet("TESTANDO"));
+                                googleMap.addMarker(new MarkerOptions().position(test).title(listEvents.get(i).getNome() + " | " + listEvents.get(i).getCategoria().getDescricao()).snippet(listEvents.get(i).getDescricao()));
                             }
                         }
 
@@ -314,31 +324,41 @@ public class FragmentMap extends Fragment {
                         e.printStackTrace();
                     }
 
-//                LocationManager locationManager = (LocationManager)getContext().getSystemService(Context.LOCATION_SERVICE);
-//                Criteria criteria = new Criteria();
-//                Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
-//                double userLatitude = location.getLatitude();
-//                double userLongitude = location.getLongitude();
-                //eventController.getEvents(userLatitude,userLongitude,50);
+//                    ISSO ESTÁ FERRANDO OS MARKERS
 
-                if (location != null)
-                {
-                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
-                    CameraPosition cameraPosition = new CameraPosition.Builder()
-                            .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
-                            .zoom(15)                   // Sets the zoom
-                            .build();                   // Creates a CameraPosition from the builder
+//                    if (location != null)
+//                    {
+//                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
+//                        CameraPosition cameraPosition = new CameraPosition.Builder()
+//                                .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
+//                                .zoom(15)                   // Sets the zoom
+//                                .build();                   // Creates a CameraPosition from the builder
+//                        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+//                    }
+//
+//                    if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
+//                            == PackageManager.PERMISSION_GRANTED) {
+//                        mMap.setMyLocationEnabled(true);
+//                    } else {
+//                        // Show rationale and request permission.
+//                    }
+//
+//                    googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+
+                    // ISSO FUNCIONA
+                    CameraPosition cameraPosition = new CameraPosition.Builder().target(marker).zoom(12).build();
                     googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                }
 
-                if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
-                        == PackageManager.PERMISSION_GRANTED) {
-                    mMap.setMyLocationEnabled(true);
-                } else {
-                    // Show rationale and request permission.
-                }
 
-                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                    if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+                        mMap.setMyLocationEnabled(true);
+                    } else {
+                        // Show rationale and request permission.
+                    }
+
+                    googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 }
             });
 

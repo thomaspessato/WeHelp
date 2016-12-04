@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -42,18 +43,24 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.wehelp.wehelp.classes.Category;
 import com.wehelp.wehelp.classes.Event;
+import com.wehelp.wehelp.classes.WeHelpApp;
+import com.wehelp.wehelp.controllers.CategoryController;
 import com.wehelp.wehelp.tabs.FragmentMap;
 import com.wehelp.wehelp.tabs.FragmentMyEvents;
 import com.wehelp.wehelp.tabs.FragmentTimeline;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 public class TabbedActivity extends AppCompatActivity {
 
@@ -78,6 +85,10 @@ public class TabbedActivity extends AppCompatActivity {
 
     public ArrayList<Event> listEvents = null;
 
+    @Inject
+    public CategoryController categoryController;
+    public ArrayList<Category> listCategories;
+
     Toolbar mToolbar;
 //    NetworkImageView profileImg;
 ///SUPPORT LIBRARY V7
@@ -96,6 +107,9 @@ public class TabbedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabbed);
+
+        ((WeHelpApp)getApplication()).getNetComponent().inject(this);
+        new ListCategoriesTask().execute();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -380,6 +394,45 @@ public class TabbedActivity extends AppCompatActivity {
                     return "Eventos";
             }
             return null;
+        }
+    }
+
+    private class ListCategoriesTask extends AsyncTask<Void, Void, ArrayList<Category>> {
+
+
+        @Override
+        protected void onPreExecute() {
+            // carregar loader
+        }
+
+        @Override
+        protected ArrayList<Category> doInBackground(Void... params) {
+            try {
+                categoryController.getCatgeories();
+                while (categoryController.getListCategories() == null && !categoryController.errorService) {
+                }
+                if (categoryController.errorService) {
+                    return null;
+                }
+                ArrayList<Category> listCategories = categoryController.getListCategories();
+                categoryController.setListCategories(null);
+                return listCategories;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        protected void onPostExecute(ArrayList<Category> categories) {
+            if (categories == null) {
+                Toast.makeText(getApplicationContext(), categoryController.errorMessages.toString(), Toast.LENGTH_LONG).show();
+            } else {
+                listCategories = categories;
+                // ADICIONAR CATEGORIAS PARA OS DROP
+            }
+
+
+            // remover loader
         }
     }
 }

@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -31,6 +32,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 import android.Manifest;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -73,7 +75,7 @@ public class FragmentMap extends Fragment {
     MapView mMapView;
 
     public static FragmentTimeline newInstance() {
-        FragmentTimeline fragment = new FragmentTimeline ();
+        FragmentTimeline fragment = new FragmentTimeline();
         Bundle args = new Bundle();
 //        args.putInt("1", sectionNumber);
 //        fragment.setArguments(args);
@@ -83,12 +85,12 @@ public class FragmentMap extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        ((WeHelpApp)getActivity().getApplication()).getNetComponent().inject(this);
+        ((WeHelpApp) getActivity().getApplication()).getNetComponent().inject(this);
 
         new ListEventsTask().execute();
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_tab_map, container, false);
-        final RelativeLayout loadingPanel = (RelativeLayout)rootView.findViewById(R.id.loadingPanel);
+        final RelativeLayout loadingPanel = (RelativeLayout) rootView.findViewById(R.id.loadingPanel);
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
         assert loadingPanel != null;
@@ -119,7 +121,7 @@ public class FragmentMap extends Fragment {
                             Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                                     mGoogleApiClient);
 
-                            System.out.println("USER LOCATION:" +mLastLocation);
+                            System.out.println("USER LOCATION:" + mLastLocation);
                             return;
                         }
                     }
@@ -139,7 +141,6 @@ public class FragmentMap extends Fragment {
                 .build();
 
         mGoogleApiClient.connect();
-
 
 
 //        mMapView.getMapAsync(new OnMapReadyCallback() {
@@ -218,15 +219,32 @@ public class FragmentMap extends Fragment {
 
     private class ListEventsTask extends AsyncTask<Void, Void, ArrayList<Event>> {
 
+
+        Location location;
+        Criteria criteria;
+        LocationManager locationManager;
+
         @Override
         protected void onPreExecute() {
             // carregar loader
         }
 
         @Override
-        protected ArrayList<Event> doInBackground(Void...params) {
+        protected ArrayList<Event> doInBackground(Void... params) {
             try {
-                eventController.getEvents(-30.012054, -51.178840, 100);
+                locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+                criteria = new Criteria();
+                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    location = new Location("");
+                    location.setLatitude(-30.034647);
+                    location.setLongitude(-51.217658);
+                } else {
+                    location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
+                }
+
+                double userLatitude = location.getLatitude();
+                double userLongitude = location.getLongitude();
+                eventController.getEvents(userLatitude, userLongitude, 50);
                 while (eventController.getListEvents() == null && !eventController.errorService){}
                 if (eventController.errorService) {
                     return null;
@@ -243,8 +261,6 @@ public class FragmentMap extends Fragment {
         protected void onPostExecute(ArrayList<Event> events) {
             if (events == null) {
                 Toast.makeText(getActivity().getApplicationContext(), eventController.errorMessages.toString(), Toast.LENGTH_LONG).show();
-//                Toast.makeText(getActivity().getApplicationContext(), "Erro ao registrar pessoa", Toast.LENGTH_LONG).show();
-//                Log.d("WeHelpWS", userController.errorMessages.toString());
             } else {
                 listEvents = events;
                 Toast.makeText(getActivity().getApplicationContext(), "Retorno: OK", Toast.LENGTH_LONG).show();
@@ -298,12 +314,12 @@ public class FragmentMap extends Fragment {
                         e.printStackTrace();
                     }
 
-                LocationManager locationManager = (LocationManager)getContext().getSystemService(Context.LOCATION_SERVICE);
-                Criteria criteria = new Criteria();
-                Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
-                double userLatitude = location.getLatitude();
-                double userLongitude = location.getLongitude();
-                eventController.getEvents(userLatitude,userLongitude,50);
+//                LocationManager locationManager = (LocationManager)getContext().getSystemService(Context.LOCATION_SERVICE);
+//                Criteria criteria = new Criteria();
+//                Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
+//                double userLatitude = location.getLatitude();
+//                double userLongitude = location.getLongitude();
+                //eventController.getEvents(userLatitude,userLongitude,50);
 
                 if (location != null)
                 {

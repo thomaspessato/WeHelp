@@ -17,8 +17,10 @@ import com.google.gson.stream.JsonWriter;
 import com.wehelp.wehelp.adapters.GsonUTCDateAdapter;
 import com.wehelp.wehelp.classes.Event;
 import com.wehelp.wehelp.classes.ServiceContainer;
+import com.wehelp.wehelp.controllers.CategoryController;
 import com.wehelp.wehelp.controllers.EventController;
 import com.wehelp.wehelp.controllers.UserController;
+import com.wehelp.wehelp.services.CategoryService;
 import com.wehelp.wehelp.services.EventService;
 import com.wehelp.wehelp.services.UserService;
 
@@ -71,6 +73,12 @@ public class NetModule {
         return eventService;
     }
 
+    @Provides
+    CategoryService provideCategortService(ServiceContainer serviceContainer, Gson gson) {
+        CategoryService categoryService = new CategoryService(serviceContainer, gson);
+        return categoryService;
+    }
+
 
     @Provides
     UserController provideUserController(UserService userService, Gson gson, Application application) {
@@ -82,6 +90,12 @@ public class NetModule {
     EventController provideEventController(EventService eventService, Gson gson, Application application) {
         EventController eventController = new EventController(eventService, gson, application);
         return eventController;
+    }
+
+    @Provides
+    CategoryController provideCategoryController(CategoryService categoryService, Gson gson, Application application) {
+        CategoryController categoryController = new CategoryController(categoryService, gson, application);
+        return categoryController;
     }
 
 

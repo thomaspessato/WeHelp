@@ -51,16 +51,22 @@ public class UserController {
 
 
     public void getUser(final IServiceResponseCallback serviceResponseCallback, final IExecuteCallback executeErrorCallback) {
+        userTemp = null;
+        errorMessages = null;
+        errorService = false;
         this.userService.getUser(new IServiceResponseCallback() {
             @Override
             public void execute(JSONObject response) {
                 weHelpApp.setUser(JsonToUser(response));
+                userTemp = weHelpApp.getUser();
                 serviceResponseCallback.execute(response);
             }
         }, new IExecuteCallback() {
             @Override
             public void execute() {
                 Log.d("WeHelpWS", "Erro ao buscar dados do usuário");
+
+                errorService = true;
                 executeErrorCallback.execute();
             }
         });

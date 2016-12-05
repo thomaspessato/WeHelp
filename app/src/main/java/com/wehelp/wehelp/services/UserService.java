@@ -77,7 +77,9 @@ public class UserService {
                 },
                 new IServiceErrorCallback() {
                     @Override
-                    public void execute(VolleyError error) {}
+                    public void execute(VolleyError error) {
+                        executeCallback.execute();
+                    }
                 }
         );
     }

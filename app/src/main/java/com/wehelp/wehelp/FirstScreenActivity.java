@@ -3,6 +3,7 @@ package com.wehelp.wehelp;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,11 +13,31 @@ import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import com.wehelp.wehelp.classes.ServiceContainer;
+import com.wehelp.wehelp.classes.User;
+import com.wehelp.wehelp.classes.WeHelpApp;
+import com.wehelp.wehelp.controllers.UserController;
+import com.wehelp.wehelp.services.IExecuteCallback;
+import com.wehelp.wehelp.services.IServiceResponseCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import javax.inject.Inject;
+
 public class FirstScreenActivity extends AppCompatActivity {
+
+    @Inject
+    public UserController userController ;
+    @Inject
+    public ServiceContainer serviceContainer;
+
+    boolean mostrarTela = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((WeHelpApp) getApplication()).getNetComponent().inject(this);
 
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         getSupportActionBar().hide();
@@ -68,4 +89,5 @@ public class FirstScreenActivity extends AppCompatActivity {
 
 
     }
+
 }

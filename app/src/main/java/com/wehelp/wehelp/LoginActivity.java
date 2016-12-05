@@ -28,16 +28,22 @@ public class LoginActivity extends AppCompatActivity {
     @Inject
     public UserController userController;
 
+    @Inject
+    public ServiceContainer serviceContainer;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         ((WeHelpApp) getApplication()).getNetComponent().inject(this);
 
+
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         getSupportActionBar().hide();
-
         setContentView(R.layout.activity_login);
+
+
 
         Button loginBtn = (Button)findViewById(R.id.btn_login);
         Button forgotBtn = (Button)findViewById(R.id.btn_forgot);
@@ -99,4 +105,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+
+
 }

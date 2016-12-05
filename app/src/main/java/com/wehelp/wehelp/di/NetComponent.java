@@ -1,6 +1,7 @@
 package com.wehelp.wehelp.di;
 
 import com.wehelp.wehelp.CreateEventActivity;
+import com.wehelp.wehelp.FirstScreenActivity;
 import com.wehelp.wehelp.LoginActivity;
 import com.wehelp.wehelp.MainActivity;
 import com.wehelp.wehelp.TabbedActivity;
@@ -24,5 +25,5 @@ public interface NetComponent {
     void inject(FragmentOngRegister fragment);
     void inject(CreateEventActivity activity);
     void inject(TabbedActivity activity);
-    // void inject(MyService service);
+    void inject(FirstScreenActivity activity);
 }

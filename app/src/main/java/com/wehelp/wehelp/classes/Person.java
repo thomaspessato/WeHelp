@@ -1,11 +1,12 @@
 package com.wehelp.wehelp.classes;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Rael on 31/10/2016.
  */
-public class Person {
+public class Person implements Serializable{
     private int id;
     private String nome;
     private String foto;

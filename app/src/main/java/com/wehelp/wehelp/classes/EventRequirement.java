@@ -1,8 +1,9 @@
 package com.wehelp.wehelp.classes;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class EventRequirement {
+public class EventRequirement implements Serializable {
     private Date created_at;
     private Date updated_at;
     private int evento_id;

@@ -7,14 +7,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.vision.text.Text;
 import com.wehelp.wehelp.EventDetailActivity;
 import com.wehelp.wehelp.HelpEventActivity;
 import com.wehelp.wehelp.R;
+import com.wehelp.wehelp.classes.Category;
 import com.wehelp.wehelp.classes.Event;
+import com.wehelp.wehelp.classes.EventRequirement;
+import com.wehelp.wehelp.classes.Ong;
+import com.wehelp.wehelp.classes.Person;
+import com.wehelp.wehelp.classes.User;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,16 +52,38 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
         }
 
         TextView linkInfoEvent = (TextView) convertView.findViewById(R.id.btn_moreinfo);
-        TextView eventDate = (TextView)convertView.findViewById(R.id.event_timeline_date);
+        TextView eventAddress = (TextView)convertView.findViewById(R.id.event_timeline_date);
+        TextView eventHour = (TextView)convertView.findViewById(R.id.event_timeline_hour);
         TextView eventCreator = (TextView)convertView.findViewById(R.id.event_timeline_creator);
         TextView eventCategory = (TextView)convertView.findViewById(R.id.event_timeline_category);
         TextView eventTitle = (TextView)convertView.findViewById(R.id.event_timeline_title);
         Button btnHelp = (Button)convertView.findViewById(R.id.btn_help);
+        LinearLayout requirementsLayout = (LinearLayout)convertView.findViewById(R.id.event_requirements_layout);
 
-//        String address = timelineEvent.getAddressStreet()+timelineEvent.getAddressNumber()+" - "+timelineEvent.getEndDate().toString();
-//        String category = timelineEvent.getCategory();
-//        String title = timelineEvent.getTitle();
-//        String creator = timelineEvent.getCreator();
+        String address = "Endereço: "+timelineEvent.getCidade()+" / "+timelineEvent.getRua()+" - "+timelineEvent.getNumero()+", "+timelineEvent.getComplemento();
+        String hour = "Data: "+new SimpleDateFormat("dd/mm/yyyy / hh:mm").format(timelineEvent.getDataInicio());
+
+
+        Category category = timelineEvent.getCategoria();
+
+        String categoria = category.getDescricao();
+        String title = timelineEvent.getNome();
+        String descricao = timelineEvent.getDescricao();
+        ArrayList requisitos = timelineEvent.getRequisitos();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+                android.R.layout.simple_list_item_1, android.R.id.text1);
+
+        requirementsLayout.removeAllViews();
+        
+        for(int i = 0; i< requisitos.size() ; i++) {
+            Object requisito = requisitos.get(i);
+            String requisitoString = ((EventRequirement) requisito).getDescricao();
+            TextView requirementTxt = new TextView(getContext());
+            requirementTxt.setText(requisitoString);
+            requirementsLayout.addView(requirementTxt);
+
+        }
+
 
         linkInfoEvent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,11 +101,11 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
             }
         });
 
-//        eventTitle.setText(title);
-//        eventCategory.setText(category);
-//        eventCreator.setText(creator);
-//        eventDate.setText(address);
-//        eventCreator.setText(timelineEvent);
+        eventTitle.setText(title);
+        eventCategory.setText(categoria);
+        eventAddress.setText(address);
+        eventHour.setText(hour);
+        eventCreator.setText("CRIADOR");
 
         return convertView;
     }

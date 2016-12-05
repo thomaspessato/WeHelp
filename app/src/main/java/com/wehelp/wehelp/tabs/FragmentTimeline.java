@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.gson.Gson;
 import com.wehelp.wehelp.R;
 import com.wehelp.wehelp.TabbedActivity;
 import com.wehelp.wehelp.adapters.TimelineEventAdapter;
@@ -60,7 +61,14 @@ public class FragmentTimeline extends Fragment {
             TabbedActivity tab = (TabbedActivity)getActivity();
             eventList = tab.listEvents != null ? tab.listEvents : new ArrayList<Event>();
 
-            System.out.println("EVENTLIST: " +eventList);
+            System.out.println("EVENTLIST: " +eventList.get(0));
+
+
+            Event event = eventList.get(0);
+            Gson gson = new Gson();
+            String json = gson.toJson(event);
+            System.out.println("EVENTLIST: " +json);
+
             System.out.println("EVENTLIST SIZE: "+eventList.size());
 
             listView = (ListView)rootView.findViewById(R.id.timeline_listview);

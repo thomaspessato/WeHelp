@@ -2,6 +2,8 @@ package com.wehelp.wehelp.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import com.wehelp.wehelp.classes.Ong;
 import com.wehelp.wehelp.classes.Person;
 import com.wehelp.wehelp.classes.User;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -97,6 +100,12 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
             @Override
             public void onClick(View view) {
                 Intent intentHelp = new Intent(getContext(), HelpEventActivity.class);
+
+                Bundle mBundle = new Bundle();
+                mBundle.putSerializable("event", timelineEvent);
+                intentHelp.putExtras(mBundle);
+
+
                 context.startActivity(intentHelp);
             }
         });

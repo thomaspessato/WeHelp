@@ -1,11 +1,12 @@
 package com.wehelp.wehelp.classes;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Rael on 29/10/2016.
  */
-public class User {
+public class User implements Serializable{
     private int id;
     private String email;
     private int pessoa_id;

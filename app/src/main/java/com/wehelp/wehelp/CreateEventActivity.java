@@ -448,7 +448,7 @@ public class CreateEventActivity extends AppCompatActivity {
                     arrayListCategories.add(listCategories.get(i));
                 }
 
-                CategorySpinnerAdapter spinnerAdapter = new CategorySpinnerAdapter(CreateEventActivity.this,arrayListCategories);
+                CategorySpinnerAdapter spinnerAdapter = new CategorySpinnerAdapter(CreateEventActivity.this, R.layout.row_spinner_category,arrayListCategories);
                 spinnerAdapter.notifyDataSetChanged();
                 categorySpinner.setAdapter(spinnerAdapter);
 

@@ -1,6 +1,8 @@
 package com.wehelp.wehelp.classes;
 
-public class Ong {
+import java.io.Serializable;
+
+public class Ong implements Serializable {
     private int id;
     private String nome;
     private String cnpj;

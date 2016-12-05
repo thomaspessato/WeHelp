@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.wehelp.wehelp.R;
 import com.wehelp.wehelp.classes.Category;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,22 +20,26 @@ import java.util.List;
 public class CategorySpinnerAdapter extends ArrayAdapter<Category> {
 
     private Context context;
+    ArrayList<Category> list = null;
 
 
-    public CategorySpinnerAdapter(Context context, List<Category> list) {
+    public CategorySpinnerAdapter(Context context, ArrayList<Category> list) {
         super(context, R.layout.row_comment, list);
         this.context = context;
+        this.list = list;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.support_simple_spinner_dropdown_item, null);
+            convertView = inflater.inflate(R.layout.row_spinner_category, null);
         }
 
-        TextView tvText1 = (TextView) convertView.findViewById(android.R.id.text1);
-        tvText1.setText("Teste");
+
+        TextView txtSpinner = (TextView) convertView.findViewById(R.id.txt_spinner);
+        txtSpinner.setText(list.get(position).getDescricao());
+        System.out.println("CATEGORY INSIDE ADAPTER: "+list.get(position).getDescricao());
 
         return convertView;
     }

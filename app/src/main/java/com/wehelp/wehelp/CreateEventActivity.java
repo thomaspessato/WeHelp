@@ -108,6 +108,19 @@ public class CreateEventActivity extends AppCompatActivity {
         final int[] requirementsCounter = {0};
         lvRequirements.setAdapter(requirementsArrayAdapter);
 
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Category item = (Category)adapterView.getItemAtPosition(i);
+                System.out.println("CATEGORY CLICKED: " + item.getDescricao());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         TextWatcher tw = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -430,14 +443,14 @@ public class CreateEventActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), categoryController.errorMessages.toString(), Toast.LENGTH_LONG).show();
             } else {
                 listCategories = categories;
-//                ArrayList<Category> arrayListCategories = new ArrayList<>();
-//                CategorySpinnerAdapter spinnerAdapter = new CategorySpinnerAdapter(CreateEventActivity.this, arrayListCategories);
-//
-//                for(int i = 0; i < listCategories.size(); i++) {
-//                    arrayListCategories.add(listCategories.get(i));
-//                }
-//                spinnerAdapter.notifyDataSetChanged();
-//                categorySpinner.setAdapter(spinnerAdapter);
+                ArrayList<Category> arrayListCategories = new ArrayList<>();
+                for(int i = 0; i < listCategories.size(); i++) {
+                    arrayListCategories.add(listCategories.get(i));
+                }
+
+                CategorySpinnerAdapter spinnerAdapter = new CategorySpinnerAdapter(CreateEventActivity.this,arrayListCategories);
+                spinnerAdapter.notifyDataSetChanged();
+                categorySpinner.setAdapter(spinnerAdapter);
 
 //                populateCategorySpinner(categorySpinner,CreateEventActivity.this,listCategories);
 

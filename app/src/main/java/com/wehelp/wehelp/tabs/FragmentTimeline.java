@@ -60,8 +60,14 @@ public class FragmentTimeline extends Fragment {
             TabbedActivity tab = (TabbedActivity)getActivity();
             eventList = tab.listEvents != null ? tab.listEvents : new ArrayList<Event>();
 
+            System.out.println("EVENTLIST: " +eventList);
+            System.out.println("EVENTLIST SIZE: "+eventList.size());
+
             listView = (ListView)rootView.findViewById(R.id.timeline_listview);
             eventArrayAdapter = new TimelineEventAdapter(getContext(),eventList);
+
+
+
             listView.setAdapter(eventArrayAdapter);
             swipeRefreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_refresh_layout);
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -84,6 +90,8 @@ public class FragmentTimeline extends Fragment {
 
         TabbedActivity tab = (TabbedActivity)getActivity();
         eventList = tab.listEvents != null ? tab.listEvents : new ArrayList<Event>();
+
+
 
         listView = (ListView)rootView.findViewById(R.id.timeline_listview);
         eventArrayAdapter = new TimelineEventAdapter(getContext(),eventList);

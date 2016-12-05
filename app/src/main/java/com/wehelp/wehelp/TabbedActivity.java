@@ -85,9 +85,7 @@ public class TabbedActivity extends AppCompatActivity {
 
     public ArrayList<Event> listEvents = null;
 
-    @Inject
-    public CategoryController categoryController;
-    public ArrayList<Category> listCategories;
+
 
     Toolbar mToolbar;
 //    NetworkImageView profileImg;
@@ -109,7 +107,7 @@ public class TabbedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tabbed);
 
         ((WeHelpApp)getApplication()).getNetComponent().inject(this);
-        new ListCategoriesTask().execute();
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -397,42 +395,5 @@ public class TabbedActivity extends AppCompatActivity {
         }
     }
 
-    private class ListCategoriesTask extends AsyncTask<Void, Void, ArrayList<Category>> {
 
-
-        @Override
-        protected void onPreExecute() {
-            // carregar loader
-        }
-
-        @Override
-        protected ArrayList<Category> doInBackground(Void... params) {
-            try {
-                categoryController.getCatgeories();
-                while (categoryController.getListCategories() == null && !categoryController.errorService) {
-                }
-                if (categoryController.errorService) {
-                    return null;
-                }
-                ArrayList<Category> listCategories = categoryController.getListCategories();
-                categoryController.setListCategories(null);
-                return listCategories;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        protected void onPostExecute(ArrayList<Category> categories) {
-            if (categories == null) {
-                Toast.makeText(getApplicationContext(), categoryController.errorMessages.toString(), Toast.LENGTH_LONG).show();
-            } else {
-                listCategories = categories;
-                // ADICIONAR CATEGORIAS PARA OS DROP
-            }
-
-
-            // remover loader
-        }
-    }
 }

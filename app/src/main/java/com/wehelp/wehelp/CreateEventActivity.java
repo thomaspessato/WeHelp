@@ -2,6 +2,7 @@ package com.wehelp.wehelp;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 
@@ -267,7 +268,7 @@ public class CreateEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String title = eventTitle.getText().toString();
-                String category = categorySpinner.getSelectedItem().toString();;
+                Category category = (Category)categorySpinner.getSelectedItem();
                 String addressStreet = eventAddressStreet.getText().toString();
                 String addressNumber = eventAddressNumber.getText().toString();
                 String addressComp = eventAddressComp.getText().toString();
@@ -287,7 +288,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 System.out.println("requirements: "+requirementsArr);
 
                 if(title.equalsIgnoreCase("") ||
-                        category.equalsIgnoreCase("") ||
+                        category == null ||
                         addressStreet.equalsIgnoreCase("") ||
                         addressNumber.equalsIgnoreCase("") ||
                         desc.equalsIgnoreCase("") ||
@@ -324,7 +325,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 event.setNome(title);
                 event.setRua(addressStreet);
                 event.setComplemento(addressComp);
-                event.setCategoriaId(1); //pegar categoria selecionada
+                event.setCategoriaId(category.getId()); //pegar categoria selecionada
                 event.setCertificado(true);
                 event.setCidade("Porto Alegre");
                 event.setUf("RS");
@@ -405,7 +406,9 @@ public class CreateEventActivity extends AppCompatActivity {
 //                Toast.makeText(getActivity().getApplicationContext(), "Erro ao registrar pessoa", Toast.LENGTH_LONG).show();
 //                Log.d("WeHelpWS", userController.errorMessages.toString());
             } else {
-                Toast.makeText(getApplicationContext(), "Retorno: " + event.getNome(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Evento  " + event.getNome() + " cadastrado", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(CreateEventActivity.this, TabbedActivity.class);
+                startActivity(intent);
             }
 
             // remover loader

@@ -88,7 +88,7 @@ public class FragmentMap extends Fragment {
 
         ((WeHelpApp) getActivity().getApplication()).getNetComponent().inject(this);
 
-        new ListEventsTask().execute();
+        //new ListEventsTask().execute();
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_tab_map, container, false);
         final RelativeLayout loadingPanel = (RelativeLayout) rootView.findViewById(R.id.loadingPanel);
@@ -216,6 +216,12 @@ public class FragmentMap extends Fragment {
 //        });
 
         return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        new ListEventsTask().execute();
     }
 
     private class ListEventsTask extends AsyncTask<Void, Void, ArrayList<Event>> {

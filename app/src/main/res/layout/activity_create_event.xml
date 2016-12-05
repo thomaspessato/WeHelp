@@ -121,15 +121,11 @@
             android:textSize="18sp"
             android:textColor="@android:color/black" />
 
-        <EditText
+        <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/register_event_category"
-            android:textSize="18sp"
-            android:hint="Ex: Educação"
-            android:layout_marginBottom="15dp" />
+            android:id="@+id/event_register_spinner_category" />
+
 
         <!--<LinearLayout-->
             <!--android:orientation="horizontal"-->

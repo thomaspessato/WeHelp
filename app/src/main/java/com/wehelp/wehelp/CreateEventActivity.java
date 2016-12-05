@@ -1,5 +1,6 @@
 package com.wehelp.wehelp;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.location.Address;
 import android.location.Geocoder;
@@ -22,17 +23,23 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wehelp.wehelp.adapters.CategorySpinnerAdapter;
 import com.wehelp.wehelp.adapters.RequirementListAdapter;
+import com.wehelp.wehelp.classes.Category;
 import com.wehelp.wehelp.classes.Event;
 import com.wehelp.wehelp.classes.EventRequirement;
 import com.wehelp.wehelp.classes.User;
 import com.wehelp.wehelp.classes.WeHelpApp;
+import com.wehelp.wehelp.controllers.CategoryController;
 import com.wehelp.wehelp.controllers.EventController;
+import com.wehelp.wehelp.services.CategoryService;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -54,6 +61,14 @@ public class CreateEventActivity extends AppCompatActivity {
     @Inject
     public EventController eventController;
 
+    @Inject
+    public CategoryController categoryController;
+    public ArrayList<Category> listCategories;
+
+    Spinner categorySpinner;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,8 +77,12 @@ public class CreateEventActivity extends AppCompatActivity {
 
         setTitle("Criar evento");
 
+        new ListCategoriesTask().execute();
+
+
+
+
         final EditText eventTitle = (EditText)findViewById(R.id.register_event_title);
-        final EditText eventCategory  = (EditText)findViewById(R.id.register_event_category);
         final EditText eventAddressStreet = (EditText)findViewById(R.id.register_event_street);
         final EditText eventAddressNumber = (EditText)findViewById(R.id.register_event_number);
         final EditText eventAddressComp = (EditText)findViewById(R.id.register_event_comp);
@@ -74,6 +93,7 @@ public class CreateEventActivity extends AppCompatActivity {
         Button btnRegisterEvent = (Button)findViewById(R.id.btn_register_event);
         final EditText eventDesc = (EditText)findViewById(R.id.register_event_desc);
         final ListView lvRequirements = (ListView)findViewById(R.id.listview_requirements);
+        categorySpinner = (Spinner)findViewById(R.id.event_register_spinner_category);
 
         final ArrayList<String> listItems=new ArrayList<String>();
 
@@ -87,7 +107,6 @@ public class CreateEventActivity extends AppCompatActivity {
         requirementsArrayAdapter = new RequirementListAdapter(this,listItems);
         final int[] requirementsCounter = {0};
         lvRequirements.setAdapter(requirementsArrayAdapter);
-
 
         TextWatcher tw = new TextWatcher() {
             @Override
@@ -231,34 +250,11 @@ public class CreateEventActivity extends AppCompatActivity {
                 }
         });
 
-
-//
-//        lvRequirements.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-//
-//                System.out.println("clicked on item");
-//                AlertDialog.Builder adb=new AlertDialog.Builder(CreateEventActivity.this);
-//                adb.setTitle("Delete?");
-//                adb.setMessage("Are you sure you want to delete " + position);
-//                final int positionToRemove = position;
-//                adb.setNegativeButton("Cancel", null);
-//                adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        listItems.remove(positionToRemove);
-//                        requirementsArrayAdapter.notifyDataSetChanged();
-//                    }});
-//                adb.show();
-//            }
-//        });
-
-
-
         btnRegisterEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String title = eventTitle.getText().toString();
-                String category = eventCategory.getText().toString();
+                String category = categorySpinner.getSelectedItem().toString();;
                 String addressStreet = eventAddressStreet.getText().toString();
                 String addressNumber = eventAddressNumber.getText().toString();
                 String addressComp = eventAddressComp.getText().toString();
@@ -266,6 +262,8 @@ public class CreateEventActivity extends AppCompatActivity {
                 String hour = eventHour.getText().toString();
                 String desc = eventDesc.getText().toString();
                 ArrayList<EventRequirement> requirementsArr = new ArrayList();
+
+
 
                 for (int i=0;i<requirementsArrayAdapter.getCount();i++){
                     EventRequirement req = new EventRequirement();
@@ -401,6 +399,54 @@ public class CreateEventActivity extends AppCompatActivity {
         }
     }
 
+    private class ListCategoriesTask extends AsyncTask<Void, Void, ArrayList<Category>> {
+
+
+        @Override
+        protected void onPreExecute() {
+            // carregar loader
+        }
+
+        @Override
+        protected ArrayList<Category> doInBackground(Void... params) {
+            try {
+                categoryController.getCatgeories();
+                while (categoryController.getListCategories() == null && !categoryController.errorService) {
+                }
+                if (categoryController.errorService) {
+                    return null;
+                }
+                ArrayList<Category> listCategories = categoryController.getListCategories();
+                categoryController.setListCategories(null);
+                return listCategories;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        protected void onPostExecute(ArrayList<Category> categories) {
+            if (categories == null) {
+                Toast.makeText(getApplicationContext(), categoryController.errorMessages.toString(), Toast.LENGTH_LONG).show();
+            } else {
+                listCategories = categories;
+//                ArrayList<Category> arrayListCategories = new ArrayList<>();
+//                CategorySpinnerAdapter spinnerAdapter = new CategorySpinnerAdapter(CreateEventActivity.this, arrayListCategories);
+//
+//                for(int i = 0; i < listCategories.size(); i++) {
+//                    arrayListCategories.add(listCategories.get(i));
+//                }
+//                spinnerAdapter.notifyDataSetChanged();
+//                categorySpinner.setAdapter(spinnerAdapter);
+
+//                populateCategorySpinner(categorySpinner,CreateEventActivity.this,listCategories);
+
+            }
+
+
+            // remover loader
+        }
+    }
 
 
 }

@@ -267,11 +267,11 @@ public class TabbedActivity extends AppCompatActivity {
                 Intent intentParticipate = new Intent(this, ParticipateEventActivity.class);
                 startActivity(intentParticipate);
                 break;
+//            case 4:
+//                Intent intentConfigure = new Intent(this, ConfigurationActivity.class);
+//                startActivity(intentConfigure);
+//                break;
             case 4:
-                Intent intentConfigure = new Intent(this, ConfigurationActivity.class);
-                startActivity(intentConfigure);
-                break;
-            case 5:
                 Intent intentLogout = new Intent(this, LoginActivity.class);
                 intentLogout.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intentLogout);

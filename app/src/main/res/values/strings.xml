@@ -4,7 +4,7 @@
         <item>Perfil</item>
         <item>Meus eventos</item>
         <item>Eventos que participo</item>
-        <item>Configurações</item>
+        <!--<item>Configurações</item>-->
         <item>Sair</item>
     </string-array>
 

@@ -44,13 +44,14 @@ public class ParticipatingEventAdapter extends ArrayAdapter<Event>{
             System.out.println("timeline event: convertView was NULL");
         }
 
-        TextView linkInfoEvent = (TextView) convertView.findViewById(R.id.btn_moreinfo);
+//        TextView linkInfoEvent = (TextView) convertView.findViewById(R.id.btn_moreinfo);
         TextView eventAddress = (TextView)convertView.findViewById(R.id.event_timeline_date);
         TextView eventHour = (TextView)convertView.findViewById(R.id.event_timeline_hour);
         TextView eventCreator = (TextView)convertView.findViewById(R.id.event_timeline_creator);
         TextView eventCategory = (TextView)convertView.findViewById(R.id.event_timeline_category);
         TextView eventTitle = (TextView)convertView.findViewById(R.id.event_timeline_title);
         TextView eventDescription = (TextView)convertView.findViewById(R.id.event_timeline_description);
+        TextView eventParticipants = (TextView)convertView.findViewById(R.id.event_timeline_participating);
         Button btnAbandon = (Button)convertView.findViewById(R.id.btn_abandon);
 //        LinearLayout requirementsLayout = (LinearLayout)convertView.findViewById(R.id.event_requirements_layout);
 
@@ -76,14 +77,14 @@ public class ParticipatingEventAdapter extends ArrayAdapter<Event>{
 //            requirementsLayout.addView(requirementTxt);
 //
 //        }
-
-        linkInfoEvent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), EventDetailActivity.class);
-                context.startActivity(intent);
-            }
-        });
+//
+//        linkInfoEvent.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getContext(), EventDetailActivity.class);
+//                context.startActivity(intent);
+//            }
+//        });
 
         btnAbandon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,12 +100,21 @@ public class ParticipatingEventAdapter extends ArrayAdapter<Event>{
             }
         });
 
+        System.out.println("PARTICIPATING EVENT:" +timelineEvent);
+
         eventTitle.setText(title);
         eventCategory.setText(categoria);
         eventAddress.setText(address);
         eventHour.setText(hour);
         eventCreator.setText("CRIADOR");
         eventDescription.setText(timelineEvent.getDescricao());
+
+        if(timelineEvent.getNumeroParticipantes() > 0) {
+            eventParticipants.setText("Você e mais +"+(timelineEvent.getNumeroParticipantes()-1)+" pessoas irão participar deste evento.");
+        }
+        if(timelineEvent.getNumeroParticipantes() == 0) {
+            eventParticipants.setText("Apenas você está participando deste projeto. Divulgue!");
+        }
 
         return convertView;
     }

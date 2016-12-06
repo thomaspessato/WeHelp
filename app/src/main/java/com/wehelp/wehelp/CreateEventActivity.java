@@ -356,28 +356,28 @@ public class CreateEventActivity extends AppCompatActivity {
 
     }
 
-    private void setListViewHeightBasedOnChildren(ListView listView) {
-        Log.e("Listview Size ", "" + listView.getCount());
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) {
-
-            return;
-        }
-
-        int totalHeight = 0;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            View listItem = listAdapter.getView(i, null, listView);
-            listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
-        }
-
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight
-                + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
-        listView.requestLayout();
-
-    }
+//    private void setListViewHeightBasedOnChildren(ListView listView) {
+//        Log.e("Listview Size ", "" + listView.getCount());
+//        ListAdapter listAdapter = listView.getAdapter();
+//        if (listAdapter == null) {
+//
+//            return;
+//        }
+//
+//        int totalHeight = 0;
+//        for (int i = 0; i < listAdapter.getCount(); i++) {
+//            View listItem = listAdapter.getView(i, null, listView);
+//            listItem.measure(0, 0);
+//            totalHeight += listItem.getMeasuredHeight();
+//        }
+//
+//        ViewGroup.LayoutParams params = listView.getLayoutParams();
+//        params.height = totalHeight
+//                + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+//        listView.setLayoutParams(params);
+//        listView.requestLayout();
+//
+//    }
 
     private class CreateEventTask extends AsyncTask<Event, Void, Event> {
 
@@ -389,12 +389,15 @@ public class CreateEventActivity extends AppCompatActivity {
         @Override
         protected Event doInBackground(Event... event) {
             try {
+                System.out.println("CREATING EVENT");
                 eventController.createEvent(event[0]);
                 while (eventController.eventTemp == null && !eventController.errorService){}
                 if (eventController.errorService) {
                     return null;
                 }
+
                 Event eventReturned = eventController.eventTemp;
+                System.out.println("EVENT RETURNED");
                 eventController.eventTemp = null;
                 return eventReturned;
             } catch (Exception e) {
@@ -405,7 +408,8 @@ public class CreateEventActivity extends AppCompatActivity {
 
         protected void onPostExecute(Event event) {
             if (event == null) {
-                Toast.makeText(getApplicationContext(), eventController.errorMessages.toString(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), eventController.errorMessages.toString(), Toast.LENGTH_LONG).show();
+                System.out.println("Erro ao cadastrar evento: "+eventController.errorMessages);
 //                Toast.makeText(getActivity().getApplicationContext(), "Erro ao registrar pessoa", Toast.LENGTH_LONG).show();
 //                Log.d("WeHelpWS", userController.errorMessages.toString());
             } else {

@@ -81,15 +81,9 @@ public class ParticipateEventActivity extends AppCompatActivity {
                     return null;
                 }
 
-
                 ArrayList<Event> listEvents = eventController.getListEvents();
-
                 eventController.setListEvents(null);
                 System.out.println("listEvents: "+listEvents);
-
-
-
-
                 return listEvents;
         }
 

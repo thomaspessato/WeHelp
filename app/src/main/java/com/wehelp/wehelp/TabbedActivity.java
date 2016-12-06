@@ -272,7 +272,7 @@ public class TabbedActivity extends AppCompatActivity {
 //                startActivity(intentConfigure);
 //                break;
             case 4:
-                Intent intentLogout = new Intent(this, LoginActivity.class);
+                Intent intentLogout = new Intent(this, FirstScreenActivity.class);
                 intentLogout.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intentLogout);
 //                TEM QUE FAZER O DISCONNECT

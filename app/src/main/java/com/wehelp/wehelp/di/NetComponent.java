@@ -1,5 +1,6 @@
 package com.wehelp.wehelp.di;
 
+import com.wehelp.wehelp.AbandonEventActivity;
 import com.wehelp.wehelp.CreateEventActivity;
 import com.wehelp.wehelp.EventDetailActivity;
 import com.wehelp.wehelp.FirstScreenActivity;
@@ -33,4 +34,5 @@ public interface NetComponent {
     void inject(ParticipateEventActivity activity);
     void inject(HelpEventActivity activity);
     void inject(MyEventsActivity activity);
+    void inject(AbandonEventActivity activity);
 }

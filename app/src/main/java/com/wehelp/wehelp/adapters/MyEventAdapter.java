@@ -1,6 +1,8 @@
 package com.wehelp.wehelp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.wehelp.wehelp.AbandonEventActivity;
+import com.wehelp.wehelp.HelpEventActivity;
 import com.wehelp.wehelp.R;
 import com.wehelp.wehelp.classes.Category;
 import com.wehelp.wehelp.classes.Event;
@@ -48,7 +52,7 @@ public class MyEventAdapter extends ArrayAdapter<Event> {
         TextView eventTitle = (TextView)convertView.findViewById(R.id.event_my_title);
         TextView eventDescription = (TextView)convertView.findViewById(R.id.event_my_description);
         TextView eventParticipants = (TextView)convertView.findViewById(R.id.event_my_participating);
-        Button btnAbandon = (Button)convertView.findViewById(R.id.btn_delete);
+        Button btnDelete = (Button)convertView.findViewById(R.id.btn_delete);
 
         String address = "Endereço: "+timelineEvent.getCidade()+" / "+timelineEvent.getRua()+" - "+timelineEvent.getNumero()+", "+timelineEvent.getComplemento();
         String hour = "Data: "+new SimpleDateFormat("dd/mm/yyyy / hh:mm").format(timelineEvent.getDataInicio());
@@ -62,16 +66,15 @@ public class MyEventAdapter extends ArrayAdapter<Event> {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
                 android.R.layout.simple_list_item_1, android.R.id.text1);
 
-        btnAbandon.setOnClickListener(new View.OnClickListener() {
+        btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intentHelp = new Intent(getContext(), HelpEventActivity.class);
-
+//                Intent intentHelp = new Intent(getContext(), DeleteEventActivity.class);
+//
 //                Bundle mBundle = new Bundle();
 //                mBundle.putSerializable("event", timelineEvent);
 //                intentHelp.putExtras(mBundle);
-
-
+//
 //                context.startActivity(intentHelp);
             }
         });

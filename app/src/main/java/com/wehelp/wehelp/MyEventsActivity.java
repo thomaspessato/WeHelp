@@ -84,7 +84,6 @@ public class MyEventsActivity extends AppCompatActivity {
             eventController.setListEvents(null);
             System.out.println("listEvents: "+listEvents);
 
-
             return listEvents;
         }
 

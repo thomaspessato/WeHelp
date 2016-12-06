@@ -50,6 +50,17 @@ public class EventService {
         }, serviceErrorCallback);
     }
 
+    public void getMyEvents(int userId, final IServiceArrayResponseCallback serviceArrayResponseCallback, final IServiceErrorCallback serviceErrorCallback) {
+        String url = "eventos?usuario_id="+userId;
+        this.serviceContainer.GetArrayRequest(url, new IServiceArrayResponseCallback() {
+            @Override
+            public void execute(JSONArray response) {
+                Log.d("WeHelpWs", response.toString());
+                serviceArrayResponseCallback.execute(response);
+            }
+        }, serviceErrorCallback);
+    }
+
     public void createEvent(Event event, final IServiceResponseCallback serviceResponseCallback, final IServiceErrorCallback serviceErrorCallback) throws JSONException {
         String url = "eventos";
         JSONObject json = new JSONObject();

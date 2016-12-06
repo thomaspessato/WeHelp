@@ -6,6 +6,7 @@ import com.wehelp.wehelp.FirstScreenActivity;
 import com.wehelp.wehelp.HelpEventActivity;
 import com.wehelp.wehelp.LoginActivity;
 import com.wehelp.wehelp.MainActivity;
+import com.wehelp.wehelp.MyEventsActivity;
 import com.wehelp.wehelp.ParticipateEventActivity;
 import com.wehelp.wehelp.TabbedActivity;
 import com.wehelp.wehelp.controllers.UserController;
@@ -31,4 +32,5 @@ public interface NetComponent {
     void inject(FirstScreenActivity activity);
     void inject(ParticipateEventActivity activity);
     void inject(HelpEventActivity activity);
+    void inject(MyEventsActivity activity);
 }

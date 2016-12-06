@@ -22,14 +22,14 @@ import java.util.List;
 /**
  * Created by temp on 9/15/16.
  */
-public class TimelineEventAdapter extends ArrayAdapter<Event>{
+public class ParticipatingEventAdapter extends ArrayAdapter<Event>{
 
     private Context context;
     private List<Event> eventList;
 
 
-    public TimelineEventAdapter(Context context, List<Event> list) {
-        super(context, R.layout.row_timeline, list);
+    public ParticipatingEventAdapter(Context context, List<Event> list) {
+        super(context, R.layout.row_participating_event, list);
         this.context = context;
         this.eventList= list;
     }
@@ -40,7 +40,7 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.row_timeline, null);
+            convertView = inflater.inflate(R.layout.row_participating_event, null);
             System.out.println("timeline event: convertView was NULL");
         }
 
@@ -51,13 +51,11 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
         TextView eventCategory = (TextView)convertView.findViewById(R.id.event_timeline_category);
         TextView eventTitle = (TextView)convertView.findViewById(R.id.event_timeline_title);
         TextView eventDescription = (TextView)convertView.findViewById(R.id.event_timeline_description);
-        Button btnHelp = (Button)convertView.findViewById(R.id.btn_abandon);
+        Button btnAbandon = (Button)convertView.findViewById(R.id.btn_abandon);
 //        LinearLayout requirementsLayout = (LinearLayout)convertView.findViewById(R.id.event_requirements_layout);
 
         String address = "Endereço: "+timelineEvent.getCidade()+" / "+timelineEvent.getRua()+" - "+timelineEvent.getNumero()+", "+timelineEvent.getComplemento();
         String hour = "Data: "+new SimpleDateFormat("dd/mm/yyyy / hh:mm").format(timelineEvent.getDataInicio());
-
-
 
         Category category = timelineEvent.getCategoria();
 
@@ -79,7 +77,6 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
 //
 //        }
 
-
         linkInfoEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,17 +85,17 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
             }
         });
 
-        btnHelp.setOnClickListener(new View.OnClickListener() {
+        btnAbandon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentHelp = new Intent(getContext(), HelpEventActivity.class);
+//                Intent intentHelp = new Intent(getContext(), HelpEventActivity.class);
 
-                Bundle mBundle = new Bundle();
-                mBundle.putSerializable("event", timelineEvent);
-                intentHelp.putExtras(mBundle);
+//                Bundle mBundle = new Bundle();
+//                mBundle.putSerializable("event", timelineEvent);
+//                intentHelp.putExtras(mBundle);
 
 
-                context.startActivity(intentHelp);
+//                context.startActivity(intentHelp);
             }
         });
 

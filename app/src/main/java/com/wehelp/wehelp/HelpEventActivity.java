@@ -23,41 +23,41 @@ public class HelpEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_help_event);
-        
+
         setTitle("Quero ajudar");
         Event event = (Event)getIntent().getSerializableExtra("event");
         TextView eventName = (TextView) findViewById(R.id.help_event_name);
         TextView eventDescription = (TextView) findViewById(R.id.help_event_description);
         Button helpRegisterButton = (Button)findViewById(R.id.btn_register_help);
-        final ListView lvRequirementsCheckbox = (ListView)findViewById(R.id.listview_requirements_checkbox);
-        final ArrayList<EventRequirement> requirementList = new ArrayList<>();
-        final ArrayList<EventRequirement> checkedRequirementList = new ArrayList<>();
-        RequirementCheckboxAdapter checkboxAdapter = new RequirementCheckboxAdapter(this,R.layout.row_checkbox_requirement,requirementList);
+//        final ListView lvRequirementsCheckbox = (ListView)findViewById(R.id.listview_requirements_checkbox);
+//        final ArrayList<EventRequirement> requirementList = new ArrayList<>();
+//        final ArrayList<EventRequirement> checkedRequirementList = new ArrayList<>();
+//        RequirementCheckboxAdapter checkboxAdapter = new RequirementCheckboxAdapter(this,R.layout.row_checkbox_requirement,requirementList);
 
         assert eventName != null;
         assert eventDescription != null;
-        assert lvRequirementsCheckbox != null;
+//        assert lvRequirementsCheckbox != null;
         eventName.setText(event.getNome());
         eventDescription.setText(event.getDescricao());
-        lvRequirementsCheckbox.setAdapter(checkboxAdapter);
+//        lvRequirementsCheckbox.setAdapter(checkboxAdapter);
 
-        for(int i = 0; i< event.getRequisitos().size(); i++) {
-            EventRequirement requirement = event.getRequisitos().get(i);
-            requirementList.add(requirement);
-        }
+//        for(int i = 0; i< event.getRequisitos().size(); i++) {
+//            EventRequirement requirement = event.getRequisitos().get(i);
+//            requirementList.add(requirement);
+//        }
 
-        checkboxAdapter.notifyDataSetChanged();
+//        checkboxAdapter.notifyDataSetChanged();
 
         assert helpRegisterButton != null;
         helpRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkedRequirementList.clear();
-                for(int i = 0; i< requirementList.size(); i++) {
-                    if(requirementList.get(i).isSelected()) {
-                        checkedRequirementList.add(requirementList.get(i));
-                    }
-                }
+//                checkedRequirementList.clear();
+//                for(int i = 0; i< requirementList.size(); i++) {
+//                    if(requirementList.get(i).isSelected()) {
+//                        checkedRequirementList.add(requirementList.get(i));
+//                    }
+//                }
             }
         });
 

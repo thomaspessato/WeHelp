@@ -9,6 +9,8 @@ public class EventRequirement implements Serializable {
     private int evento_id;
     private int id;
     private String descricao;
+    boolean selected = false;
+
 
 
     public Date getCreatedAt() {
@@ -49,5 +51,12 @@ public class EventRequirement implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }

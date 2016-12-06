@@ -36,21 +36,16 @@
         android:id="@+id/textView8"
         android:textSize="18sp" />
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView8"
-        android:id="@+id/layout_checkbox_requirements"
-        android:layout_marginLeft="10dp">
-
-    </LinearLayout>
+        android:id="@+id/listview_requirements_checkbox" />
 
     <Button
         android:text="ENVIAR CONFIRMAÇÃO"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button4"
+        android:id="@+id/btn_register_help"
         style="@style/Widget.AppCompat.Button.Colored" />
 
 </LinearLayout>

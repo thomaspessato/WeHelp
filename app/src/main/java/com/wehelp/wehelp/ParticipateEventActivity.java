@@ -16,6 +16,7 @@ import javax.inject.Inject;
 
 public class ParticipateEventActivity extends AppCompatActivity {
 
+    @Inject
     EventController eventController;
     int userId;
 
@@ -30,7 +31,7 @@ public class ParticipateEventActivity extends AppCompatActivity {
 
         ((WeHelpApp) getApplication()).getNetComponent().inject(this);
 
-        System.out.println("USER ID: "+((WeHelpApp) getApplication()).getUser().getId());
+        System.out.println("USER ID: "+((WeHelpApp)this.application).getUser().getId());
         new ListParticipatingEventsTask().execute();
     }
 
@@ -43,7 +44,7 @@ public class ParticipateEventActivity extends AppCompatActivity {
         @Override
         protected ArrayList<Event> doInBackground(Void... params) {
 
-                eventController.getParticipatingEvents(11);
+                eventController.getParticipatingEvents(((WeHelpApp)application).getUser().getId());
                 while (eventController.getListEvents() == null && !eventController.errorService){}
                 if (eventController.errorService) {
                     return null;

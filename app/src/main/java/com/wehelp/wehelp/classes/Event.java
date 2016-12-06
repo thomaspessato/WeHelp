@@ -31,6 +31,7 @@ public class Event implements Serializable {
     private ArrayList<EventRequirement> requisitos;
     private String cep;
     private String nome;
+    private int numero_participantes;
 
 
     public int getId() {
@@ -202,6 +203,7 @@ public class Event implements Serializable {
     }
 
 
+
     public Category getCategoria() {
         return categoria;
     }
@@ -235,5 +237,13 @@ public class Event implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public int getNumeroParticipantes() {
+        return numero_participantes;
+    }
+
+    public void setNumeroParticipantes(int numero_participantes) {
+        this.numero_participantes = numero_participantes;
     }
 }

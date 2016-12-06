@@ -1,7 +1,9 @@
 package com.wehelp.wehelp.di;
 
 import com.wehelp.wehelp.CreateEventActivity;
+import com.wehelp.wehelp.EventDetailActivity;
 import com.wehelp.wehelp.FirstScreenActivity;
+import com.wehelp.wehelp.HelpEventActivity;
 import com.wehelp.wehelp.LoginActivity;
 import com.wehelp.wehelp.MainActivity;
 import com.wehelp.wehelp.ParticipateEventActivity;
@@ -28,4 +30,5 @@ public interface NetComponent {
     void inject(TabbedActivity activity);
     void inject(FirstScreenActivity activity);
     void inject(ParticipateEventActivity activity);
+    void inject(HelpEventActivity activity);
 }

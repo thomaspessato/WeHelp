@@ -32,6 +32,7 @@ public class EventController {
     public Event eventTemp = null;
     public boolean errorService = false;
     public JSONObject errorMessages = null;
+    public boolean addUserOk = false;
 
     public ArrayList<Event> getListEvents() {
         return this.listEvents;
@@ -129,10 +130,13 @@ public class EventController {
     public void addUser(final Event event, final User user) throws JSONException {
         this.errorService = false;
         this.errorMessages = null;
+        this.addUserOk = false;
+
         this.eventService.addUser(event, user, new IServiceResponseCallback() {
             @Override
             public void execute(JSONObject response) {
                 Log.d("WeHelpWs", "Usuário " + user.getId() + " participando do evento " + event.getId());
+                addUserOk = true;
             }
         }, new IServiceErrorCallback() {
             @Override

@@ -88,26 +88,26 @@ public class CreateEventActivity extends AppCompatActivity {
         final EditText eventAddressNumber = (EditText)findViewById(R.id.register_event_number);
         final EditText eventAddressComp = (EditText)findViewById(R.id.register_event_comp);
         final EditText eventDate = (EditText)findViewById(R.id.register_event_date);
-        final EditText eventRequirement = (EditText)findViewById(R.id.register_event_requirement);
+//        final EditText eventRequirement = (EditText)findViewById(R.id.register_event_requirement);
         final EditText eventHour = (EditText)findViewById(R.id.register_event_hour);
-        Button btnNewRequirement = (Button)findViewById(R.id.btn_new_requirement);
+//        Button btnNewRequirement = (Button)findViewById(R.id.btn_new_requirement);
         Button btnRegisterEvent = (Button)findViewById(R.id.btn_register_event);
         final EditText eventDesc = (EditText)findViewById(R.id.register_event_desc);
-        final ListView lvRequirements = (ListView)findViewById(R.id.listview_requirements);
+//        final ListView lvRequirements = (ListView)findViewById(R.id.listview_requirements);
         categorySpinner = (Spinner)findViewById(R.id.event_register_spinner_category);
 
-        final ArrayList<String> listItems=new ArrayList<String>();
+//        final ArrayList<String> listItems=new ArrayList<String>();
 
-        final ArrayAdapter requirementsArrayAdapter;
+//        final ArrayAdapter requirementsArrayAdapter;
         final Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
 
-        assert btnNewRequirement != null;
-        assert eventRequirement != null;
+//        assert btnNewRequirement != null;
+//        assert eventRequirement != null;
 
 
-        requirementsArrayAdapter = new RequirementListAdapter(this,listItems);
-        final int[] requirementsCounter = {0};
-        lvRequirements.setAdapter(requirementsArrayAdapter);
+//        requirementsArrayAdapter = new RequirementListAdapter(this,listItems);
+//        final int[] requirementsCounter = {0};
+//        lvRequirements.setAdapter(requirementsArrayAdapter);
 
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -248,21 +248,21 @@ public class CreateEventActivity extends AppCompatActivity {
         eventHour.addTextChangedListener(twHour);
         eventDate.addTextChangedListener(tw);
 
-
-        btnNewRequirement.setOnClickListener(new View.OnClickListener() {
-            @Override
-                public void onClick(View view) {
-                    String requirement = eventRequirement.getText().toString();
-                    if(!requirement.equalsIgnoreCase("")) {
-                        listItems.add(requirement);
-                        requirementsArrayAdapter.notifyDataSetChanged();
-                        eventRequirement.setText("");
-                        setListViewHeightBasedOnChildren(lvRequirements);
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Por favor, preencha algo no requisito", Toast.LENGTH_SHORT).show();
-                    }
-                }
-        });
+//
+//        btnNewRequirement.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//                public void onClick(View view) {
+//                    String requirement = eventRequirement.getText().toString();
+//                    if(!requirement.equalsIgnoreCase("")) {
+//                        listItems.add(requirement);
+//                        requirementsArrayAdapter.notifyDataSetChanged();
+//                        eventRequirement.setText("");
+//                        setListViewHeightBasedOnChildren(lvRequirements);
+//                    } else {
+//                        Toast.makeText(getApplicationContext(), "Por favor, preencha algo no requisito", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//        });
 
         btnRegisterEvent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -275,17 +275,17 @@ public class CreateEventActivity extends AppCompatActivity {
                 String date = eventDate.getText().toString();
                 String hour = eventHour.getText().toString();
                 String desc = eventDesc.getText().toString();
-                ArrayList<EventRequirement> requirementsArr = new ArrayList();
+//                ArrayList<EventRequirement> requirementsArr = new ArrayList();
 
 
-
-                for (int i=0;i<requirementsArrayAdapter.getCount();i++){
-                    EventRequirement req = new EventRequirement();
-                    req.setDescricao(requirementsArrayAdapter.getItem(i).toString());
-                    requirementsArr.add(req);
-                }
-
-                System.out.println("requirements: "+requirementsArr);
+//
+//                for (int i=0;i<requirementsArrayAdapter.getCount();i++){
+//                    EventRequirement req = new EventRequirement();
+//                    req.setDescricao(requirementsArrayAdapter.getItem(i).toString());
+//                    requirementsArr.add(req);
+//                }
+//
+//                System.out.println("requirements: "+requirementsArr);
 
                 if(title.equalsIgnoreCase("") ||
                         category == null ||
@@ -347,8 +347,8 @@ public class CreateEventActivity extends AppCompatActivity {
                 event.setRanking(1);
                 event.setStatus("A");
                 event.setUsuarioId(((WeHelpApp)getApplication()).getUser().getId());
-                ArrayList<EventRequirement> listReq = new ArrayList<>();
-                event.setRequisitos(requirementsArr);
+//                ArrayList<EventRequirement> listReq = new ArrayList<>();
+//                event.setRequisitos(requirementsArr);
                 new CreateEventTask().execute(event);
             }
         });

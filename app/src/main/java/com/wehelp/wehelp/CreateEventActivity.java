@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,6 +66,7 @@ public class CreateEventActivity extends AppCompatActivity {
     @Inject
     public CategoryController categoryController;
     public ArrayList<Category> listCategories;
+    RelativeLayout loadingPanel;
 
     Spinner categorySpinner;
 
@@ -95,6 +97,9 @@ public class CreateEventActivity extends AppCompatActivity {
         final EditText eventDesc = (EditText)findViewById(R.id.register_event_desc);
 //        final ListView lvRequirements = (ListView)findViewById(R.id.listview_requirements);
         categorySpinner = (Spinner)findViewById(R.id.event_register_spinner_category);
+        loadingPanel = (RelativeLayout) findViewById(R.id.loadingPanel);
+        assert loadingPanel != null;
+        loadingPanel.setVisibility(View.GONE);
 
 //        final ArrayList<String> listItems=new ArrayList<String>();
 
@@ -267,6 +272,8 @@ public class CreateEventActivity extends AppCompatActivity {
         btnRegisterEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                loadingPanel.setVisibility(View.VISIBLE);
                 String title = eventTitle.getText().toString();
                 Category category = (Category)categorySpinner.getSelectedItem();
                 String addressStreet = eventAddressStreet.getText().toString();
@@ -295,6 +302,7 @@ public class CreateEventActivity extends AppCompatActivity {
                         date.equalsIgnoreCase("") ||
                         hour.equalsIgnoreCase("")) {
                     Toast.makeText(getApplicationContext(), "Desculpe, todos os campos são necessários!", Toast.LENGTH_SHORT).show();
+                    loadingPanel.setVisibility(View.GONE);
                     return;
                 }
 
@@ -304,17 +312,22 @@ public class CreateEventActivity extends AppCompatActivity {
                 int tentativas = 3;
                 while (tentativas > 0) {
                     try {
-                        address = geocoder.getFromLocationName(addressStreet + ", " + addressNumber + ", " + addressComp + ", Porto Alegre", 1).get(0);
-                        latitude = address.getLatitude();
-                        longitude = address.getLongitude();
-                        System.out.println("lat: " + latitude);
-                        System.out.println("lng: " + longitude);
+                        if(geocoder.getFromLocationName(addressStreet + ", " + addressNumber + ", " + addressComp + ", Porto Alegre", 1).size() > 0) {
+                            address = geocoder.getFromLocationName(addressStreet + ", " + addressNumber + ", " + addressComp + ", Porto Alegre", 1).get(0);
+                            latitude = address.getLatitude();
+                            longitude = address.getLongitude();
+                            System.out.println("lat: " + latitude);
+                            System.out.println("lng: " + longitude);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Tentando encontrar endereço", Toast.LENGTH_SHORT).show();
+                        }
                         break;
                     } catch (IOException e) {
                         e.printStackTrace();
                         tentativas--;
                         if (tentativas == 0) {
                             Toast.makeText(getApplicationContext(), "Endereço inválido", Toast.LENGTH_SHORT).show();
+                            loadingPanel.setVisibility(View.GONE);
                             return;
                         }
                     }
@@ -347,8 +360,8 @@ public class CreateEventActivity extends AppCompatActivity {
                 event.setRanking(1);
                 event.setStatus("A");
                 event.setUsuarioId(((WeHelpApp)getApplication()).getUser().getId());
-//                ArrayList<EventRequirement> listReq = new ArrayList<>();
-//                event.setRequisitos(requirementsArr);
+                ArrayList<EventRequirement> listReq = new ArrayList<>();
+                event.setRequisitos(listReq);
                 new CreateEventTask().execute(event);
             }
         });
@@ -410,10 +423,12 @@ public class CreateEventActivity extends AppCompatActivity {
             if (event == null) {
 //                Toast.makeText(getApplicationContext(), eventController.errorMessages.toString(), Toast.LENGTH_LONG).show();
                 System.out.println("Erro ao cadastrar evento: "+eventController.errorMessages);
+                loadingPanel.setVisibility(View.GONE);
 //                Toast.makeText(getActivity().getApplicationContext(), "Erro ao registrar pessoa", Toast.LENGTH_LONG).show();
 //                Log.d("WeHelpWS", userController.errorMessages.toString());
             } else {
                 Toast.makeText(getApplicationContext(), "Evento  " + event.getNome() + " cadastrado", Toast.LENGTH_LONG).show();
+                loadingPanel.setVisibility(View.GONE);
                 Intent intent = new Intent(CreateEventActivity.this, TabbedActivity.class);
                 startActivity(intent);
             }

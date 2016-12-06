@@ -335,6 +335,9 @@ public class CreateEventActivity extends AppCompatActivity {
                     event.setDataInicio(sdf1.parse(date + " " + hour + ":00"));
                 } catch (ParseException e) {
                     e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Data/Hora são inválidos!", Toast.LENGTH_SHORT).show();
+                    eventDate.requestFocus();
+                    return;
                 }
                 event.setDescricao(desc);
                 event.setLat(latitude);

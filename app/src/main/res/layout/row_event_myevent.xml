@@ -84,15 +84,15 @@
 
                     android:textColor="@android:color/white"
                     android:layout_alignParentBottom="true"
-                    android:layout_toRightOf="@+id/btn_help"
-                    android:layout_toEndOf="@+id/btn_help"
+                    android:layout_toRightOf="@+id/btn_abandon"
+                    android:layout_toEndOf="@+id/btn_abandon"
                     android:layout_weight="1" />
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="37dp"
                     android:text="EDITAR"
-                    android:id="@+id/btn_help"
+                    android:id="@+id/btn_abandon"
                     android:layout_gravity="center_horizontal|right"
                     android:background="@color/colorPrimary"
                     android:padding="10dp"

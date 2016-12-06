@@ -68,47 +68,47 @@
             android:layout_marginBottom="15dp" />
 
 
-        <TextView
-            android:text="O que você precisa?"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/textview30"
-            android:textSize="18sp"
-            android:textColor="@android:color/black" />
+        <!--<TextView-->
+            <!--android:text="O que você precisa?"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:id="@+id/textview30"-->
+            <!--android:textSize="18sp"-->
+            <!--android:textColor="@android:color/black" />-->
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <!--<LinearLayout-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
 
-            <EditText
-                android:layout_width="298dp"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:id="@+id/register_event_requirement"
-                android:textSize="18sp"
-                android:layout_weight="1"
-                android:hint="Ex: 2kg de batata" />
+            <!--<EditText-->
+                <!--android:layout_width="298dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:inputType="textPersonName"-->
+                <!--android:id="@+id/register_event_requirement"-->
+                <!--android:textSize="18sp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:hint="Ex: 2kg de batata" />-->
 
-            <Button
-                android:text="+"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btn_new_requirement"
-                android:layout_weight="1"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:textSize="18sp" />
+            <!--<Button-->
+                <!--android:text="+"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/btn_new_requirement"-->
+                <!--android:layout_weight="1"-->
+                <!--style="@style/Widget.AppCompat.Button.Colored"-->
+                <!--android:textSize="18sp" />-->
 
-        </LinearLayout>
+        <!--</LinearLayout>-->
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/listview_requirements"
-            android:layout_marginBottom="20dp" />
+        <!--<ListView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:id="@+id/listview_requirements"-->
+            <!--android:layout_marginBottom="20dp" />-->
 
         <TextView
             android:text="Sobre que assunto é seu evento?"

@@ -60,11 +60,13 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
         TextView eventCreator = (TextView)convertView.findViewById(R.id.event_timeline_creator);
         TextView eventCategory = (TextView)convertView.findViewById(R.id.event_timeline_category);
         TextView eventTitle = (TextView)convertView.findViewById(R.id.event_timeline_title);
+        TextView eventDescription = (TextView)convertView.findViewById(R.id.event_timeline_description);
         Button btnHelp = (Button)convertView.findViewById(R.id.btn_help);
-        LinearLayout requirementsLayout = (LinearLayout)convertView.findViewById(R.id.event_requirements_layout);
+//        LinearLayout requirementsLayout = (LinearLayout)convertView.findViewById(R.id.event_requirements_layout);
 
         String address = "Endereço: "+timelineEvent.getCidade()+" / "+timelineEvent.getRua()+" - "+timelineEvent.getNumero()+", "+timelineEvent.getComplemento();
         String hour = "Data: "+new SimpleDateFormat("dd/mm/yyyy / hh:mm").format(timelineEvent.getDataInicio());
+
 
 
         Category category = timelineEvent.getCategoria();
@@ -72,20 +74,20 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
         String categoria = category.getDescricao();
         String title = timelineEvent.getNome();
         String descricao = timelineEvent.getDescricao();
-        ArrayList requisitos = timelineEvent.getRequisitos();
+//        ArrayList requisitos = timelineEvent.getRequisitos();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
                 android.R.layout.simple_list_item_1, android.R.id.text1);
 
-        requirementsLayout.removeAllViews();
-        
-        for(int i = 0; i< requisitos.size() ; i++) {
-            Object requisito = requisitos.get(i);
-            String requisitoString = ((EventRequirement) requisito).getDescricao();
-            TextView requirementTxt = new TextView(getContext());
-            requirementTxt.setText(requisitoString);
-            requirementsLayout.addView(requirementTxt);
-
-        }
+//        requirementsLayout.removeAllViews();
+//
+//        for(int i = 0; i< requisitos.size() ; i++) {
+//            Object requisito = requisitos.get(i);
+//            String requisitoString = ((EventRequirement) requisito).getDescricao();
+//            TextView requirementTxt = new TextView(getContext());
+//            requirementTxt.setText(requisitoString);
+//            requirementsLayout.addView(requirementTxt);
+//
+//        }
 
 
         linkInfoEvent.setOnClickListener(new View.OnClickListener() {
@@ -115,6 +117,7 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
         eventAddress.setText(address);
         eventHour.setText(hour);
         eventCreator.setText("CRIADOR");
+        eventDescription.setText(timelineEvent.getDescricao());
 
         return convertView;
     }

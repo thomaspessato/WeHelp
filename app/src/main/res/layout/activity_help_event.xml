@@ -26,20 +26,20 @@
         android:textSize="18sp"
         android:layout_marginBottom="20dp" />
 
-    <TextView
-        android:text="Com o quê você vai ajudar?"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/textView8"
-        android:textSize="18sp" />
+    <!--<TextView-->
+        <!--android:text="Com o quê você vai ajudar?"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:id="@+id/textView8"-->
+        <!--android:textSize="18sp" />-->
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listview_requirements_checkbox" />
+    <!--<ListView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/listview_requirements_checkbox" />-->
 
     <Button
         android:text="ENVIAR CONFIRMAÇÃO"

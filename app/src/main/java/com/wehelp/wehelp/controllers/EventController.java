@@ -56,6 +56,7 @@ public class EventController {
         this.eventService.getEvents(lat, lng, perimetro, new IServiceArrayResponseCallback() {
             @Override
             public void execute(JSONArray response) {
+                System.out.println("get events response: "+response);
                 setListEvents(JsonArrayToEventList(response));
             }
         }, new IServiceErrorCallback() {

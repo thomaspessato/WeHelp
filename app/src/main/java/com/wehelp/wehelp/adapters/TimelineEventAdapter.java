@@ -44,13 +44,14 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
             System.out.println("timeline event: convertView was NULL");
         }
 
-        TextView linkInfoEvent = (TextView) convertView.findViewById(R.id.btn_moreinfo);
+//        TextView linkInfoEvent = (TextView) convertView.findViewById(R.id.btn_moreinfo);
         TextView eventAddress = (TextView)convertView.findViewById(R.id.event_timeline_date);
         TextView eventHour = (TextView)convertView.findViewById(R.id.event_timeline_hour);
         TextView eventCreator = (TextView)convertView.findViewById(R.id.event_timeline_creator);
         TextView eventCategory = (TextView)convertView.findViewById(R.id.event_timeline_category);
         TextView eventTitle = (TextView)convertView.findViewById(R.id.event_timeline_title);
         TextView eventDescription = (TextView)convertView.findViewById(R.id.event_timeline_description);
+        TextView eventParticipants = (TextView)convertView.findViewById(R.id.event_timeline_participating);
         Button btnHelp = (Button)convertView.findViewById(R.id.btn_abandon);
 //        LinearLayout requirementsLayout = (LinearLayout)convertView.findViewById(R.id.event_requirements_layout);
 
@@ -80,13 +81,13 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
 //        }
 
 
-        linkInfoEvent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), EventDetailActivity.class);
-                context.startActivity(intent);
-            }
-        });
+//        linkInfoEvent.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getContext(), EventDetailActivity.class);
+//                context.startActivity(intent);
+//            }
+//        });
 
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +109,17 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
         eventHour.setText(hour);
         eventCreator.setText("CRIADOR");
         eventDescription.setText(timelineEvent.getDescricao());
+        if(timelineEvent.getNumeroParticipantes() > 0) {
+            eventParticipants.setText(timelineEvent.getNumeroParticipantes()+" pessoas irão participar deste evento.");
+        }
+        if(timelineEvent.getNumeroParticipantes() == 1) {
+            eventParticipants.setText(timelineEvent.getNumeroParticipantes()+" pessoa irá participar deste evento.");
+        }
+        if(timelineEvent.getNumeroParticipantes() == 0){
+            eventParticipants.setText("Não há nenhuma pessoa participando no momento. Seja a primeira!");
+        }
+
+
 
         return convertView;
     }

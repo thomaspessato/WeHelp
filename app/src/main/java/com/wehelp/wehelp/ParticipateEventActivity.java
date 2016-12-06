@@ -80,9 +80,13 @@ public class ParticipateEventActivity extends AppCompatActivity {
                 if (eventController.errorService) {
                     return null;
                 }
+
+
                 ArrayList<Event> listEvents = eventController.getListEvents();
+
                 eventController.setListEvents(null);
                 System.out.println("listEvents: "+listEvents);
+
 
 
 

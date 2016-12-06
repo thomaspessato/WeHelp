@@ -61,7 +61,7 @@ public class FragmentTimeline extends Fragment {
             TabbedActivity tab = (TabbedActivity)getActivity();
             eventList = tab.listEvents != null ? tab.listEvents : new ArrayList<Event>();
 
-            System.out.println("EVENTLIST: " +eventList.get(0));
+            System.out.println("EVENTLIST: " +eventList.get(1));
 
 
             Event event = eventList.get(0);
@@ -98,8 +98,6 @@ public class FragmentTimeline extends Fragment {
 
         TabbedActivity tab = (TabbedActivity)getActivity();
         eventList = tab.listEvents != null ? tab.listEvents : new ArrayList<Event>();
-
-
 
         listView = (ListView)rootView.findViewById(R.id.timeline_listview);
         eventArrayAdapter = new TimelineEventAdapter(getContext(),eventList);

@@ -35,9 +35,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.Manifest;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wehelp.wehelp.EventDetailActivity;
+import com.wehelp.wehelp.HelpEventActivity;
 import com.wehelp.wehelp.R;
 import com.wehelp.wehelp.TabbedActivity;
 import com.wehelp.wehelp.classes.Category;
@@ -290,7 +292,7 @@ public class FragmentMap extends Fragment {
                     LatLng marker = new LatLng(-30.012054, -51.178840);
                     Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
 
-
+                    mMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
 
                     googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                     try {
@@ -302,7 +304,6 @@ public class FragmentMap extends Fragment {
                             addresses.add(geocoder.getFromLocationName("Avenida Sertório, Porto Alegre", 1).get(0));
                             addresses.add(geocoder.getFromLocationName("Avenida Plínio Brasil Milano, Porto Alegre", 1).get(0));
                             addresses.add(geocoder.getFromLocationName("Rua Novo Hamburgo, Porto Alegre", 1).get(0));
-
 
                             for (int i = 0; i < addresses.size(); i++) {
                                 double longitude = addresses.get(i).getLongitude();
@@ -317,7 +318,9 @@ public class FragmentMap extends Fragment {
                                 double latitude = listEvents.get(i).getLat();
                                 LatLng test = new LatLng(latitude, longitude);
 
-                                googleMap.addMarker(new MarkerOptions().position(test).title(listEvents.get(i).getNome() + " | " + listEvents.get(i).getCategoria().getDescricao()).snippet(listEvents.get(i).getDescricao()));
+
+                                Marker newMarker = googleMap.addMarker(new MarkerOptions().position(test).title(listEvents.get(i).getNome()).snippet(listEvents.get(i).getCategoria().getDescricao()));
+                                newMarker.setTag(listEvents.get(i));
                             }
                         }
 
@@ -325,8 +328,14 @@ public class FragmentMap extends Fragment {
                         googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                             @Override
                             public void onInfoWindowClick(Marker marker) {
-                                Intent intentDetail = new Intent(getActivity(), EventDetailActivity.class);
-                                startActivity(intentDetail);
+                                    System.out.println("MARKER TAG "+marker.getTag());
+                                Intent intentHelp = new Intent(getContext(), HelpEventActivity.class);
+
+                                Bundle mBundle = new Bundle();
+                                mBundle.putSerializable("event", (Event)marker.getTag());
+                                intentHelp.putExtras(mBundle);
+
+                                startActivity(intentHelp);
                             }
                         });
 
@@ -334,27 +343,7 @@ public class FragmentMap extends Fragment {
                         e.printStackTrace();
                     }
 
-//                    ISSO ESTÁ FERRANDO OS MARKERS
-
-//                    if (location != null)
-//                    {
-//                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
-//                        CameraPosition cameraPosition = new CameraPosition.Builder()
-//                                .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
-//                                .zoom(15)                   // Sets the zoom
-//                                .build();                   // Creates a CameraPosition from the builder
-//                        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-//                    }
 //
-//                    if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
-//                            == PackageManager.PERMISSION_GRANTED) {
-//                        mMap.setMyLocationEnabled(true);
-//                    } else {
-//                        // Show rationale and request permission.
-//                    }
-//
-//                    googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
 
                     // ISSO FUNCIONA
                     CameraPosition cameraPosition = new CameraPosition.Builder().target(marker).zoom(12).build();
@@ -372,7 +361,44 @@ public class FragmentMap extends Fragment {
                 }
             });
 
+
             // remover loader
+        }
+
+
+    }
+    class MyInfoWindowAdapter implements GoogleMap.InfoWindowAdapter, GoogleMap.OnMarkerClickListener {
+
+        private final View myContentsView;
+
+        MyInfoWindowAdapter(){
+            myContentsView = getActivity().getLayoutInflater().inflate(R.layout.custom_info_window, null);
+        }
+
+
+        @Override
+        public View getInfoContents(Marker marker) {
+
+            TextView tvTitle = ((TextView)myContentsView.findViewById(R.id.title));
+            tvTitle.setText(marker.getTitle());
+            TextView tvSnippet = ((TextView)myContentsView.findViewById(R.id.snippet));
+            tvSnippet.setText(marker.getSnippet());
+
+            return myContentsView;
+        }
+
+
+
+        @Override
+        public View getInfoWindow(Marker marker) {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public boolean onMarkerClick(Marker marker) {
+
+            return false;
         }
     }
 

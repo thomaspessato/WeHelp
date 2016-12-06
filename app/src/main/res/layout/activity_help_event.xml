@@ -16,14 +16,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/help_event_name"
-        android:textSize="24sp" />
+        android:textSize="18sp"
+        android:textColor="@android:color/black" />
 
     <TextView
         android:text="TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/help_event_description"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:layout_marginBottom="20dp" />
 
     <!--<TextView-->
@@ -41,8 +42,85 @@
         <!--android:layout_height="wrap_content"-->
         <!--android:id="@+id/listview_requirements_checkbox" />-->
 
+    <TextView
+        android:text="Quantas pessoas irão?"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView12"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimary" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/event_help_participants"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:text="Onde será?"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView29"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimary" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/event_help_address"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:text="Quando?"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView35"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimary" />
+
+    <TextView
+        android:text="A data significa quando o evento de fato ocorrerá. Mas outras ações podem ocorrer até a data / hora do evento."
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView27"
+        android:fontFamily="sans-serif"
+        android:textStyle="normal|italic"
+        android:textSize="12sp" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/event_help_date"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="15dp" />
+
+
+    <TextView
+        android:text="Como funciona a comunicação?"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView8"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimary" />
+
+    <TextView
+        android:text="Assim que enviar a confirmação, um e-mail será enviado para o criador do evento, informando que você irá fazer parte do evento."
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView7" />
+
+    <TextView
+        android:text="A partir daí, é necessário manter contato por outros meios."
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView9"
+        android:layout_marginBottom="10dp" />
+
     <Button
-        android:text="ENVIAR CONFIRMAÇÃO"
+        android:text="CONFIRMAR PARTICIPAÇÃO"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btn_register_help"

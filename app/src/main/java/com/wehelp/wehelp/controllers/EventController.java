@@ -67,6 +67,26 @@ public class EventController {
         });
     }
 
+    public void getParticipatingEvents(int userId) {
+        this.errorService = false;
+        this.setListEvents(null);
+        this.errorMessages = null;
+
+        this.eventService.getParticipatingEvents(userId, new IServiceArrayResponseCallback() {
+            @Override
+            public void execute(JSONArray response) {
+                setListEvents(JsonArrayToEventList(response));
+            }
+        }, new IServiceErrorCallback() {
+            @Override
+            public void execute(VolleyError error) {
+                setListEvents(new ArrayList<Event>());
+                errorService = true;
+                errorMessages = Util.ServiceErrorToJson(error);
+            }
+        });
+    }
+
     public ArrayList<Event> JsonArrayToEventList(JSONArray jsonArray) {
         ArrayList<Event> list = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++)

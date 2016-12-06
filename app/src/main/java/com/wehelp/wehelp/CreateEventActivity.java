@@ -82,37 +82,34 @@ public class CreateEventActivity extends AppCompatActivity {
 
         new ListCategoriesTask().execute();
 
-
-
-
         final EditText eventTitle = (EditText)findViewById(R.id.register_event_title);
         final EditText eventAddressStreet = (EditText)findViewById(R.id.register_event_street);
         final EditText eventAddressNumber = (EditText)findViewById(R.id.register_event_number);
         final EditText eventAddressComp = (EditText)findViewById(R.id.register_event_comp);
         final EditText eventDate = (EditText)findViewById(R.id.register_event_date);
-//        final EditText eventRequirement = (EditText)findViewById(R.id.register_event_requirement);
+        final EditText eventRequirement = (EditText)findViewById(R.id.register_event_requirement);
         final EditText eventHour = (EditText)findViewById(R.id.register_event_hour);
-//        Button btnNewRequirement = (Button)findViewById(R.id.btn_new_requirement);
+        Button btnNewRequirement = (Button)findViewById(R.id.btn_new_requirement);
         Button btnRegisterEvent = (Button)findViewById(R.id.btn_register_event);
         final EditText eventDesc = (EditText)findViewById(R.id.register_event_desc);
-//        final ListView lvRequirements = (ListView)findViewById(R.id.listview_requirements);
+        final ListView lvRequirements = (ListView)findViewById(R.id.listview_requirements);
         categorySpinner = (Spinner)findViewById(R.id.event_register_spinner_category);
         loadingPanel = (RelativeLayout) findViewById(R.id.loadingPanel);
         assert loadingPanel != null;
         loadingPanel.setVisibility(View.GONE);
 
-//        final ArrayList<String> listItems=new ArrayList<String>();
+        final ArrayList<String> listItems=new ArrayList<String>();
 
-//        final ArrayAdapter requirementsArrayAdapter;
+        final ArrayAdapter requirementsArrayAdapter;
         final Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
 
-//        assert btnNewRequirement != null;
-//        assert eventRequirement != null;
+        assert btnNewRequirement != null;
+        assert eventRequirement != null;
 
 
-//        requirementsArrayAdapter = new RequirementListAdapter(this,listItems);
-//        final int[] requirementsCounter = {0};
-//        lvRequirements.setAdapter(requirementsArrayAdapter);
+        requirementsArrayAdapter = new RequirementListAdapter(this,listItems);
+        final int[] requirementsCounter = {0};
+        lvRequirements.setAdapter(requirementsArrayAdapter);
 
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -254,20 +251,20 @@ public class CreateEventActivity extends AppCompatActivity {
         eventDate.addTextChangedListener(tw);
 
 //
-//        btnNewRequirement.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//                public void onClick(View view) {
-//                    String requirement = eventRequirement.getText().toString();
-//                    if(!requirement.equalsIgnoreCase("")) {
-//                        listItems.add(requirement);
-//                        requirementsArrayAdapter.notifyDataSetChanged();
-//                        eventRequirement.setText("");
-//                        setListViewHeightBasedOnChildren(lvRequirements);
-//                    } else {
-//                        Toast.makeText(getApplicationContext(), "Por favor, preencha algo no requisito", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//        });
+        btnNewRequirement.setOnClickListener(new View.OnClickListener() {
+            @Override
+                public void onClick(View view) {
+                    String requirement = eventRequirement.getText().toString();
+                    if(!requirement.equalsIgnoreCase("")) {
+                        listItems.add(requirement);
+                        requirementsArrayAdapter.notifyDataSetChanged();
+                        eventRequirement.setText("");
+                        setListViewHeightBasedOnChildren(lvRequirements);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Por favor, preencha algo no requisito", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        });
 
         btnRegisterEvent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -282,17 +279,17 @@ public class CreateEventActivity extends AppCompatActivity {
                 String date = eventDate.getText().toString();
                 String hour = eventHour.getText().toString();
                 String desc = eventDesc.getText().toString();
-//                ArrayList<EventRequirement> requirementsArr = new ArrayList();
+                ArrayList<EventRequirement> requirementsArr = new ArrayList();
 
 
-//
-//                for (int i=0;i<requirementsArrayAdapter.getCount();i++){
-//                    EventRequirement req = new EventRequirement();
-//                    req.setDescricao(requirementsArrayAdapter.getItem(i).toString());
-//                    requirementsArr.add(req);
-//                }
-//
-//                System.out.println("requirements: "+requirementsArr);
+
+                for (int i=0;i<requirementsArrayAdapter.getCount();i++){
+                    EventRequirement req = new EventRequirement();
+                    req.setDescricao(requirementsArrayAdapter.getItem(i).toString());
+                    requirementsArr.add(req);
+                }
+
+                System.out.println("requirements: "+requirementsArr);
 
                 if(title.equalsIgnoreCase("") ||
                         category == null ||
@@ -360,8 +357,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 event.setRanking(1);
                 event.setStatus("A");
                 event.setUsuarioId(((WeHelpApp)getApplication()).getUser().getId());
-                ArrayList<EventRequirement> listReq = new ArrayList<>();
-                event.setRequisitos(listReq);
+                event.setRequisitos(requirementsArr);
                 new CreateEventTask().execute(event);
             }
         });
@@ -369,28 +365,28 @@ public class CreateEventActivity extends AppCompatActivity {
 
     }
 
-//    private void setListViewHeightBasedOnChildren(ListView listView) {
-//        Log.e("Listview Size ", "" + listView.getCount());
-//        ListAdapter listAdapter = listView.getAdapter();
-//        if (listAdapter == null) {
-//
-//            return;
-//        }
-//
-//        int totalHeight = 0;
-//        for (int i = 0; i < listAdapter.getCount(); i++) {
-//            View listItem = listAdapter.getView(i, null, listView);
-//            listItem.measure(0, 0);
-//            totalHeight += listItem.getMeasuredHeight();
-//        }
-//
-//        ViewGroup.LayoutParams params = listView.getLayoutParams();
-//        params.height = totalHeight
-//                + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-//        listView.setLayoutParams(params);
-//        listView.requestLayout();
-//
-//    }
+    private void setListViewHeightBasedOnChildren(ListView listView) {
+        Log.e("Listview Size ", "" + listView.getCount());
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+
+            return;
+        }
+
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight
+                + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+
+    }
 
     private class CreateEventTask extends AsyncTask<Event, Void, Event> {
 
@@ -427,6 +423,9 @@ public class CreateEventActivity extends AppCompatActivity {
 //                Toast.makeText(getActivity().getApplicationContext(), "Erro ao registrar pessoa", Toast.LENGTH_LONG).show();
 //                Log.d("WeHelpWS", userController.errorMessages.toString());
             } else {
+                System.out.println("event: NOVO EVENTO: "+event);
+                System.out.println("event: NOME DO EVENTO: "+event.getNome());
+                System.out.println("event: RUA DO EVENTO: "+event.getRua());
                 Toast.makeText(getApplicationContext(), "Evento  " + event.getNome() + " cadastrado", Toast.LENGTH_LONG).show();
                 loadingPanel.setVisibility(View.GONE);
                 Intent intent = new Intent(CreateEventActivity.this, TabbedActivity.class);

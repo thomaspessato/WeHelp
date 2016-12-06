@@ -10,6 +10,8 @@
     android:orientation="vertical"
     android:paddingLeft="20dp">
 
+
+
     <RelativeLayout
         android:id="@+id/loadingPanel"
         android:layout_width="match_parent"
@@ -23,122 +25,137 @@
             android:indeterminate="true"
             android:elevation="13dp"
             style="@style/Widget.AppCompat.ProgressBar" />
+
     </RelativeLayout>
 
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:text="TextView"
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/help_event_name"
-        android:textSize="18sp"
-        android:textColor="@android:color/black" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/help_event_description"
-        android:textSize="14sp"
-        android:layout_marginBottom="20dp" />
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/help_event_name"
+            android:textSize="18sp"
+            android:textColor="@android:color/black" />
 
-    <!--<TextView-->
-        <!--android:text="Com o quê você vai ajudar?"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:id="@+id/textView8"-->
-        <!--android:textSize="18sp" />-->
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/help_event_description"
+            android:textSize="14sp"
+            android:layout_marginBottom="20dp" />
 
-    <!--<ListView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/listview_requirements_checkbox" />-->
+        <TextView
+            android:text="Com o quê você vai ajudar?"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/textView8"
+            android:textSize="18sp" />
 
-    <TextView
-        android:text="Quantas pessoas irão?"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView12"
-        android:textSize="18sp"
-        android:textColor="@color/colorPrimary" />
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listview_requirements_checkbox" />
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/event_help_participants"
-        android:layout_marginBottom="20dp" />
+        <TextView
+            android:text="Quantas pessoas irão?"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView12"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimary" />
 
-    <TextView
-        android:text="Onde será?"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView29"
-        android:textSize="18sp"
-        android:textColor="@color/colorPrimary" />
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/event_help_participants"
+            android:layout_marginBottom="20dp" />
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/event_help_address"
-        android:layout_marginBottom="20dp" />
+        <TextView
+            android:text="Onde será?"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView29"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimary" />
 
-    <TextView
-        android:text="Quando?"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView35"
-        android:textSize="18sp"
-        android:textColor="@color/colorPrimary" />
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/event_help_address"
+            android:layout_marginBottom="20dp" />
 
-    <TextView
-        android:text="A data significa quando o evento de fato ocorrerá. Mas outras ações podem ocorrer até a data / hora do evento."
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView27"
-        android:fontFamily="sans-serif"
-        android:textStyle="normal|italic"
-        android:textSize="12sp" />
+        <TextView
+            android:text="Quando?"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView35"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimary" />
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/event_help_date"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="15dp" />
+        <TextView
+            android:text="A data significa quando o evento de fato ocorrerá. Mas outras ações podem ocorrer até a data / hora do evento."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView27"
+            android:fontFamily="sans-serif"
+            android:textStyle="normal|italic"
+            android:textSize="12sp" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/event_help_date"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="15dp" />
 
 
-    <TextView
-        android:text="Como funciona a comunicação?"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView8"
-        android:textSize="18sp"
-        android:textColor="@color/colorPrimary" />
+        <TextView
+            android:text="Como funciona a comunicação?"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView8"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimary" />
 
-    <TextView
-        android:text="Assim que enviar a confirmação, um e-mail será enviado para o criador do evento, informando que você irá fazer parte do evento."
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView7" />
+        <TextView
+            android:text="Assim que enviar a confirmação, um e-mail será enviado para o criador do evento, informando que você irá fazer parte do evento."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView7" />
 
-    <TextView
-        android:text="A partir daí, é necessário manter contato por outros meios."
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView9"
-        android:layout_marginBottom="10dp" />
+        <TextView
+            android:text="A partir daí, é necessário manter contato por outros meios."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView9"
+            android:layout_marginBottom="10dp" />
 
-    <Button
-        android:text="CONFIRMAR PARTICIPAÇÃO"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_register_help"
-        style="@style/Widget.AppCompat.Button.Colored" />
+        <Button
+            android:text="CONFIRMAR PARTICIPAÇÃO"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_register_help"
+            style="@style/Widget.AppCompat.Button.Colored" />
+    </LinearLayout>
+
+    </ScrollView>
+
+
 
 </LinearLayout>

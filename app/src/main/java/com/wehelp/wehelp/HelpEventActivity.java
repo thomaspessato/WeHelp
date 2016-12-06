@@ -55,10 +55,10 @@ public class HelpEventActivity extends AppCompatActivity {
         loadingPanel.setVisibility(View.GONE);
 
         Button helpRegisterButton = (Button)findViewById(R.id.btn_register_help);
-//        final ListView lvRequirementsCheckbox = (ListView)findViewById(R.id.listview_requirements_checkbox);
-//        final ArrayList<EventRequirement> requirementList = new ArrayList<>();
-//        final ArrayList<EventRequirement> checkedRequirementList = new ArrayList<>();
-//        RequirementCheckboxAdapter checkboxAdapter = new RequirementCheckboxAdapter(this,R.layout.row_checkbox_requirement,requirementList);
+        final ListView lvRequirementsCheckbox = (ListView)findViewById(R.id.listview_requirements_checkbox);
+        final ArrayList<EventRequirement> requirementList = new ArrayList<>();
+        final ArrayList<EventRequirement> checkedRequirementList = new ArrayList<>();
+        RequirementCheckboxAdapter checkboxAdapter = new RequirementCheckboxAdapter(this,R.layout.row_checkbox_requirement,requirementList);
 
 
         String address = event.getCidade()+" / "+event.getRua()+" - "+event.getNumero()+", "+event.getComplemento();
@@ -69,7 +69,7 @@ public class HelpEventActivity extends AppCompatActivity {
         assert eventAddress != null;
         assert eventDate != null;
         assert eventParticipants != null;
-//        assert lvRequirementsCheckbox != null;
+        assert lvRequirementsCheckbox != null;
         eventName.setText(event.getNome());
         eventDescription.setText(event.getDescricao());
         eventAddress.setText(address);
@@ -85,14 +85,14 @@ public class HelpEventActivity extends AppCompatActivity {
             eventParticipants.setText("Não há nenhuma pessoa participando no momento. Seja a primeira!");
         }
 
-//        lvRequirementsCheckbox.setAdapter(checkboxAdapter);
+        lvRequirementsCheckbox.setAdapter(checkboxAdapter);
 
-//        for(int i = 0; i< event.getRequisitos().size(); i++) {
-//            EventRequirement requirement = event.getRequisitos().get(i);
-//            requirementList.add(requirement);
-//        }
+        for(int i = 0; i< event.getRequisitos().size(); i++) {
+            EventRequirement requirement = event.getRequisitos().get(i);
+            requirementList.add(requirement);
+        }
 
-//        checkboxAdapter.notifyDataSetChanged();
+        checkboxAdapter.notifyDataSetChanged();
 
         assert helpRegisterButton != null;
         helpRegisterButton.setOnClickListener(new View.OnClickListener() {

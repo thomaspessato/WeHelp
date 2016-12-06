@@ -4,6 +4,7 @@ import com.wehelp.wehelp.CreateEventActivity;
 import com.wehelp.wehelp.FirstScreenActivity;
 import com.wehelp.wehelp.LoginActivity;
 import com.wehelp.wehelp.MainActivity;
+import com.wehelp.wehelp.ParticipateEventActivity;
 import com.wehelp.wehelp.TabbedActivity;
 import com.wehelp.wehelp.controllers.UserController;
 import com.wehelp.wehelp.tabs.FragmentMap;
@@ -26,4 +27,5 @@ public interface NetComponent {
     void inject(CreateEventActivity activity);
     void inject(TabbedActivity activity);
     void inject(FirstScreenActivity activity);
+    void inject(ParticipateEventActivity activity);
 }

@@ -10,8 +10,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.vision.text.Text;
 import com.wehelp.wehelp.adapters.MyEventAdapter;
 import com.wehelp.wehelp.adapters.ParticipatingEventAdapter;
 import com.wehelp.wehelp.classes.Event;
@@ -37,13 +39,19 @@ public class MyEventsActivity extends AppCompatActivity {
     View footer; //lazy load
     private SwipeRefreshLayout swipeRefreshLayout;
     RelativeLayout loadingPanel;
+    RelativeLayout noEventsPanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_events);
 
+
+
         loadingPanel = (RelativeLayout) findViewById(R.id.loadingPanel);
+        noEventsPanel = (RelativeLayout) findViewById(R.id.no_events_panel);
+        assert noEventsPanel != null;
+        noEventsPanel.setVisibility(View.GONE);
         setTitle("Eventos que criei");
 
         ((WeHelpApp) getApplication()).getNetComponent().inject(this);
@@ -92,9 +100,15 @@ public class MyEventsActivity extends AppCompatActivity {
                 loadingPanel.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(), eventController.errorMessages.toString(), Toast.LENGTH_LONG).show();
             } else {
-                eventList.addAll(events);
-                // Adiciona lista de eventos a Activity principal
-                eventArrayAdapter.notifyDataSetChanged();
+
+                if(events.size() > 0) {
+                    eventList.addAll(events);
+                    noEventsPanel.setVisibility(View.GONE);
+                    eventArrayAdapter.notifyDataSetChanged();
+                } else {
+                    noEventsPanel.setVisibility(View.VISIBLE);
+                }
+
                 loadingPanel.setVisibility(View.GONE);
             }
             // remover loader

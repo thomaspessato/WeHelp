@@ -309,14 +309,17 @@ public class CreateEventActivity extends AppCompatActivity {
                 int tentativas = 3;
                 while (tentativas > 0) {
                     try {
-                        if(geocoder.getFromLocationName(addressStreet + ", " + addressNumber + ", " + addressComp + ", Porto Alegre", 1).size() > 0) {
-                            address = geocoder.getFromLocationName(addressStreet + ", " + addressNumber + ", " + addressComp + ", Porto Alegre", 1).get(0);
+                        List<Address> lst = geocoder.getFromLocationName(addressStreet + " " + addressNumber + " Porto Alegre RS Brasil", 1);
+                        if(lst.size() > 0) {
+                            address = lst.get(0);
                             latitude = address.getLatitude();
                             longitude = address.getLongitude();
                             System.out.println("lat: " + latitude);
                             System.out.println("lng: " + longitude);
                         } else {
                             Toast.makeText(getApplicationContext(), "Tentando encontrar endereço", Toast.LENGTH_SHORT).show();
+                            tentativas--;
+                            continue;
                         }
                         break;
                     } catch (IOException e) {

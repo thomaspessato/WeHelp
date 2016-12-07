@@ -6,6 +6,25 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.wehelp.wehelp.ParticipateEventActivity">
 
+
+
+    <RelativeLayout
+        android:id="@+id/no_events_panel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:translationZ="@dimen/cast_intro_overlay_button_margin_bottom">
+
+        <TextView
+            android:text="Você não está participando de nenhum evento."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView30"
+            android:textSize="24sp"
+            android:gravity="center_horizontal" />
+
+    </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/loadingPanel"
         android:layout_width="match_parent"

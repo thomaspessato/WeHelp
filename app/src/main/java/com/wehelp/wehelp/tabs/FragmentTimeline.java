@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
 import com.wehelp.wehelp.R;
@@ -42,6 +43,7 @@ public class FragmentTimeline extends Fragment {
     View footer; //lazy load
     private SwipeRefreshLayout swipeRefreshLayout;
     ViewGroup rootView;
+    RelativeLayout noEventsPanel;
 
     public static FragmentTimeline newInstance() {
         FragmentTimeline fragment = new FragmentTimeline ();
@@ -62,20 +64,12 @@ public class FragmentTimeline extends Fragment {
             eventList = tab.listEvents != null ? tab.listEvents : new ArrayList<Event>();
 
             System.out.println("EVENTLIST: " +eventList.get(1));
-
-
-            Event event = eventList.get(0);
-            Gson gson = new Gson();
-            String json = gson.toJson(event);
-            System.out.println("EVENTLIST: " +json);
-
-            System.out.println("EVENTLIST SIZE: "+eventList.size());
+            if(eventList.size() > 0) {
+                noEventsPanel.setVisibility(View.GONE);
+            }
 
             listView = (ListView)rootView.findViewById(R.id.timeline_listview);
             eventArrayAdapter = new TimelineEventAdapter(getContext(),eventList);
-
-
-
             listView.setAdapter(eventArrayAdapter);
             swipeRefreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_refresh_layout);
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -98,6 +92,10 @@ public class FragmentTimeline extends Fragment {
 
         TabbedActivity tab = (TabbedActivity)getActivity();
         eventList = tab.listEvents != null ? tab.listEvents : new ArrayList<Event>();
+
+        noEventsPanel = (RelativeLayout)rootView.findViewById(R.id.no_events_panel);
+        assert noEventsPanel != null;
+        noEventsPanel.setVisibility(View.GONE);
 
         listView = (ListView)rootView.findViewById(R.id.timeline_listview);
         eventArrayAdapter = new TimelineEventAdapter(getContext(),eventList);

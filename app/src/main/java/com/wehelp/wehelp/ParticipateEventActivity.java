@@ -37,6 +37,7 @@ public class ParticipateEventActivity extends AppCompatActivity {
     View footer; //lazy load
     private SwipeRefreshLayout swipeRefreshLayout;
     RelativeLayout loadingPanel;
+    RelativeLayout noEventsPanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,9 @@ public class ParticipateEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_participate_event);
 
         loadingPanel = (RelativeLayout) findViewById(R.id.loadingPanel);
+        noEventsPanel = (RelativeLayout) findViewById(R.id.no_events_panel);
+        assert noEventsPanel != null;
+        noEventsPanel.setVisibility(View.GONE);
         setTitle("Eventos que participo");
 
         ((WeHelpApp) getApplication()).getNetComponent().inject(this);
@@ -92,9 +96,16 @@ public class ParticipateEventActivity extends AppCompatActivity {
                 loadingPanel.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(), eventController.errorMessages.toString(), Toast.LENGTH_LONG).show();
             } else {
-                eventList.addAll(events);
-                // Adiciona lista de eventos a Activity principal
-                eventArrayAdapter.notifyDataSetChanged();
+
+                if(events.size() > 0) {
+                    eventList.addAll(events);
+                    // Adiciona lista de eventos a Activity principal
+                    eventArrayAdapter.notifyDataSetChanged();
+                    noEventsPanel.setVisibility(View.GONE);
+                } else {
+                    noEventsPanel.setVisibility(View.VISIBLE);
+                }
+
                 loadingPanel.setVisibility(View.GONE);
             }
             // remover loader

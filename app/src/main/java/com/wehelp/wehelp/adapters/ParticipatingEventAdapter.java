@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.wehelp.wehelp.AbandonEventActivity;
 import com.wehelp.wehelp.EventDetailActivity;
 import com.wehelp.wehelp.HelpEventActivity;
 import com.wehelp.wehelp.R;
@@ -89,14 +90,13 @@ public class ParticipatingEventAdapter extends ArrayAdapter<Event>{
         btnAbandon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intentHelp = new Intent(getContext(), HelpEventActivity.class);
+                Intent intentHelp = new Intent(getContext(), AbandonEventActivity.class);
 
-//                Bundle mBundle = new Bundle();
-//                mBundle.putSerializable("event", timelineEvent);
-//                intentHelp.putExtras(mBundle);
+                Bundle mBundle = new Bundle();
+                mBundle.putSerializable("event", timelineEvent);
+                intentHelp.putExtras(mBundle);
 
-
-//                context.startActivity(intentHelp);
+                context.startActivity(intentHelp);
             }
         });
 

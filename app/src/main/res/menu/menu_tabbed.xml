@@ -2,10 +2,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.wehelp.wehelp.TabbedActivity">
-    <!--<item-->
-        <!--android:id="@+id/search"-->
-        <!--android:orderInCategory="100"-->
-        <!--android:icon="@android:drawable/ic_search_category_default"-->
-        <!--android:title="Pesquisar"-->
-        <!--app:showAsAction="always" />-->
+    <item
+        android:id="@+id/refresh"
+        android:orderInCategory="100"
+        android:icon="@drawable/quantum_ic_refresh_white_24"
+        android:title="Atualizar"
+        app:showAsAction="always" />
 </menu>

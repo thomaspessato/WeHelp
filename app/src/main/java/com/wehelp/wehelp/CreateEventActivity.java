@@ -82,43 +82,37 @@ public class CreateEventActivity extends AppCompatActivity {
 
         new ListCategoriesTask().execute();
 
-
-
-
         final EditText eventTitle = (EditText)findViewById(R.id.register_event_title);
         final EditText eventAddressStreet = (EditText)findViewById(R.id.register_event_street);
         final EditText eventAddressNumber = (EditText)findViewById(R.id.register_event_number);
         final EditText eventAddressComp = (EditText)findViewById(R.id.register_event_comp);
         final EditText eventDate = (EditText)findViewById(R.id.register_event_date);
-//        final EditText eventRequirement = (EditText)findViewById(R.id.register_event_requirement);
+        final EditText eventRequirement = (EditText)findViewById(R.id.register_event_requirement);
         final EditText eventHour = (EditText)findViewById(R.id.register_event_hour);
-//        Button btnNewRequirement = (Button)findViewById(R.id.btn_new_requirement);
-        Button btnRegisterEvent = (Button)findViewById(R.id.btn_register_event);
         final EditText eventDesc = (EditText)findViewById(R.id.register_event_desc);
-//        final ListView lvRequirements = (ListView)findViewById(R.id.listview_requirements);
+        final EditText eventRequirementQtd = (EditText)findViewById(R.id.register_event_requirement_qtd);
+        final EditText eventRequirementUnit = (EditText)findViewById(R.id.register_event_requirement_uni);
+        final ListView lvRequirements = (ListView)findViewById(R.id.listview_requirements);
+        final ArrayList<String> listItems=new ArrayList<String>();
+        final ArrayAdapter requirementsArrayAdapter;
+        final Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+        Button btnNewRequirement = (Button)findViewById(R.id.btn_new_requirement);
+        Button btnRegisterEvent = (Button)findViewById(R.id.btn_register_event);
         categorySpinner = (Spinner)findViewById(R.id.event_register_spinner_category);
         loadingPanel = (RelativeLayout) findViewById(R.id.loadingPanel);
-        assert loadingPanel != null;
         loadingPanel.setVisibility(View.GONE);
 
-//        final ArrayList<String> listItems=new ArrayList<String>();
+        assert loadingPanel != null;
+        assert btnNewRequirement != null;
+        assert eventRequirement != null;
 
-//        final ArrayAdapter requirementsArrayAdapter;
-        final Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-
-//        assert btnNewRequirement != null;
-//        assert eventRequirement != null;
-
-
-//        requirementsArrayAdapter = new RequirementListAdapter(this,listItems);
-//        final int[] requirementsCounter = {0};
-//        lvRequirements.setAdapter(requirementsArrayAdapter);
+        requirementsArrayAdapter = new RequirementListAdapter(this,listItems);
+        lvRequirements.setAdapter(requirementsArrayAdapter);
 
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Category item = (Category)adapterView.getItemAtPosition(i);
-                System.out.println("CATEGORY CLICKED: " + item.getDescricao());
             }
 
             @Override
@@ -144,14 +138,12 @@ public class CreateEventActivity extends AppCompatActivity {
                     for (int i = 2; i <= cl && i < 6; i += 2) {
                         sel++;
                     }
-                    //Fix for pressing delete next to a forward slash
+
                     if (clean.equals(cleanC)) sel--;
 
                     if (clean.length() < 8){
                         clean = clean + ddmmyyyy.substring(clean.length());
                     }else{
-                        //This part makes sure that when we finish entering numbers
-                        //the date is correct, fixing it otherwise
                         int day  = Integer.parseInt(clean.substring(0,2));
                         int mon  = Integer.parseInt(clean.substring(2,4));
                         int year = Integer.parseInt(clean.substring(4,8));
@@ -160,9 +152,6 @@ public class CreateEventActivity extends AppCompatActivity {
                         cal.set(Calendar.MONTH, mon-1);
                         year = (year<1900)?1900:(year>2100)?2100:year;
                         cal.set(Calendar.YEAR, year);
-                        // ^ first set year for the line below to work correctly
-                        //with leap years - otherwise, date e.g. 29/02/2012
-                        //would be automatically corrected to 28/02/2012
 
                         day = (day > cal.getActualMaximum(Calendar.DATE))? cal.getActualMaximum(Calendar.DATE):day;
                         clean = String.format("%02d%02d%02d",day, mon, year);
@@ -188,6 +177,7 @@ public class CreateEventActivity extends AppCompatActivity {
             private String ddmmyyyy = "DDMMYYYY";
             private Calendar cal = Calendar.getInstance();
         };
+
         TextWatcher twHour = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -205,17 +195,13 @@ public class CreateEventActivity extends AppCompatActivity {
                     for (int i = 2; i <= cl && i < 4; i += 2) {
                         sel++;
                     }
-                    //Fix for pressing delete next to a forward slash
                     if (clean.equals(cleanC)) sel--;
 
                     if (clean.length() < 4){
                         clean = clean + hhmm.substring(clean.length());
                     }else{
-                        //This part makes sure that when we finish entering numbers
-                        //the date is correct, fixing it otherwise
                         int hour  = Integer.parseInt(clean.substring(0,2));
                         int min  = Integer.parseInt(clean.substring(2,4));
-//                        int year = Integer.parseInt(clean.substring(4,8));
 
                         if(hour > 23) {
                             hour = 23;
@@ -248,26 +234,23 @@ public class CreateEventActivity extends AppCompatActivity {
             private Calendar cal = Calendar.getInstance();
         };
 
-
-
         eventHour.addTextChangedListener(twHour);
         eventDate.addTextChangedListener(tw);
 
-//
-//        btnNewRequirement.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//                public void onClick(View view) {
-//                    String requirement = eventRequirement.getText().toString();
-//                    if(!requirement.equalsIgnoreCase("")) {
-//                        listItems.add(requirement);
-//                        requirementsArrayAdapter.notifyDataSetChanged();
-//                        eventRequirement.setText("");
-//                        setListViewHeightBasedOnChildren(lvRequirements);
-//                    } else {
-//                        Toast.makeText(getApplicationContext(), "Por favor, preencha algo no requisito", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//        });
+        btnNewRequirement.setOnClickListener(new View.OnClickListener() {
+            @Override
+                public void onClick(View view) {
+                    String requirement = eventRequirement.getText().toString();
+                    if(!requirement.equalsIgnoreCase("")) {
+                        listItems.add(requirement);
+                        requirementsArrayAdapter.notifyDataSetChanged();
+                        eventRequirement.setText("");
+                        setListViewHeightBasedOnChildren(lvRequirements);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Por favor, preencha algo no requisito", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        });
 
         btnRegisterEvent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -282,17 +265,15 @@ public class CreateEventActivity extends AppCompatActivity {
                 String date = eventDate.getText().toString();
                 String hour = eventHour.getText().toString();
                 String desc = eventDesc.getText().toString();
-//                ArrayList<EventRequirement> requirementsArr = new ArrayList();
+                ArrayList<EventRequirement> requirementsArr = new ArrayList();
 
+                for (int i=0;i<requirementsArrayAdapter.getCount();i++){
+                    EventRequirement req = new EventRequirement();
+                    req.setDescricao(requirementsArrayAdapter.getItem(i).toString());
+                    requirementsArr.add(req);
+                }
 
-//
-//                for (int i=0;i<requirementsArrayAdapter.getCount();i++){
-//                    EventRequirement req = new EventRequirement();
-//                    req.setDescricao(requirementsArrayAdapter.getItem(i).toString());
-//                    requirementsArr.add(req);
-//                }
-//
-//                System.out.println("requirements: "+requirementsArr);
+                System.out.println("requirements: "+requirementsArr);
 
                 if(title.equalsIgnoreCase("") ||
                         category == null ||
@@ -312,14 +293,17 @@ public class CreateEventActivity extends AppCompatActivity {
                 int tentativas = 3;
                 while (tentativas > 0) {
                     try {
-                        if(geocoder.getFromLocationName(addressStreet + ", " + addressNumber + ", " + addressComp + ", Porto Alegre", 1).size() > 0) {
-                            address = geocoder.getFromLocationName(addressStreet + ", " + addressNumber + ", " + addressComp + ", Porto Alegre", 1).get(0);
+                        List<Address> lst = geocoder.getFromLocationName(addressStreet + " " + addressNumber + " Porto Alegre RS Brasil", 1);
+                        if(lst.size() > 0) {
+                            address = lst.get(0);
                             latitude = address.getLatitude();
                             longitude = address.getLongitude();
                             System.out.println("lat: " + latitude);
                             System.out.println("lng: " + longitude);
                         } else {
                             Toast.makeText(getApplicationContext(), "Tentando encontrar endereço", Toast.LENGTH_SHORT).show();
+                            tentativas--;
+                            continue;
                         }
                         break;
                     } catch (IOException e) {
@@ -360,8 +344,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 event.setRanking(1);
                 event.setStatus("A");
                 event.setUsuarioId(((WeHelpApp)getApplication()).getUser().getId());
-                ArrayList<EventRequirement> listReq = new ArrayList<>();
-                event.setRequisitos(listReq);
+                event.setRequisitos(requirementsArr);
                 new CreateEventTask().execute(event);
             }
         });
@@ -369,28 +352,28 @@ public class CreateEventActivity extends AppCompatActivity {
 
     }
 
-//    private void setListViewHeightBasedOnChildren(ListView listView) {
-//        Log.e("Listview Size ", "" + listView.getCount());
-//        ListAdapter listAdapter = listView.getAdapter();
-//        if (listAdapter == null) {
-//
-//            return;
-//        }
-//
-//        int totalHeight = 0;
-//        for (int i = 0; i < listAdapter.getCount(); i++) {
-//            View listItem = listAdapter.getView(i, null, listView);
-//            listItem.measure(0, 0);
-//            totalHeight += listItem.getMeasuredHeight();
-//        }
-//
-//        ViewGroup.LayoutParams params = listView.getLayoutParams();
-//        params.height = totalHeight
-//                + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-//        listView.setLayoutParams(params);
-//        listView.requestLayout();
-//
-//    }
+    private void setListViewHeightBasedOnChildren(ListView listView) {
+        Log.e("Listview Size ", "" + listView.getCount());
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+
+            return;
+        }
+
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight
+                + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+
+    }
 
     private class CreateEventTask extends AsyncTask<Event, Void, Event> {
 
@@ -421,18 +404,17 @@ public class CreateEventActivity extends AppCompatActivity {
 
         protected void onPostExecute(Event event) {
             if (event == null) {
-//                Toast.makeText(getApplicationContext(), eventController.errorMessages.toString(), Toast.LENGTH_LONG).show();
                 System.out.println("Erro ao cadastrar evento: "+eventController.errorMessages);
                 loadingPanel.setVisibility(View.GONE);
-//                Toast.makeText(getActivity().getApplicationContext(), "Erro ao registrar pessoa", Toast.LENGTH_LONG).show();
-//                Log.d("WeHelpWS", userController.errorMessages.toString());
             } else {
+                System.out.println("event: NOVO EVENTO: "+event);
+                System.out.println("event: NOME DO EVENTO: "+event.getNome());
+                System.out.println("event: RUA DO EVENTO: "+event.getRua());
                 Toast.makeText(getApplicationContext(), "Evento  " + event.getNome() + " cadastrado", Toast.LENGTH_LONG).show();
                 loadingPanel.setVisibility(View.GONE);
                 Intent intent = new Intent(CreateEventActivity.this, TabbedActivity.class);
                 startActivity(intent);
             }
-
             // remover loader
         }
     }
@@ -472,17 +454,10 @@ public class CreateEventActivity extends AppCompatActivity {
                 for(int i = 0; i < listCategories.size(); i++) {
                     arrayListCategories.add(listCategories.get(i));
                 }
-
                 CategorySpinnerAdapter spinnerAdapter = new CategorySpinnerAdapter(CreateEventActivity.this, R.layout.row_spinner_category,arrayListCategories);
                 spinnerAdapter.notifyDataSetChanged();
                 categorySpinner.setAdapter(spinnerAdapter);
-
-//                populateCategorySpinner(categorySpinner,CreateEventActivity.this,listCategories);
-
             }
-
-
-            // remover loader
         }
     }
 

@@ -1,13 +1,12 @@
 package com.wehelp.wehelp;
 
 import android.app.Application;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,24 +25,23 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-public class HelpEventActivity extends AppCompatActivity {
+public class AbandonEventActivity extends AppCompatActivity {
 
     @Inject
     EventController eventController;
     @Inject
     Application application;
-
-    public Event event;
     RelativeLayout loadingPanel;
+    public Event event;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((WeHelpApp) getApplication()).getNetComponent().inject(this);
 
-        setContentView(R.layout.activity_help_event);
+        setContentView(R.layout.activity_abandon_event);
 
-        setTitle("Quero ajudar");
+        setTitle("Desistir do evento");
         this.event = (Event)getIntent().getSerializableExtra("event");
         TextView eventName = (TextView) findViewById(R.id.help_event_name);
         TextView eventDescription = (TextView) findViewById(R.id.help_event_description);
@@ -69,7 +67,7 @@ public class HelpEventActivity extends AppCompatActivity {
         assert eventAddress != null;
         assert eventDate != null;
         assert eventParticipants != null;
-        assert lvRequirementsCheckbox != null;
+//        assert lvRequirementsCheckbox != null;
         eventName.setText(event.getNome());
         eventDescription.setText(event.getDescricao());
         eventAddress.setText(address);
@@ -87,10 +85,7 @@ public class HelpEventActivity extends AppCompatActivity {
 
         lvRequirementsCheckbox.setAdapter(checkboxAdapter);
 
-        ArrayList requisitos = event.getRequisitos();
-
-        System.out.println("TAMANHO DOS REQUISITOS: "+event.getRequisitos());
-        for(int i = 0; i< requisitos.size(); i++) {
+        for(int i = 0; i< event.getRequisitos().size(); i++) {
             EventRequirement requirement = event.getRequisitos().get(i);
             requirementList.add(requirement);
         }
@@ -101,13 +96,20 @@ public class HelpEventActivity extends AppCompatActivity {
         helpRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new ParticipateEventsTask().execute();
+                loadingPanel.setVisibility(View.VISIBLE);
+                checkedRequirementList.clear();
+                for(int i = 0; i< requirementList.size(); i++) {
+                    if(requirementList.get(i).isSelected()) {
+                        checkedRequirementList.add(requirementList.get(i));
+                    }
+                }
+                new AbandonEventTask().execute();
             }
         });
 
     }
 
-    private class ParticipateEventsTask extends AsyncTask<Void, Void, Boolean> {
+    private class AbandonEventTask extends AsyncTask<Void, Void, Boolean> {
 
         @Override
         protected void onPreExecute() {
@@ -118,11 +120,12 @@ public class HelpEventActivity extends AppCompatActivity {
         protected Boolean doInBackground(Void... params) {
 
             try {
-                eventController.addUser(event,((WeHelpApp)application).getUser());
-                while (!eventController.addUserOk && !eventController.errorService){}
+                eventController.removeUser(event,((WeHelpApp)application).getUser());
+                while (!eventController.removeUserOk && !eventController.errorService){}
                 if (eventController.errorService) {
                     return false;
                 } else {
+                    finish();
                     return true;
                 }
             } catch (JSONException e) {
@@ -132,14 +135,14 @@ public class HelpEventActivity extends AppCompatActivity {
 
         }
 
-
         protected void onPostExecute(Boolean retorno) {
             if (!retorno) {
                 Toast.makeText(getApplicationContext(), eventController.errorMessages.toString(), Toast.LENGTH_LONG).show();
+                loadingPanel.setVisibility(View.GONE);
             } else {
-                Toast.makeText(getApplicationContext(), "Você está participando do evento!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Você desistiu de participar do evento", Toast.LENGTH_LONG).show();
+                loadingPanel.setVisibility(View.GONE);
             }
-            loadingPanel.setVisibility(View.GONE);
         }
     }
 }

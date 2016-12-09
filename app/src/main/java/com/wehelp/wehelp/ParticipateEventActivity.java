@@ -37,6 +37,7 @@ public class ParticipateEventActivity extends AppCompatActivity {
     View footer; //lazy load
     private SwipeRefreshLayout swipeRefreshLayout;
     RelativeLayout loadingPanel;
+    RelativeLayout noEventsPanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,9 @@ public class ParticipateEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_participate_event);
 
         loadingPanel = (RelativeLayout) findViewById(R.id.loadingPanel);
+        noEventsPanel = (RelativeLayout) findViewById(R.id.no_events_panel);
+        assert noEventsPanel != null;
+        noEventsPanel.setVisibility(View.GONE);
         setTitle("Eventos que participo");
 
         ((WeHelpApp) getApplication()).getNetComponent().inject(this);
@@ -55,7 +59,7 @@ public class ParticipateEventActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-//                IMPLEMENT REFRESH ON LIST
+                new ListParticipatingEventsTask().execute();
             }
         });
 
@@ -68,7 +72,8 @@ public class ParticipateEventActivity extends AppCompatActivity {
     private class ListParticipatingEventsTask extends AsyncTask<Void, Void, ArrayList<Event>> {
         @Override
         protected void onPreExecute() {
-            // carregar loader
+            eventArrayAdapter.clear();
+            loadingPanel.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -81,15 +86,9 @@ public class ParticipateEventActivity extends AppCompatActivity {
                     return null;
                 }
 
-
                 ArrayList<Event> listEvents = eventController.getListEvents();
-
                 eventController.setListEvents(null);
                 System.out.println("listEvents: "+listEvents);
-
-
-
-
                 return listEvents;
         }
 
@@ -98,9 +97,15 @@ public class ParticipateEventActivity extends AppCompatActivity {
                 loadingPanel.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(), eventController.errorMessages.toString(), Toast.LENGTH_LONG).show();
             } else {
-                eventList.addAll(events);
-                // Adiciona lista de eventos a Activity principal
-                eventArrayAdapter.notifyDataSetChanged();
+
+                if(events.size() > 0) {
+                    eventList.addAll(events);
+                    eventArrayAdapter.notifyDataSetChanged();
+                    noEventsPanel.setVisibility(View.GONE);
+                } else {
+                    noEventsPanel.setVisibility(View.VISIBLE);
+                }
+                swipeRefreshLayout.setRefreshing(false);
                 loadingPanel.setVisibility(View.GONE);
             }
             // remover loader

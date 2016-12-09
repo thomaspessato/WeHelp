@@ -51,7 +51,7 @@ public class RequirementCheckboxAdapter extends ArrayAdapter<EventRequirement> {
 
             holder.name.setOnClickListener( new View.OnClickListener() {
                 public void onClick(View v) {
-                    CheckBox cb = (CheckBox) v ;
+                    CheckBox cb = (CheckBox) v;
                     EventRequirement requirement = (EventRequirement) cb.getTag();
                     Toast.makeText(getContext(),
                             "Clicked on Checkbox: " + cb.getText() +

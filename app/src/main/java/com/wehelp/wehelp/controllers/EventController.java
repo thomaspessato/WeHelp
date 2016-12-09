@@ -33,6 +33,11 @@ public class EventController {
     public boolean errorService = false;
     public JSONObject errorMessages = null;
     public boolean addUserOk = false;
+    public boolean removeUserOk = false;
+
+    public EventController() {
+
+    }
 
     public ArrayList<Event> getListEvents() {
         return this.listEvents;
@@ -94,7 +99,7 @@ public class EventController {
         this.setListEvents(null);
         this.errorMessages = null;
 
-        this.eventService.getParticipatingEvents(userId, new IServiceArrayResponseCallback() {
+        this.eventService.getMyEvents(userId, new IServiceArrayResponseCallback() {
             @Override
             public void execute(JSONArray response) {
                 setListEvents(JsonArrayToEventList(response));
@@ -176,6 +181,7 @@ public class EventController {
             @Override
             public void execute(JSONObject response) {
                 Log.d("WeHelpWs", "Usuário " + user.getId() + " removido do evento " + event.getId());
+                removeUserOk = true;
             }
         }, new IServiceErrorCallback() {
             @Override

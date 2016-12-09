@@ -38,10 +38,14 @@ import javax.inject.Inject;
  */
 public class FragmentTimeline extends Fragment {
 
+    @Inject
+    public EventController eventController;
+
     @Nullable
 
     public ArrayAdapter<Event> eventArrayAdapter;
     public ArrayList<Event> eventList = new ArrayList<Event>();
+
     ListView listView;
     View footer; //lazy load
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -56,8 +60,7 @@ public class FragmentTimeline extends Fragment {
         return fragment;
     }
 
-    @Inject
-    public EventController eventController;
+
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -85,8 +88,9 @@ public class FragmentTimeline extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        ((WeHelpApp) getActivity().getApplication()).getNetComponent().inject(this);
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_tab_timeline, container, false);
-        eventController = new EventController();
         TabbedActivity tab = (TabbedActivity)getActivity();
         eventList = tab.listEvents != null ? tab.listEvents : new ArrayList<Event>();
 
@@ -112,18 +116,18 @@ public class FragmentTimeline extends Fragment {
             @Override
             public void onRefresh() {
 //                eventArrayAdapter.clear();
-//                System.out.println("No events!");
-//                eventController.getEvents(-30.0381669,-51.214949,50);
-//                while (eventController.getListEvents() == null && !eventController.errorService){}
-//                if (eventController.errorService) {
-//                    System.out.println("No events!");
-//                }
-//                ArrayList<Event> listEvents = eventController.getListEvents();
-//                eventController.setListEvents(null);
-//                System.out.println("EVENTS! "+listEvents);
-//                swipeRefreshLayout.setRefreshing(false);
-//
-//                eventArrayAdapter.notifyDataSetChanged();
+                System.out.println("No events!");
+                eventController.getEvents(-30.0381669,-51.214949,50);
+                while (eventController.getListEvents() == null && !eventController.errorService){}
+                if (eventController.errorService) {
+                    System.out.println("No events!");
+                }
+                ArrayList<Event> listEvents = eventController.getListEvents();
+                eventController.setListEvents(null);
+                System.out.println("EVENTS! "+listEvents);
+                swipeRefreshLayout.setRefreshing(false);
+
+                eventArrayAdapter.notifyDataSetChanged();
 
             }
         });

@@ -63,7 +63,8 @@ public class MyEventsActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-//                IMPLEMENT REFRESH ON LIST
+                new ListMyEventsTask().execute();
+
             }
         });
 
@@ -76,6 +77,7 @@ public class MyEventsActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             // carregar loader
+            eventArrayAdapter.clear();
         }
 
         @Override
@@ -102,6 +104,7 @@ public class MyEventsActivity extends AppCompatActivity {
             } else {
 
                 if(events.size() > 0) {
+                    eventArrayAdapter.clear();
                     eventList.addAll(events);
                     noEventsPanel.setVisibility(View.GONE);
                     eventArrayAdapter.notifyDataSetChanged();
@@ -110,6 +113,7 @@ public class MyEventsActivity extends AppCompatActivity {
                 }
 
                 loadingPanel.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
             }
             // remover loader
         }

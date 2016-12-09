@@ -87,7 +87,10 @@ public class HelpEventActivity extends AppCompatActivity {
 
         lvRequirementsCheckbox.setAdapter(checkboxAdapter);
 
-        for(int i = 0; i< event.getRequisitos().size(); i++) {
+        ArrayList requisitos = event.getRequisitos();
+
+        System.out.println("TAMANHO DOS REQUISITOS: "+event.getRequisitos());
+        for(int i = 0; i< requisitos.size(); i++) {
             EventRequirement requirement = event.getRequisitos().get(i);
             requirementList.add(requirement);
         }

@@ -34,6 +34,10 @@ public class EventController {
     public JSONObject errorMessages = null;
     public boolean addUserOk = false;
 
+    public EventController() {
+
+    }
+
     public ArrayList<Event> getListEvents() {
         return this.listEvents;
     }
@@ -94,7 +98,7 @@ public class EventController {
         this.setListEvents(null);
         this.errorMessages = null;
 
-        this.eventService.getParticipatingEvents(userId, new IServiceArrayResponseCallback() {
+        this.eventService.getMyEvents(userId, new IServiceArrayResponseCallback() {
             @Override
             public void execute(JSONArray response) {
                 setListEvents(JsonArrayToEventList(response));

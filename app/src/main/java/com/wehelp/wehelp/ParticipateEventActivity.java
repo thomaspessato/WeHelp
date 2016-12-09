@@ -59,7 +59,7 @@ public class ParticipateEventActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-//                IMPLEMENT REFRESH ON LIST
+                new ListParticipatingEventsTask().execute();
             }
         });
 
@@ -98,14 +98,14 @@ public class ParticipateEventActivity extends AppCompatActivity {
             } else {
 
                 if(events.size() > 0) {
+                    eventArrayAdapter.clear();
                     eventList.addAll(events);
-                    // Adiciona lista de eventos a Activity principal
                     eventArrayAdapter.notifyDataSetChanged();
                     noEventsPanel.setVisibility(View.GONE);
                 } else {
                     noEventsPanel.setVisibility(View.VISIBLE);
                 }
-
+                swipeRefreshLayout.setRefreshing(false);
                 loadingPanel.setVisibility(View.GONE);
             }
             // remover loader

@@ -71,13 +71,6 @@ public class FragmentTimeline extends Fragment {
             listView = (ListView)rootView.findViewById(R.id.timeline_listview);
             eventArrayAdapter = new TimelineEventAdapter(getContext(),eventList);
             listView.setAdapter(eventArrayAdapter);
-            swipeRefreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_refresh_layout);
-            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-//                IMPLEMENT REFRESH ON TIMELINE
-                }
-            });
             eventArrayAdapter.notifyDataSetChanged();
         } else {
             // Do your Work
@@ -89,7 +82,7 @@ public class FragmentTimeline extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_tab_timeline, container, false);
-
+        eventController = new EventController();
         TabbedActivity tab = (TabbedActivity)getActivity();
         eventList = tab.listEvents != null ? tab.listEvents : new ArrayList<Event>();
 
@@ -104,34 +97,22 @@ public class FragmentTimeline extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-//                IMPLEMENT REFRESH ON TIMELINE
+//                eventArrayAdapter.clear();
+//                System.out.println("No events!");
+//                eventController.getEvents(-30.0381669,-51.214949,50);
+//                while (eventController.getListEvents() == null && !eventController.errorService){}
+//                if (eventController.errorService) {
+//                    System.out.println("No events!");
+//                }
+//                ArrayList<Event> listEvents = eventController.getListEvents();
+//                eventController.setListEvents(null);
+//                System.out.println("EVENTS! "+listEvents);
+//                swipeRefreshLayout.setRefreshing(false);
+//
+//                eventArrayAdapter.notifyDataSetChanged();
+
             }
         });
-
-
-
-//        JSONArray jsonArray = null;
-//        try {
-//            jsonArray = new JSONArray(data);
-//            for(int i = 0; i<jsonArray.length(); i++){
-//
-//
-//                Event event = new Event();
-//                JSONObject dataEvent = (JSONObject) jsonArray.get(i);
-//                //set image
-////                event.setTitle(dataEvent.getString("descricao"));
-//                event.setCidade(dataEvent.getString("cidade"));
-//                event.setNumero(dataEvent.getString("numero"));
-////                event.setAddressCity("Porto Alegre");
-////                String date = "12-12-2016"; //how to pass date variable to method? (setEndDate)
-////                event.setCategory("Categoria "+i);
-////                event.setUsuario("Creator "+ i);
-//
-//                eventList.add(event);
-//            }
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
 
                 eventArrayAdapter.notifyDataSetChanged();
         return rootView;

@@ -17,6 +17,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -144,78 +145,6 @@ public class FragmentMap extends Fragment {
                 .build();
 
         mGoogleApiClient.connect();
-
-
-//        mMapView.getMapAsync(new OnMapReadyCallback() {
-//            @Override
-//            public void onMapReady(GoogleMap mMap) {
-//                googleMap = mMap;
-//                // For showing a move to my location button
-//                // For dropping a marker at a point on the Map
-//                LatLng marker = new LatLng(-30.012054, -51.178840);
-//                Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
-//                try {
-////                List<Address> addresses = new ArrayList<Address>();
-//                    /*
-//                    while (eventController.getListEvents() == null){
-//                        Log.d("WeHelpWS", "Ainda carregando eventos ...");
-//                    }
-//                    */
-//                    List<Address> addresses = new ArrayList<Address>();
-////                    if (eventController.getListEvents().size() == 0) {
-//                        addresses.add(geocoder.getFromLocationName("Rua Marechal José Inácio, Porto Alegre", 1).get(0));
-//                        addresses.add(geocoder.getFromLocationName("Rua Padre Hildebrando, Porto Alegre", 1).get(0));
-//                        addresses.add(geocoder.getFromLocationName("Avenida Assis Brasil, Porto Alegre", 1).get(0));
-//                        addresses.add(geocoder.getFromLocationName("Avenida Sertório, Porto Alegre", 1).get(0));
-//                        addresses.add(geocoder.getFromLocationName("Avenida Plínio Brasil Milano, Porto Alegre", 1).get(0));
-//                        addresses.add(geocoder.getFromLocationName("Rua Novo Hamburgo, Porto Alegre", 1).get(0));
-////                    } else {
-////                        ArrayList<Event> list = eventController.getListEvents();
-////                        for (int i = 0; i < list.size(); i++)
-////                        {
-////                            addresses.add(geocoder.getFromLocation(list.get(i).getLat(), list.get(i).getLng(), 1).get(0));
-////                        }
-////                    }
-//
-//
-//
-//                    for (int i = 0; i< addresses.size(); i++) {
-//                        double longitude = addresses.get(i).getLongitude();
-//                        double latitude = addresses.get(i).getLatitude();
-//                        LatLng test = new LatLng(latitude,longitude);
-//
-//                        googleMap.addMarker(new MarkerOptions().position(test).title("BLABLBALBA | Educação").snippet("TESTANDO"));
-//                    }
-//
-//                    googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-//                        @Override
-//                        public void onInfoWindowClick(Marker marker) {
-//                            Intent intentDetail = new Intent(getActivity(), EventDetailActivity.class);
-//                            startActivity(intentDetail);
-//                        }
-//                    });
-//
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                googleMap.addMarker(new MarkerOptions().position(marker).title("Creche Moranguinho | Educação").snippet("Necessitamos de 20 caixas de lápis, 30 pacotes de folhas"));
-//                CameraPosition cameraPosition = new CameraPosition.Builder().target(marker).zoom(12).build();
-//                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-//
-//
-//                if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
-//                        == PackageManager.PERMISSION_GRANTED) {
-//                    mMap.setMyLocationEnabled(true);
-//                } else {
-//                    // Show rationale and request permission.
-//                }
-//
-//                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-//
-//
-//            }
-//        });
 
         return rootView;
     }
@@ -378,12 +307,10 @@ public class FragmentMap extends Fragment {
 
         @Override
         public View getInfoContents(Marker marker) {
-
             TextView tvTitle = ((TextView)myContentsView.findViewById(R.id.title));
             tvTitle.setText(marker.getTitle());
             TextView tvSnippet = ((TextView)myContentsView.findViewById(R.id.snippet));
             tvSnippet.setText(marker.getSnippet());
-
             return myContentsView;
         }
 
@@ -402,5 +329,11 @@ public class FragmentMap extends Fragment {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
+        System.out.println("CLICKED ON ITEM! "+item.getTitle());
+
+        return super.onOptionsItemSelected(item);
+    }
 }

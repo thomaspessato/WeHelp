@@ -17,6 +17,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,6 +79,7 @@ public class FragmentMap extends Fragment {
     @Nullable
 
     MapView mMapView;
+    RelativeLayout loadingPanel;
 
     public static FragmentTimeline newInstance() {
         FragmentTimeline fragment = new FragmentTimeline();
@@ -93,8 +96,10 @@ public class FragmentMap extends Fragment {
 
         //new ListEventsTask().execute();
 
+        setHasOptionsMenu(true);
+
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_tab_map, container, false);
-        final RelativeLayout loadingPanel = (RelativeLayout) rootView.findViewById(R.id.loadingPanel);
+        loadingPanel = (RelativeLayout) rootView.findViewById(R.id.loadingPanel);
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
         assert loadingPanel != null;
@@ -115,7 +120,7 @@ public class FragmentMap extends Fragment {
                 .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
                     @Override
                     public void onConnected(@Nullable Bundle bundle) {
-                        loadingPanel.setVisibility(View.GONE);
+//                        loadingPanel.setVisibility(View.GONE);
                         if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                             // TODO: Consider calling
                             ActivityCompat.requestPermissions(getActivity(),
@@ -164,7 +169,7 @@ public class FragmentMap extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            // carregar loader
+            loadingPanel.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -222,7 +227,7 @@ public class FragmentMap extends Fragment {
                     Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
 
                     mMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
-
+                    googleMap.clear();
                     googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                     try {
                         List<Address> addresses = new ArrayList<Address>();
@@ -291,7 +296,7 @@ public class FragmentMap extends Fragment {
             });
 
 
-            // remover loader
+            loadingPanel.setVisibility(View.GONE);
         }
 
 
@@ -330,9 +335,24 @@ public class FragmentMap extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void setHasOptionsMenu(boolean hasMenu) {
+        super.setHasOptionsMenu(hasMenu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        System.out.println("CLICKED ON ITEM! "+item.getTitle());
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                Toast.makeText(getContext(), "Atualizando eventos", Toast.LENGTH_SHORT).show();
+                new ListEventsTask().execute();
+                return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

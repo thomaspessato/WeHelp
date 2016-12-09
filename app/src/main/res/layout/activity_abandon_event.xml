@@ -15,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:translationZ="@dimen/cast_intro_overlay_button_margin_bottom">
+        android:translationZ="@dimen/cast_intro_overlay_button_margin_bottom"
+        android:visibility="gone">
 
         <ProgressBar
             android:layout_width="wrap_content"
@@ -42,20 +43,20 @@
         android:textSize="14sp"
         android:layout_marginBottom="20dp" />
 
-    <!--<TextView-->
-    <!--android:text="Com o quê você vai ajudar?"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentTop="true"-->
-    <!--android:layout_alignParentLeft="true"-->
-    <!--android:layout_alignParentStart="true"-->
-    <!--android:id="@+id/textView8"-->
-    <!--android:textSize="18sp" />-->
+    <TextView
+        android:text="Você ficou de ajudar com"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textView19"
+        android:textSize="18sp" />
 
-    <!--<ListView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:id="@+id/listview_requirements_checkbox" />-->
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listview_requirements_checkbox" />
 
     <TextView
         android:text="Quantas pessoas irão?"

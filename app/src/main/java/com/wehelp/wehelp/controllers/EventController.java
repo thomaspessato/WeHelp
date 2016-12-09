@@ -33,6 +33,7 @@ public class EventController {
     public boolean errorService = false;
     public JSONObject errorMessages = null;
     public boolean addUserOk = false;
+    public boolean removeUserOk = false;
 
     public EventController() {
 
@@ -180,6 +181,7 @@ public class EventController {
             @Override
             public void execute(JSONObject response) {
                 Log.d("WeHelpWs", "Usuário " + user.getId() + " removido do evento " + event.getId());
+                removeUserOk = true;
             }
         }, new IServiceErrorCallback() {
             @Override

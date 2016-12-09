@@ -13,12 +13,24 @@
         android:translationZ="@dimen/cast_intro_overlay_button_margin_bottom">
 
         <TextView
-            android:text="No momento, não há eventos acontecendo! :("
+            android:text="Não há eventos acontecendo em Porto Alegre no momento :("
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView30"
             android:textSize="24sp"
-            android:gravity="center_horizontal" />
+            android:gravity="center_horizontal"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:layout_marginBottom="20dp" />
+
+        <Button
+            android:text="Crie um evento agora mesmo!"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView30"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/btn_create_event_none"
+            style="@style/Widget.AppCompat.Button.Colored" />
 
     </RelativeLayout>
 

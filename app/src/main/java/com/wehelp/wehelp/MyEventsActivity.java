@@ -76,7 +76,7 @@ public class MyEventsActivity extends AppCompatActivity {
     private class ListMyEventsTask extends AsyncTask<Void, Void, ArrayList<Event>> {
         @Override
         protected void onPreExecute() {
-            // carregar loader
+            loadingPanel.setVisibility(View.VISIBLE);
             eventArrayAdapter.clear();
         }
 

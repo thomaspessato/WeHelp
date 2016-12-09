@@ -72,7 +72,8 @@ public class ParticipateEventActivity extends AppCompatActivity {
     private class ListParticipatingEventsTask extends AsyncTask<Void, Void, ArrayList<Event>> {
         @Override
         protected void onPreExecute() {
-            // carregar loader
+            eventArrayAdapter.clear();
+            loadingPanel.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -98,7 +99,6 @@ public class ParticipateEventActivity extends AppCompatActivity {
             } else {
 
                 if(events.size() > 0) {
-                    eventArrayAdapter.clear();
                     eventList.addAll(events);
                     eventArrayAdapter.notifyDataSetChanged();
                     noEventsPanel.setVisibility(View.GONE);

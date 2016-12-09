@@ -1,6 +1,7 @@
 package com.wehelp.wehelp.tabs;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,10 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
+import com.wehelp.wehelp.CreateEventActivity;
 import com.wehelp.wehelp.R;
 import com.wehelp.wehelp.TabbedActivity;
 import com.wehelp.wehelp.adapters.TimelineEventAdapter;
@@ -63,8 +66,9 @@ public class FragmentTimeline extends Fragment {
             TabbedActivity tab = (TabbedActivity)getActivity();
             eventList = tab.listEvents != null ? tab.listEvents : new ArrayList<Event>();
 
-            System.out.println("EVENTLIST: " +eventList.get(1));
-            if(eventList.size() > 0) {
+            if(eventList.size() == 0) {
+                noEventsPanel.setVisibility(View.VISIBLE);
+            } else {
                 noEventsPanel.setVisibility(View.GONE);
             }
 
@@ -87,13 +91,23 @@ public class FragmentTimeline extends Fragment {
         eventList = tab.listEvents != null ? tab.listEvents : new ArrayList<Event>();
 
         noEventsPanel = (RelativeLayout)rootView.findViewById(R.id.no_events_panel);
+        Button btnCreateEvent = (Button)rootView.findViewById(R.id.btn_create_event_none);
         assert noEventsPanel != null;
         noEventsPanel.setVisibility(View.GONE);
 
         listView = (ListView)rootView.findViewById(R.id.timeline_listview);
+        swipeRefreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_refresh_layout);
         eventArrayAdapter = new TimelineEventAdapter(getContext(),eventList);
         listView.setAdapter(eventArrayAdapter);
-        swipeRefreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_refresh_layout);
+
+        btnCreateEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentCreateEvent= new Intent(getContext(), CreateEventActivity.class);
+                startActivity(intentCreateEvent);
+            }
+        });
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

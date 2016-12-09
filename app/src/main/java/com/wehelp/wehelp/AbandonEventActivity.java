@@ -7,17 +7,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wehelp.wehelp.adapters.RequirementCheckboxAdapter;
 import com.wehelp.wehelp.classes.Event;
+import com.wehelp.wehelp.classes.EventRequirement;
 import com.wehelp.wehelp.classes.WeHelpApp;
 import com.wehelp.wehelp.controllers.EventController;
 
 import org.json.JSONException;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -49,10 +53,10 @@ public class AbandonEventActivity extends AppCompatActivity {
         loadingPanel.setVisibility(View.GONE);
 
         Button helpRegisterButton = (Button)findViewById(R.id.btn_register_help);
-//        final ListView lvRequirementsCheckbox = (ListView)findViewById(R.id.listview_requirements_checkbox);
-//        final ArrayList<EventRequirement> requirementList = new ArrayList<>();
-//        final ArrayList<EventRequirement> checkedRequirementList = new ArrayList<>();
-//        RequirementCheckboxAdapter checkboxAdapter = new RequirementCheckboxAdapter(this,R.layout.row_checkbox_requirement,requirementList);
+        final ListView lvRequirementsCheckbox = (ListView)findViewById(R.id.listview_requirements_checkbox);
+        final ArrayList<EventRequirement> requirementList = new ArrayList<>();
+        final ArrayList<EventRequirement> checkedRequirementList = new ArrayList<>();
+        RequirementCheckboxAdapter checkboxAdapter = new RequirementCheckboxAdapter(this,R.layout.row_checkbox_requirement,requirementList);
 
 
         String address = event.getCidade()+" / "+event.getRua()+" - "+event.getNumero()+", "+event.getComplemento();
@@ -79,26 +83,26 @@ public class AbandonEventActivity extends AppCompatActivity {
             eventParticipants.setText("Não há nenhuma pessoa participando no momento. Seja a primeira!");
         }
 
-//        lvRequirementsCheckbox.setAdapter(checkboxAdapter);
+        lvRequirementsCheckbox.setAdapter(checkboxAdapter);
 
-//        for(int i = 0; i< event.getRequisitos().size(); i++) {
-//            EventRequirement requirement = event.getRequisitos().get(i);
-//            requirementList.add(requirement);
-//        }
+        for(int i = 0; i< event.getRequisitos().size(); i++) {
+            EventRequirement requirement = event.getRequisitos().get(i);
+            requirementList.add(requirement);
+        }
 
-//        checkboxAdapter.notifyDataSetChanged();
+        checkboxAdapter.notifyDataSetChanged();
 
         assert helpRegisterButton != null;
         helpRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 loadingPanel.setVisibility(View.VISIBLE);
-//                checkedRequirementList.clear();
-//                for(int i = 0; i< requirementList.size(); i++) {
-//                    if(requirementList.get(i).isSelected()) {
-//                        checkedRequirementList.add(requirementList.get(i));
-//                    }
-//                }
+                checkedRequirementList.clear();
+                for(int i = 0; i< requirementList.size(); i++) {
+                    if(requirementList.get(i).isSelected()) {
+                        checkedRequirementList.add(requirementList.get(i));
+                    }
+                }
                 new AbandonEventTask().execute();
             }
         });
@@ -117,12 +121,11 @@ public class AbandonEventActivity extends AppCompatActivity {
 
             try {
                 eventController.removeUser(event,((WeHelpApp)application).getUser());
-                while (!eventController.addUserOk && !eventController.errorService){}
+                while (!eventController.removeUserOk && !eventController.errorService){}
                 if (eventController.errorService) {
                     return false;
                 } else {
-//                    Toast.makeText(getApplicationContext(), "Você desistiu de participar do evento", Toast.LENGTH_LONG).show();
-//                    finish();
+                    finish();
                     return true;
                 }
             } catch (JSONException e) {

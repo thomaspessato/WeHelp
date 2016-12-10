@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.vision.text.Text;
 import com.google.gson.Gson;
 import com.wehelp.wehelp.R;
 import com.wehelp.wehelp.classes.EventRequirement;
@@ -53,7 +54,6 @@ public class RequirementCheckboxAdapter extends ArrayAdapter<EventRequirement> {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.row_checkbox_requirement, null);
 
-            final AlertDialog.Builder builder = new AlertDialog.Builder(context);
             final View dialogLayout = inflater.inflate(R.layout.dialog_requirement_help,null);
             holder = new ViewHolder();
             holder.code = (TextView) convertView.findViewById(R.id.code);
@@ -65,7 +65,7 @@ public class RequirementCheckboxAdapter extends ArrayAdapter<EventRequirement> {
             if(requirementList.get((position)) != null) {
                 requirement = requirementList.get(position);
                 holder.code.setText("");
-                holder.name.setText(requirement.getDescricao());
+                holder.name.setText(requirement.getQuant()+" "+requirement.getUn()+" "+requirement.getDescricao());
                 holder.name.setChecked(requirement.isSelected());
                 holder.name.setTag(requirement);
             }
@@ -81,32 +81,43 @@ public class RequirementCheckboxAdapter extends ArrayAdapter<EventRequirement> {
 //            System.out.println("requirementString"+requirementString);
 
             assert finalRequirement != null;
-            builder.setView(dialogLayout)
-                    .setPositiveButton("CONFIRMAR", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            EditText helpQtd = (EditText)dialogLayout.findViewById(R.id.requirement_help_qtd);
-                            if(helpQtd.getText().toString().equalsIgnoreCase("")) {
-                                helpQtd.setText("1");
-                            }
-                            if(finalRequirement.getUn() == null) {
-                                finalRequirement.setUn("unidade");
-                            }
-                            finalHolder1.helpQtd.setText("Você irá ajudar com "+ helpQtd.getText()+" "+ finalRequirement.getUn());
-                            finalHolder.name.setChecked(true);
-                        }
-                    }).setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    finalHolder.name.setChecked(false);
-                }
-            });
+
 
             convertView.setOnClickListener( new View.OnClickListener() {
                 public void onClick(View v) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     if(dialogLayout.getParent() != null) {
                         ((ViewGroup)dialogLayout.getParent()).removeView(dialogLayout);
                     }
+
+                    TextView tvDialogRequirement = (TextView)dialogLayout.findViewById(R.id.dialog_requirement);
+                    String quantidade = Double.toString(finalRequirement.getQuant());
+                    String unidade = finalRequirement.getUn();
+                    String descricao = finalRequirement.getDescricao();
+                    tvDialogRequirement.setText(quantidade +" "+unidade+" "+descricao);
+
+                    builder.setView(dialogLayout)
+                            .setPositiveButton("CONFIRMAR", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    EditText helpQtd = (EditText)dialogLayout.findViewById(R.id.requirement_help_qtd);
+                                    if(helpQtd.getText().toString().equalsIgnoreCase("")) {
+                                        helpQtd.setText("1");
+                                    }
+                                    if(finalRequirement.getUn() == null) {
+                                        finalRequirement.setUn("unidade");
+                                    }
+                                    finalHolder1.helpQtd.setText("Você irá ajudar com "+ helpQtd.getText()+" "+ finalRequirement.getUn());
+                                    finalHolder.name.setChecked(true);
+                                }
+                            }).setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finalHolder.name.setChecked(false);
+                        }
+                    });
+
                     builder.create();
                     builder.show();
                 }

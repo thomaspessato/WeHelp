@@ -5,9 +5,11 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -44,7 +46,8 @@ public class HelpEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_help_event);
 
         setTitle("Quero ajudar");
-        this.event = (Event)getIntent().getSerializableExtra("event");
+        event = (Event)getIntent().getSerializableExtra("event");
+        System.out.println("REQUISITOS: "+event.getRequisitos().size());
         TextView eventName = (TextView) findViewById(R.id.help_event_name);
         TextView eventDescription = (TextView) findViewById(R.id.help_event_description);
         TextView eventDate = (TextView) findViewById(R.id.event_help_date);
@@ -85,27 +88,53 @@ public class HelpEventActivity extends AppCompatActivity {
             eventParticipants.setText("Não há nenhuma pessoa participando no momento. Seja a primeira!");
         }
 
+        requirementList.addAll(event.getRequisitos());
         lvRequirementsCheckbox.setAdapter(checkboxAdapter);
-
-        ArrayList requisitos = event.getRequisitos();
-
-        System.out.println("TAMANHO DOS REQUISITOS: "+event.getRequisitos());
-        for(int i = 0; i< requisitos.size(); i++) {
-            EventRequirement requirement = event.getRequisitos().get(i);
-            requirementList.add(requirement);
-        }
-
         checkboxAdapter.notifyDataSetChanged();
+
+        setListViewHeightBasedOnChildren(lvRequirementsCheckbox);
 
         assert helpRegisterButton != null;
         helpRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                for(int i = 0; i < requirementList.size(); i++) {
+                    if(requirementList.get(i).isSelected()) {
+                        checkedRequirementList.add(requirementList.get(i));
+                        System.out.println("CHECKED ITEM: "+requirementList.get(i).getDescricao().toString());
+                    }
+                }
+
+
                 new ParticipateEventsTask().execute();
             }
         });
 
     }
+
+    private void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+
+            return;
+        }
+
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight
+                + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+
+    }
+
 
     private class ParticipateEventsTask extends AsyncTask<Void, Void, Boolean> {
 
@@ -116,6 +145,8 @@ public class HelpEventActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
+
+
 
             try {
                 eventController.addUser(event,((WeHelpApp)application).getUser());

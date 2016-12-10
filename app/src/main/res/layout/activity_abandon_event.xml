@@ -26,6 +26,16 @@
             style="@style/Widget.AppCompat.ProgressBar" />
     </RelativeLayout>
 
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
 
     <TextView
         android:text="TextView"
@@ -142,5 +152,8 @@
         android:id="@+id/btn_register_help"
         style="@style/Widget.AppCompat.Button.Colored"
         android:background="@color/colorPrimary" />
+
+            </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

@@ -209,7 +209,7 @@ public class FragmentMap extends Fragment {
 
         protected void onPostExecute(ArrayList<Event> events) {
             if (events == null) {
-                Toast.makeText(getActivity().getApplicationContext(), eventController.errorMessages.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity().getApplicationContext(), "Não foi possível atualizar os eventos. Tente novamente.", Toast.LENGTH_LONG).show();
             } else {
                 listEvents = events;
                 //Toast.makeText(getActivity().getApplicationContext(), "Retorno: OK", Toast.LENGTH_LONG).show();
@@ -231,22 +231,8 @@ public class FragmentMap extends Fragment {
                     googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                     try {
                         List<Address> addresses = new ArrayList<Address>();
-                        if (listEvents == null && listEvents.size() == 0) {
-                            addresses.add(geocoder.getFromLocationName("Rua Marechal José Inácio, Porto Alegre", 1).get(0));
-                            addresses.add(geocoder.getFromLocationName("Rua Padre Hildebrando, Porto Alegre", 1).get(0));
-                            addresses.add(geocoder.getFromLocationName("Avenida Assis Brasil, Porto Alegre", 1).get(0));
-                            addresses.add(geocoder.getFromLocationName("Avenida Sertório, Porto Alegre", 1).get(0));
-                            addresses.add(geocoder.getFromLocationName("Avenida Plínio Brasil Milano, Porto Alegre", 1).get(0));
-                            addresses.add(geocoder.getFromLocationName("Rua Novo Hamburgo, Porto Alegre", 1).get(0));
+                        if (listEvents != null && listEvents.size() > 0) {
 
-                            for (int i = 0; i < addresses.size(); i++) {
-                                double longitude = addresses.get(i).getLongitude();
-                                double latitude = addresses.get(i).getLatitude();
-                                LatLng test = new LatLng(latitude, longitude);
-
-                                googleMap.addMarker(new MarkerOptions().position(test).title("BLABLBALBA | Educação").snippet("TESTANDO"));
-                            }
-                        } else {
                             for (int i = 0; i < listEvents.size(); i++) {
                                 double longitude = listEvents.get(i).getLng();
                                 double latitude = listEvents.get(i).getLat();
@@ -273,7 +259,7 @@ public class FragmentMap extends Fragment {
                             }
                         });
 
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 

@@ -28,7 +28,7 @@
     <TextView
         android:id="@+id/requirement_unit"
         android:layout_height="wrap_content"
-        android:text="unidade"
+        android:text="un"
         android:layout_marginRight="10dp"
         android:layout_weight="1"
         android:layout_width="0dp" />

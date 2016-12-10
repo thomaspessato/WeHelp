@@ -1,9 +1,17 @@
 package com.wehelp.wehelp.tabs;
 
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -13,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.wehelp.wehelp.CreateEventActivity;
@@ -117,6 +126,7 @@ public class FragmentTimeline extends Fragment {
             public void onRefresh() {
 //                eventArrayAdapter.clear();
                 System.out.println("No events!");
+                /*
                 eventController.getEvents(-30.0381669,-51.214949,50);
                 while (eventController.getListEvents() == null && !eventController.errorService){}
                 if (eventController.errorService) {
@@ -128,11 +138,74 @@ public class FragmentTimeline extends Fragment {
                 swipeRefreshLayout.setRefreshing(false);
 
                 eventArrayAdapter.notifyDataSetChanged();
-
+                */
+                new ListEventsTask().execute();
             }
         });
 
                 eventArrayAdapter.notifyDataSetChanged();
         return rootView;
+    }
+
+    private class ListEventsTask extends AsyncTask<Void, Void, ArrayList<Event>> {
+
+        Location location;
+        Criteria criteria;
+        LocationManager locationManager;
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected ArrayList<Event> doInBackground(Void... params) {
+            try {
+                locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+                criteria = new Criteria();
+                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    location = new Location("");
+                    location.setLatitude(-30.034647);
+                    location.setLongitude(-51.217658);
+                } else {
+                    location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
+                }
+
+                if (location == null) {
+                    location = new Location("");
+                    location.setLatitude(-30.034647);
+                    location.setLongitude(-51.217658);
+                }
+
+                double userLatitude = location.getLatitude();
+                double userLongitude = location.getLongitude();
+                eventController.getEvents(userLatitude, userLongitude, 50);
+                while (eventController.getListEvents() == null && !eventController.errorService){}
+                if (eventController.errorService) {
+                    return null;
+                }
+                ArrayList<Event> listEvents = eventController.getListEvents();
+                eventController.setListEvents(null);
+                return listEvents;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        protected void onPostExecute(ArrayList<Event> events) {
+            if (events == null) {
+                Toast.makeText(getActivity().getApplicationContext(), "Não foi possível atualizar os eventos. Tente novamente.", Toast.LENGTH_LONG).show();
+            } else {
+                eventList = events;
+                TabbedActivity tab = (TabbedActivity)getActivity();
+                tab.listEvents = eventList;
+                eventArrayAdapter = new TimelineEventAdapter(getContext(),eventList);
+                listView.setAdapter(eventArrayAdapter);
+                eventArrayAdapter.notifyDataSetChanged();
+            }
+            swipeRefreshLayout.setRefreshing(false);
+        }
+
+
     }
 }

@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.wehelp.wehelp.R;
+import com.wehelp.wehelp.classes.Event;
+import com.wehelp.wehelp.classes.EventRequirement;
 
 import java.util.List;
 
@@ -16,12 +18,12 @@ import java.util.List;
  * Created by thomaspessato on 28/11/16.
  */
 
-public class RequirementListAdapter extends ArrayAdapter<String> {
+public class RequirementListAdapter extends ArrayAdapter<EventRequirement> {
     private Context context;
-    private List<String> requirementList;
+    private List<EventRequirement> requirementList;
 
 
-    public RequirementListAdapter(Context context, List<String> list) {
+    public RequirementListAdapter(Context context, List<EventRequirement> list) {
         super(context, R.layout.row_timeline, list);
         this.context = context;
         this.requirementList= list;
@@ -30,15 +32,16 @@ public class RequirementListAdapter extends ArrayAdapter<String> {
 
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        final String requirement = requirementList.get(position);
+        final EventRequirement requirement = requirementList.get(position);
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.row_requirement, null);
-            System.out.println("timeline event: convertView was NULL");
         }
 
         final TextView requirementItem = (TextView)convertView.findViewById(R.id.requirement_text);
+        final TextView requirementQtd = (TextView)convertView.findViewById(R.id.requirement_qtd);
+        final TextView requirementUnit = (TextView)convertView.findViewById(R.id.requirement_unit);
         Button btnDeleteRequirement = (Button)convertView.findViewById(R.id.btn_requirement_delete);
 
         btnDeleteRequirement.setOnClickListener(new View.OnClickListener() {
@@ -50,8 +53,9 @@ public class RequirementListAdapter extends ArrayAdapter<String> {
             }
         });
 
-        requirementItem.setText(requirement);
-
+        requirementItem.setText(requirement.getDescricao());
+        requirementQtd.setText(Double.toString(requirement.getQtd()));
+        requirementUnit.setText(requirement.getUnidade());
 
         return convertView;
     }

@@ -93,7 +93,7 @@ public class CreateEventActivity extends AppCompatActivity {
         final EditText eventRequirementQtd = (EditText)findViewById(R.id.register_event_requirement_qtd);
         final EditText eventRequirementUnit = (EditText)findViewById(R.id.register_event_requirement_uni);
         final ListView lvRequirements = (ListView)findViewById(R.id.listview_requirements);
-        final ArrayList<String> listItems=new ArrayList<String>();
+        final ArrayList<EventRequirement> listItems=new ArrayList<EventRequirement>();
         final ArrayAdapter requirementsArrayAdapter;
         final Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
         Button btnNewRequirement = (Button)findViewById(R.id.btn_new_requirement);
@@ -240,8 +240,17 @@ public class CreateEventActivity extends AppCompatActivity {
         btnNewRequirement.setOnClickListener(new View.OnClickListener() {
             @Override
                 public void onClick(View view) {
-                    String requirement = eventRequirement.getText().toString();
-                    if(!requirement.equalsIgnoreCase("")) {
+
+                    EventRequirement requirement = new EventRequirement();
+                    double etQuantidade = Double.parseDouble(eventRequirementQtd.getText().toString());
+                    if(etQuantidade > 0) {
+                        requirement.setQtd(etQuantidade);
+                    } else {
+                        requirement.setQtd(1);
+                    }
+                    requirement.setDescricao(eventRequirement.getText().toString());
+                    requirement.setUnidade(eventRequirementUnit.getText().toString());
+                    if(!requirement.getDescricao().equalsIgnoreCase("")) {
                         listItems.add(requirement);
                         requirementsArrayAdapter.notifyDataSetChanged();
                         eventRequirement.setText("");
@@ -353,7 +362,6 @@ public class CreateEventActivity extends AppCompatActivity {
     }
 
     private void setListViewHeightBasedOnChildren(ListView listView) {
-        Log.e("Listview Size ", "" + listView.getCount());
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null) {
 

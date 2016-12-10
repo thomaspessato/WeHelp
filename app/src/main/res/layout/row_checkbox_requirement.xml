@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="6dip" >
+    android:orientation="horizontal"
+    android:padding="6dip"
+    android:weightSum="5">
 
     <CheckBox
         android:id="@+id/checkBox1"
@@ -13,6 +14,25 @@
         android:focusable="false"
         android:focusableInTouchMode="false" />
 
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/editText5"
+        android:textSize="14sp"
+        android:hint="ex: 10"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1.5" />
+
+    <TextView
+        android:id="@+id/requirement_unit"
+        android:layout_height="wrap_content"
+        android:text="unidade"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1"
+        android:layout_width="0dp" />
+
     <TextView
         android:id="@+id/code"
         android:layout_width="wrap_content"
@@ -20,6 +40,7 @@
         android:layout_alignBaseline="@+id/checkBox1"
         android:layout_alignBottom="@+id/checkBox1"
         android:layout_toRightOf="@+id/checkBox1"
-        android:text="TextView" />
+        android:text="TextView"
+        android:layout_weight="3" />
 
-</RelativeLayout>
+</LinearLayout>

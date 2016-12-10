@@ -1,12 +1,8 @@
 package com.wehelp.wehelp;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
-
-import android.support.v7.app.AlertDialog;
 
 import android.os.AsyncTask;
 
@@ -21,12 +17,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wehelp.wehelp.adapters.CategorySpinnerAdapter;
@@ -34,24 +28,17 @@ import com.wehelp.wehelp.adapters.RequirementListAdapter;
 import com.wehelp.wehelp.classes.Category;
 import com.wehelp.wehelp.classes.Event;
 import com.wehelp.wehelp.classes.EventRequirement;
-import com.wehelp.wehelp.classes.User;
 import com.wehelp.wehelp.classes.WeHelpApp;
 import com.wehelp.wehelp.controllers.CategoryController;
 import com.wehelp.wehelp.controllers.EventController;
-import com.wehelp.wehelp.services.CategoryService;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 
 import java.text.ParseException;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -244,12 +231,12 @@ public class CreateEventActivity extends AppCompatActivity {
                     EventRequirement requirement = new EventRequirement();
                     double etQuantidade = Double.parseDouble(eventRequirementQtd.getText().toString());
                     if(etQuantidade > 0) {
-                        requirement.setQtd(etQuantidade);
+                        requirement.setQuant(etQuantidade);
                     } else {
-                        requirement.setQtd(1);
+                        requirement.setQuant(1);
                     }
                     requirement.setDescricao(eventRequirement.getText().toString());
-                    requirement.setUnidade(eventRequirementUnit.getText().toString());
+                    requirement.setUn(eventRequirementUnit.getText().toString());
                     if(!requirement.getDescricao().equalsIgnoreCase("")) {
                         listItems.add(requirement);
                         requirementsArrayAdapter.notifyDataSetChanged();
@@ -277,9 +264,10 @@ public class CreateEventActivity extends AppCompatActivity {
                 ArrayList<EventRequirement> requirementsArr = new ArrayList();
 
                 for (int i=0;i<requirementsArrayAdapter.getCount();i++){
-                    EventRequirement req = new EventRequirement();
-                    req.setDescricao(requirementsArrayAdapter.getItem(i).toString());
-                    requirementsArr.add(req);
+
+                    Log.d("TESTE", requirementsArrayAdapter.getItem(i).toString());
+
+                    requirementsArr.add((EventRequirement)requirementsArrayAdapter.getItem(i));
                 }
 
                 System.out.println("requirements: "+requirementsArr);

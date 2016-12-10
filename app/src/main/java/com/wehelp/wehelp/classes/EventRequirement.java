@@ -9,8 +9,8 @@ public class EventRequirement implements Serializable {
     private int evento_id;
     private int id;
     private String descricao;
-    private String unidade;
-    private double qtd;
+    private String un;
+    private double quant;
     boolean selected = false;
 
 
@@ -23,13 +23,13 @@ public class EventRequirement implements Serializable {
         this.created_at = created_at;
     }
 
-    public String getUnidade() { return unidade; }
+    public String getUn() { return un; }
 
-    public void setUnidade(String unidade) { this.unidade = unidade; }
+    public void setUn(String un) { this.un = un; }
 
-    public double getQtd() { return qtd; }
+    public double getQuant() { return quant; }
 
-    public void setQtd(double qtd) { this.qtd = qtd; }
+    public void setQuant(double quant) { this.quant = quant; }
 
     public Date getUpdatedAt() {
         return updated_at;

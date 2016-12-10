@@ -19,7 +19,7 @@
         android:text="2 kg de batata"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView32"
+        android:id="@+id/dialog_requirement"
         android:textSize="18sp"
         android:layout_marginBottom="10dp" />
 

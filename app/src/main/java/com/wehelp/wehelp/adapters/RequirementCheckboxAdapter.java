@@ -13,8 +13,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.wehelp.wehelp.R;
 import com.wehelp.wehelp.classes.EventRequirement;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -67,9 +70,16 @@ public class RequirementCheckboxAdapter extends ArrayAdapter<EventRequirement> {
                 holder.name.setTag(requirement);
             }
 
+
+
             final ViewHolder finalHolder = holder;
             final ViewHolder finalHolder1 = holder;
             final EventRequirement finalRequirement = requirement;
+
+//            Gson gson = new Gson();
+//            String requirementString = gson.toJson(requirement);
+//            System.out.println("requirementString"+requirementString);
+
             assert finalRequirement != null;
             builder.setView(dialogLayout)
                     .setPositiveButton("CONFIRMAR", new DialogInterface.OnClickListener() {
@@ -79,10 +89,10 @@ public class RequirementCheckboxAdapter extends ArrayAdapter<EventRequirement> {
                             if(helpQtd.getText().toString().equalsIgnoreCase("")) {
                                 helpQtd.setText("1");
                             }
-//                            if(finalRequirement.getUnidade() == null) {
-                                finalRequirement.setUnidade("unidade");
-//                            }
-                            finalHolder1.helpQtd.setText("Você irá ajudar com "+ helpQtd.getText()+" "+ finalRequirement.getUnidade());
+                            if(finalRequirement.getUn() == null) {
+                                finalRequirement.setUn("unidade");
+                            }
+                            finalHolder1.helpQtd.setText("Você irá ajudar com "+ helpQtd.getText()+" "+ finalRequirement.getUn());
                             finalHolder.name.setChecked(true);
                         }
                     }).setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {

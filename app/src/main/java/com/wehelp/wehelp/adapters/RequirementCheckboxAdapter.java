@@ -1,17 +1,24 @@
 package com.wehelp.wehelp.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.vision.text.Text;
+import com.google.gson.Gson;
 import com.wehelp.wehelp.R;
 import com.wehelp.wehelp.classes.EventRequirement;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -22,15 +29,18 @@ import java.util.ArrayList;
 public class RequirementCheckboxAdapter extends ArrayAdapter<EventRequirement> {
 
     private ArrayList<EventRequirement> requirementList;
+    Context context;
 
     public RequirementCheckboxAdapter(Context context, int textViewResourceId,
                                       ArrayList<EventRequirement> list) {
         super(context, textViewResourceId, list);
+        this.context = context;
         this.requirementList = list;
     }
 
     private class ViewHolder {
         TextView code;
+        TextView helpQtd;
         CheckBox name;
     }
 
@@ -44,38 +54,81 @@ public class RequirementCheckboxAdapter extends ArrayAdapter<EventRequirement> {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.row_checkbox_requirement, null);
 
+            final View dialogLayout = inflater.inflate(R.layout.dialog_requirement_help,null);
             holder = new ViewHolder();
             holder.code = (TextView) convertView.findViewById(R.id.code);
             holder.name = (CheckBox) convertView.findViewById(R.id.checkBox1);
+            holder.helpQtd = (TextView)convertView.findViewById(R.id.requirement_txt_helping);
+            EventRequirement requirement = null;
             convertView.setTag(holder);
 
-            holder.name.setOnClickListener( new View.OnClickListener() {
+            if(requirementList.get((position)) != null) {
+                requirement = requirementList.get(position);
+                holder.code.setText("");
+                holder.name.setText(requirement.getQuant()+" "+requirement.getUn()+" "+requirement.getDescricao());
+                holder.name.setChecked(requirement.isSelected());
+                holder.name.setTag(requirement);
+            }
+
+
+
+            final ViewHolder finalHolder = holder;
+            final ViewHolder finalHolder1 = holder;
+            final EventRequirement finalRequirement = requirement;
+
+//            Gson gson = new Gson();
+//            String requirementString = gson.toJson(requirement);
+//            System.out.println("requirementString"+requirementString);
+
+            assert finalRequirement != null;
+
+
+            convertView.setOnClickListener( new View.OnClickListener() {
                 public void onClick(View v) {
-                    CheckBox cb = (CheckBox) v;
-                    EventRequirement requirement = (EventRequirement) cb.getTag();
-                    Toast.makeText(getContext(),
-                            "Clicked on Checkbox: " + cb.getText() +
-                                    " is " + cb.isChecked(),
-                            Toast.LENGTH_LONG).show();
-                    requirement.setSelected(cb.isChecked());
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    if(dialogLayout.getParent() != null) {
+                        ((ViewGroup)dialogLayout.getParent()).removeView(dialogLayout);
+                    }
+
+                    TextView tvDialogRequirement = (TextView)dialogLayout.findViewById(R.id.dialog_requirement);
+                    String quantidade = Double.toString(finalRequirement.getQuant());
+                    String unidade = finalRequirement.getUn();
+                    String descricao = finalRequirement.getDescricao();
+                    tvDialogRequirement.setText(quantidade +" "+unidade+" "+descricao);
+
+                    builder.setView(dialogLayout)
+                            .setPositiveButton("CONFIRMAR", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    EditText helpQtd = (EditText)dialogLayout.findViewById(R.id.requirement_help_qtd);
+                                    if(helpQtd.getText().toString().equalsIgnoreCase("")) {
+                                        helpQtd.setText("1");
+                                    }
+                                    if(finalRequirement.getUn() == null) {
+                                        finalRequirement.setUn("unidade");
+                                    }
+                                    finalHolder1.helpQtd.setText("Você irá ajudar com "+ helpQtd.getText()+" "+ finalRequirement.getUn());
+                                    finalHolder.name.setChecked(true);
+                                }
+                            }).setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finalHolder.name.setChecked(false);
+                        }
+                    });
+
+                    builder.create();
+                    builder.show();
                 }
             });
+
         }
         else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        if(requirementList.get((position)) != null) {
-            EventRequirement requirement = requirementList.get(position);
-            holder.code.setText("");
-            holder.name.setText(requirement.getDescricao());
-            holder.name.setChecked(requirement.isSelected());
-            holder.name.setTag(requirement);
-
-        }
-
         return convertView;
-
     }
 
 }

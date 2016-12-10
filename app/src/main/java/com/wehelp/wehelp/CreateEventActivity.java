@@ -229,7 +229,14 @@ public class CreateEventActivity extends AppCompatActivity {
                 public void onClick(View view) {
 
                     EventRequirement requirement = new EventRequirement();
-                    double etQuantidade = Double.parseDouble(eventRequirementQtd.getText().toString());
+                    double etQuantidade;
+                    if(eventRequirementQtd.getText().toString().equalsIgnoreCase("")) {
+                        etQuantidade = 1;
+                    } else {
+                        System.out.println("Quantidade: "+eventRequirementQtd.getText().toString());
+                        etQuantidade = Double.parseDouble(eventRequirementQtd.getText().toString());
+                    }
+
                     if(etQuantidade > 0) {
                         requirement.setQuant(etQuantidade);
                     } else {
@@ -241,6 +248,9 @@ public class CreateEventActivity extends AppCompatActivity {
                         listItems.add(requirement);
                         requirementsArrayAdapter.notifyDataSetChanged();
                         eventRequirement.setText("");
+                        eventRequirementUnit.setText("");
+                        eventRequirementQtd.setText("");
+                        eventRequirementQtd.requestFocus();
                         setListViewHeightBasedOnChildren(lvRequirements);
                     } else {
                         Toast.makeText(getApplicationContext(), "Por favor, preencha algo no requisito", Toast.LENGTH_SHORT).show();
@@ -314,7 +324,6 @@ public class CreateEventActivity extends AppCompatActivity {
                     }
                 }
 
-//                IMPLEMENTAR CADASTRO DE EVENTO WS
                 Event event = new Event();
                 event.setNome(title);
                 event.setRua(addressStreet);

@@ -130,7 +130,6 @@ public class FragmentMap extends Fragment {
                             Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                                     mGoogleApiClient);
 
-                            System.out.println("USER LOCATION:" + mLastLocation);
                             return;
                         }
                     }
@@ -248,11 +247,10 @@ public class FragmentMap extends Fragment {
                         googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                             @Override
                             public void onInfoWindowClick(Marker marker) {
-                                    System.out.println("MARKER TAG "+marker.getTag());
                                 Intent intentHelp = new Intent(getContext(), HelpEventActivity.class);
 
                                 Bundle mBundle = new Bundle();
-                                mBundle.putSerializable("event", (Event)marker.getTag());
+                                mBundle.putSerializable("event", ((Event)marker.getTag()));
                                 intentHelp.putExtras(mBundle);
 
                                 startActivity(intentHelp);

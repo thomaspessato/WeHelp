@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.wehelp.wehelp.R;
-import com.wehelp.wehelp.classes.Event;
 import com.wehelp.wehelp.classes.EventRequirement;
 
 import java.util.List;
@@ -54,8 +53,8 @@ public class RequirementListAdapter extends ArrayAdapter<EventRequirement> {
         });
 
         requirementItem.setText(requirement.getDescricao());
-        requirementQtd.setText(Double.toString(requirement.getQtd()));
-        requirementUnit.setText(requirement.getUnidade());
+        requirementQtd.setText(Double.toString(requirement.getQuant()));
+        requirementUnit.setText(requirement.getUn());
 
         return convertView;
     }

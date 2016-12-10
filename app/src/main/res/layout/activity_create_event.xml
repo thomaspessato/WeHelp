@@ -109,7 +109,7 @@
                 android:layout_alignRight="@+id/editText4"
                 android:layout_alignEnd="@+id/editText4"
                 android:id="@+id/register_event_requirement_qtd"
-                android:hint="qtd." />
+                android:hint="quant." />
 
             <EditText
                 android:layout_width="61dp"

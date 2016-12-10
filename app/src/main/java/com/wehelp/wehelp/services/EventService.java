@@ -13,8 +13,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
 
 public class EventService {
     ServiceContainer serviceContainer;
@@ -86,6 +84,8 @@ public class EventService {
             for (int i = 0; i < event.getRequisitos().size(); i++) {
                 JSONObject jsonReq = new JSONObject();
                 jsonReq.put("descricao", event.getRequisitos().get(i).getDescricao());
+                jsonReq.put("quant", String.valueOf(event.getRequisitos().get(i).getQuant()));
+                jsonReq.put("un", event.getRequisitos().get(i).getUn());
                 jsonArray.put(jsonReq);
             }
             json.put("requisitos", jsonArray);

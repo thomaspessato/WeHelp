@@ -37,6 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/requirement_txt_helping"
-        android:textStyle="normal|italic" />
+        android:textStyle="normal|italic"
+        android:textColor="@color/colorAccent" />
 
 </LinearLayout>

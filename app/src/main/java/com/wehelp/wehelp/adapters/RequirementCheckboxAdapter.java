@@ -91,7 +91,7 @@ public class RequirementCheckboxAdapter extends ArrayAdapter<EventRequirement> {
                         ((ViewGroup)dialogLayout.getParent()).removeView(dialogLayout);
                     }
 
-                    TextView tvDialogRequirement = (TextView)dialogLayout.findViewById(R.id.dialog_requirement);
+                    final TextView tvDialogRequirement = (TextView)dialogLayout.findViewById(R.id.dialog_requirement);
                     String quantidade = Double.toString(finalRequirement.getQuant());
                     String unidade = finalRequirement.getUn();
                     String descricao = finalRequirement.getDescricao();
@@ -111,10 +111,14 @@ public class RequirementCheckboxAdapter extends ArrayAdapter<EventRequirement> {
                                     finalHolder1.helpQtd.setText("Você irá ajudar com "+ helpQtd.getText()+" "+ finalRequirement.getUn());
                                     finalHolder.name.setChecked(true);
                                 }
-                            }).setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
+                            }).setNegativeButton("NÃO CONTRIBUIR", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                            EditText helpQtd = (EditText)dialogLayout.findViewById(R.id.requirement_help_qtd);
+                            helpQtd.setText("");
+                            finalHolder1.helpQtd.setText("");
                             finalHolder.name.setChecked(false);
+
                         }
                     });
 

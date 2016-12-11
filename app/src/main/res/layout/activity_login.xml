@@ -71,7 +71,7 @@
                 android:layout_gravity="center_horizontal"
                 android:textColor="#ffffff"
                 android:textStyle="bold"
-                android:text="teste@teste.com" />
+                android:text="tpessato@hotmail.com" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -91,7 +91,7 @@
                 android:password="true"
                 android:textStyle="bold"
                 android:textColor="#fff"
-                android:text="12345" />
+                android:text="abc123" />
 
             <Button
                 android:layout_width="wrap_content"

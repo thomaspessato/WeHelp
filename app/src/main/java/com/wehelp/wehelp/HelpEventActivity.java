@@ -101,7 +101,7 @@ public class HelpEventActivity extends AppCompatActivity {
         helpRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                checkedRequirementList = new ArrayList<EventRequirement>();
                 for(int i = 0; i < requirementList.size(); i++) {
                     if(requirementList.get(i).isSelected()) {
                         checkedRequirementList.add(requirementList.get(i));

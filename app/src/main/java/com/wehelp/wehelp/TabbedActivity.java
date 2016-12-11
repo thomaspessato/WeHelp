@@ -206,6 +206,11 @@ public class TabbedActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
 

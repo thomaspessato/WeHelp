@@ -31,6 +31,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -238,7 +239,30 @@ public class FragmentMap extends Fragment {
                                 LatLng test = new LatLng(latitude, longitude);
 
 
-                                Marker newMarker = googleMap.addMarker(new MarkerOptions().position(test).title(listEvents.get(i).getNome()).snippet(listEvents.get(i).getCategoria().getDescricao()));
+
+                                Marker newMarker = googleMap.addMarker(new MarkerOptions()
+                                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_music))
+                                        .position(test)
+                                        .title(listEvents.get(i).getNome())
+                                        .snippet(listEvents.get(i).getCategoria().getDescricao()));
+
+                                String categoria = listEvents.get(i).getCategoria().getDescricao();
+                                switch(categoria) {
+                                    case "comida":
+                                        newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_food));
+                                        break;
+                                    case "músicas":
+                                        newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_music));
+                                        break;
+                                    case "educação":
+                                        newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_school));
+                                        break;
+                                    case "saúde":
+                                        newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_health));
+                                        break;
+                                    default:
+                                        break;
+                                }
                                 newMarker.setTag(listEvents.get(i));
                             }
                         }

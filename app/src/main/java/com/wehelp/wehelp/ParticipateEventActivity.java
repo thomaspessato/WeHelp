@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.wehelp.wehelp.adapters.ParticipatingEventAdapter;
 import com.wehelp.wehelp.adapters.TimelineEventAdapter;
 import com.wehelp.wehelp.classes.Event;
@@ -88,7 +89,8 @@ public class ParticipateEventActivity extends AppCompatActivity {
 
                 ArrayList<Event> listEvents = eventController.getListEvents();
                 eventController.setListEvents(null);
-                System.out.println("listEvents: "+listEvents);
+//                Gson gson = new Gson();
+//                System.out.println("Event JSON: "+gson.toJson(listEvents.get(0)));
                 return listEvents;
         }
 

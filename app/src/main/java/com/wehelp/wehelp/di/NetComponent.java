@@ -10,6 +10,8 @@ import com.wehelp.wehelp.MainActivity;
 import com.wehelp.wehelp.MyEventsActivity;
 import com.wehelp.wehelp.ParticipateEventActivity;
 import com.wehelp.wehelp.TabbedActivity;
+import com.wehelp.wehelp.adapters.ParticipatingEventAdapter;
+import com.wehelp.wehelp.adapters.TimelineEventAdapter;
 import com.wehelp.wehelp.controllers.UserController;
 import com.wehelp.wehelp.tabs.FragmentMap;
 import com.wehelp.wehelp.tabs.FragmentTimeline;
@@ -37,4 +39,6 @@ public interface NetComponent {
     void inject(HelpEventActivity activity);
     void inject(MyEventsActivity activity);
     void inject(AbandonEventActivity activity);
+    void inject(ParticipatingEventAdapter adapter);
+    void inject(TimelineEventAdapter adapter);
 }

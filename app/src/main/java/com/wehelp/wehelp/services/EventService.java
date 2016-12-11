@@ -113,7 +113,7 @@ public class EventService {
             }
             jsonObject.put("requisitos", jsonArray);
         }
-
+        Log.d("TESTE", jsonObject.toString());
         this.serviceContainer.PostRequest(url, jsonObject, serviceResponseCallback, serviceErrorCallback);
     }
 

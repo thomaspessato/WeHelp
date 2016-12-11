@@ -217,7 +217,7 @@ public class FragmentMap extends Fragment {
 
             }
             TabbedActivity tab = (TabbedActivity)getActivity();
-            tab.listEvents = listEvents;
+            tab.listEvents = tab != null && tab.listEvents != null ? listEvents : new ArrayList<Event>();
 
             mMapView.getMapAsync(new OnMapReadyCallback() {
                 @Override

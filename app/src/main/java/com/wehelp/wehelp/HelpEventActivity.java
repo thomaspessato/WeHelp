@@ -38,6 +38,9 @@ public class HelpEventActivity extends AppCompatActivity {
     public Event event;
     RelativeLayout loadingPanel;
 
+
+    public ArrayList<EventRequirement> checkedRequirementList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +63,7 @@ public class HelpEventActivity extends AppCompatActivity {
         Button helpRegisterButton = (Button)findViewById(R.id.btn_register_help);
         final ListView lvRequirementsCheckbox = (ListView)findViewById(R.id.listview_requirements_checkbox);
         final ArrayList<EventRequirement> requirementList = new ArrayList<>();
-        final ArrayList<EventRequirement> checkedRequirementList = new ArrayList<>();
+        checkedRequirementList = new ArrayList<>();
         RequirementCheckboxAdapter checkboxAdapter = new RequirementCheckboxAdapter(this,R.layout.row_checkbox_requirement,requirementList);
 
 
@@ -149,7 +152,7 @@ public class HelpEventActivity extends AppCompatActivity {
 
 
             try {
-                eventController.addUser(event,((WeHelpApp)application).getUser());
+                eventController.addUser(event,((WeHelpApp)application).getUser(), checkedRequirementList);
                 while (!eventController.addUserOk && !eventController.errorService){}
                 if (eventController.errorService) {
                     return false;

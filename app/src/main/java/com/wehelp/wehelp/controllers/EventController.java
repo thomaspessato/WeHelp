@@ -153,12 +153,12 @@ public class EventController {
         });
     }
 
-    public void addUser(final Event event, final User user) throws JSONException {
+    public void addUser(final Event event, final User user, ArrayList<EventRequirement> listRequirements) throws JSONException {
         this.errorService = false;
         this.errorMessages = null;
         this.addUserOk = false;
 
-        this.eventService.addUser(event, user, new IServiceResponseCallback() {
+        this.eventService.addUser(event, user, listRequirements, new IServiceResponseCallback() {
             @Override
             public void execute(JSONObject response) {
                 Log.d("WeHelpWs", "Usuário " + user.getId() + " participando do evento " + event.getId());

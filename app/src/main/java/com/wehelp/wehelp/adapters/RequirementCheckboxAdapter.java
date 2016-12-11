@@ -110,6 +110,8 @@ public class RequirementCheckboxAdapter extends ArrayAdapter<EventRequirement> {
                                     }
                                     finalHolder1.helpQtd.setText("Você irá ajudar com "+ helpQtd.getText()+" "+ finalRequirement.getUn());
                                     finalHolder.name.setChecked(true);
+                                    finalRequirement.setSelected(true);
+                                    finalRequirement.setSelectedQuant(Double.parseDouble(helpQtd.getText().toString()));
                                 }
                             }).setNegativeButton("NÃO CONTRIBUIR", new DialogInterface.OnClickListener() {
                         @Override

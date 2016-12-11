@@ -1,6 +1,7 @@
 package com.wehelp.wehelp.classes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class EventRequirement implements Serializable {
@@ -12,6 +13,8 @@ public class EventRequirement implements Serializable {
     private String un;
     private double quant;
     boolean selected = false;
+    private double selectedQuant;
+    private ArrayList<UserRequirement> usuarios_requisito;
 
 
 
@@ -30,6 +33,10 @@ public class EventRequirement implements Serializable {
     public double getQuant() { return quant; }
 
     public void setQuant(double quant) { this.quant = quant; }
+
+    public double getSelectedQuant() { return selectedQuant; }
+
+    public void setSelectedQuant(double selectedQuant ) { this.selectedQuant = selectedQuant ; }
 
     public Date getUpdatedAt() {
         return updated_at;
@@ -68,5 +75,14 @@ public class EventRequirement implements Serializable {
     }
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+
+    public ArrayList<UserRequirement> getUsuariosRequisito() {
+        return usuarios_requisito;
+    }
+
+    public void setUsuariosRequisito(ArrayList<UserRequirement> usuarios_requisito) {
+        this.usuarios_requisito = usuarios_requisito;
     }
 }

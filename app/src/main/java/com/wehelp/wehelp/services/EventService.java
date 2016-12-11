@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class EventService {
     ServiceContainer serviceContainer;
@@ -94,11 +95,25 @@ public class EventService {
         this.serviceContainer.PostRequest(url, json, serviceResponseCallback, serviceErrorCallback);
     }
 
-    public void addUser(Event event, User user, final IServiceResponseCallback serviceResponseCallback, final IServiceErrorCallback serviceErrorCallback) throws JSONException {
+    public void addUser(Event event, User user, ArrayList<EventRequirement> listRequirements, final IServiceResponseCallback serviceResponseCallback, final IServiceErrorCallback serviceErrorCallback) throws JSONException {
         String url = "adicionar_participante";
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("usuario_id", user.getId());
         jsonObject.put("evento_id", event.getId());
+
+        if (listRequirements.size() > 0) {
+            JSONArray jsonArray = new JSONArray();
+            for (int i = 0; i < listRequirements.size(); i++) {
+                JSONObject jsonReq = new JSONObject();
+                jsonReq.put("usuario_id", user.getId());
+                jsonReq.put("requisito_id", listRequirements.get(i).getId());
+                jsonReq.put("quant", String.valueOf(listRequirements.get(i).getSelectedQuant()));
+                jsonReq.put("un", listRequirements.get(i).getUn());
+                jsonArray.put(jsonReq);
+            }
+            jsonObject.put("requisitos", jsonArray);
+        }
+
         this.serviceContainer.PostRequest(url, jsonObject, serviceResponseCallback, serviceErrorCallback);
     }
 

@@ -53,7 +53,7 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
         TextView eventCreator = (TextView)convertView.findViewById(R.id.event_timeline_creator);
         TextView eventCategory = (TextView)convertView.findViewById(R.id.event_timeline_category);
         TextView eventTitle = (TextView)convertView.findViewById(R.id.event_timeline_title);
-//        TextView eventDescription = (TextView)convertView.findViewById(R.id.event_timeline_description);
+        TextView eventDescription = (TextView)convertView.findViewById(R.id.event_timeline_description);
         TextView eventParticipants = (TextView)convertView.findViewById(R.id.event_timeline_participating);
         Button btnHelp = (Button)convertView.findViewById(R.id.btn_abandon);
         LinearLayout requirementsLayout = (LinearLayout)convertView.findViewById(R.id.event_requirement_layout);
@@ -75,8 +75,15 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
         for(int i = 0; i< requisitos.size() ; i++) {
             Object requisito = requisitos.get(i);
             String requisitoString = ((EventRequirement) requisito).getDescricao();
+            double requisitoQuantidade = ((EventRequirement) requisito).getQuant();
+            String requisitoUnidade = ((EventRequirement) requisito).getUn();
             TextView requirementTxt = new TextView(getContext());
-            requirementTxt.setText(requisitoString);
+            if(!requisitoUnidade.equalsIgnoreCase("")) {
+                requirementTxt.setText(requisitoQuantidade+" "+requisitoUnidade+" de "+requisitoString);
+            } else {
+                requirementTxt.setText(requisitoQuantidade+" "+requisitoString);
+            }
+
             requirementsLayout.addView(requirementTxt);
 
         }
@@ -108,7 +115,7 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
         eventAddress.setText(address);
         eventHour.setText(hour);
         eventCreator.setText("CRIADOR");
-//        eventDescription.setText(timelineEvent.getDescricao());
+        eventDescription.setText(timelineEvent.getDescricao());
         if(timelineEvent.getNumeroParticipantes() > 0) {
             eventParticipants.setText(timelineEvent.getNumeroParticipantes()+" pessoas irão participar deste evento.");
         }

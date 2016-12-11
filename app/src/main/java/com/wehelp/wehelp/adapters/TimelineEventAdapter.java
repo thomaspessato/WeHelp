@@ -1,5 +1,6 @@
 package com.wehelp.wehelp.adapters;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,10 +18,15 @@ import com.wehelp.wehelp.R;
 import com.wehelp.wehelp.classes.Category;
 import com.wehelp.wehelp.classes.Event;
 import com.wehelp.wehelp.classes.EventRequirement;
+import com.wehelp.wehelp.classes.UserRequirement;
+import com.wehelp.wehelp.classes.WeHelpApp;
+import com.wehelp.wehelp.controllers.EventController;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Created by temp on 9/15/16.
@@ -29,6 +35,13 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
 
     private Context context;
     private List<Event> eventList;
+
+    @Inject
+    EventController eventController;
+    int userId;
+
+    @Inject
+    Application application;
 
 
     public TimelineEventAdapter(Context context, List<Event> list) {
@@ -47,7 +60,6 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
             System.out.println("timeline event: convertView was NULL");
         }
 
-//        TextView linkInfoEvent = (TextView) convertView.findViewById(R.id.btn_moreinfo);
         TextView eventAddress = (TextView)convertView.findViewById(R.id.event_timeline_date);
         TextView eventHour = (TextView)convertView.findViewById(R.id.event_timeline_hour);
         TextView eventCreator = (TextView)convertView.findViewById(R.id.event_timeline_creator);
@@ -57,6 +69,9 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
         TextView eventParticipants = (TextView)convertView.findViewById(R.id.event_timeline_participating);
         Button btnHelp = (Button)convertView.findViewById(R.id.btn_abandon);
         LinearLayout requirementsLayout = (LinearLayout)convertView.findViewById(R.id.event_requirement_layout);
+        LinearLayout userRequirementsLayout = (LinearLayout)convertView.findViewById(R.id.event_user_requirements_layout);
+        TextView tvHelpWith = (TextView)convertView.findViewById(R.id.tv_helpwith);
+        tvHelpWith.setVisibility(View.GONE);
 
         String address = "Endereço: "+timelineEvent.getCidade()+" / "+timelineEvent.getRua()+" - "+timelineEvent.getNumero()+", "+timelineEvent.getComplemento();
         String hour = "Data: "+new SimpleDateFormat("dd/mm/yyyy / hh:mm").format(timelineEvent.getDataInicio());
@@ -71,21 +86,61 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
                 android.R.layout.simple_list_item_1, android.R.id.text1);
 
         requirementsLayout.removeAllViews();
+        userRequirementsLayout.removeAllViews();
 
         for(int i = 0; i< requisitos.size() ; i++) {
-            Object requisito = requisitos.get(i);
-            String requisitoString = ((EventRequirement) requisito).getDescricao();
-            double requisitoQuantidade = ((EventRequirement) requisito).getQuant();
-            String requisitoUnidade = ((EventRequirement) requisito).getUn();
-            TextView requirementTxt = new TextView(getContext());
-            if(!requisitoUnidade.equalsIgnoreCase("")) {
-                requirementTxt.setText(requisitoQuantidade+" "+requisitoUnidade+" de "+requisitoString);
-            } else {
-                requirementTxt.setText(requisitoQuantidade+" "+requisitoString);
+            Object objRequisito = requisitos.get(i);
+            EventRequirement requisito = (EventRequirement) objRequisito;
+
+            double quantidadeRequisito = requisito.getQuant();
+
+            for(int j = 0; j < requisito.getUsuariosRequisito().size(); j++) {
+
+                UserRequirement userRequirement = requisito.getUsuariosRequisito().get(j);
+                int userId = ((WeHelpApp)getContext().getApplicationContext()).getUser().getId();
+                int userIdRequisito = userRequirement.getId();
+                if(userId == userIdRequisito){
+                    tvHelpWith.setVisibility(View.VISIBLE);
+                    String requisitoUserString;
+                    if(userRequirement.getUn().equalsIgnoreCase("")) {
+                        requisitoUserString = userRequirement.getQuant()+" "+requisito.getDescricao();
+                    } else {
+                        requisitoUserString = userRequirement.getQuant()+" "+userRequirement.getUn()+" de "+requisito.getDescricao();
+                    }
+
+                    TextView requirementUserTxt = new TextView(getContext());
+                    requirementUserTxt.setTextColor(context.getResources().getColor(R.color.colorAccent));
+                    requirementUserTxt.setTextSize(14);
+                    requirementUserTxt.setPadding(5, 0, 0 ,0);
+                    requirementUserTxt.setText(requisitoUserString);
+                    userRequirementsLayout.addView(requirementUserTxt);
+                }
+                System.out.println("USER ID: "+((WeHelpApp)getContext().getApplicationContext()).getUser().getId());
+
+                quantidadeRequisito -= userRequirement.getQuant();
             }
 
-            requirementsLayout.addView(requirementTxt);
+            String requisitoString;
 
+            if(requisito.getUn().equalsIgnoreCase("")) {
+                requisitoString = requisito.getQuant()+" "+requisito.getDescricao();
+            } else {
+                requisitoString = requisito.getQuant()+" "+requisito.getUn()+" de "+requisito.getDescricao();
+            }
+
+            TextView requirementTxt = new TextView(getContext());
+
+            if(quantidadeRequisito <= 0) {
+                requirementTxt.setText(requisitoString +" - Quantidade atingida!");
+                requirementTxt.setTextColor(context.getResources().getColor(R.color.checkedRequirement));
+            } else {
+                requirementTxt.setText(requisitoString +" (ainda faltam "+quantidadeRequisito+")");
+                requirementTxt.setTextColor(context.getResources().getColor(R.color.colorAccent));
+            }
+
+            requirementTxt.setTextSize(14);
+            requirementTxt.setPadding(0, 0, 0 ,0);
+            requirementsLayout.addView(requirementTxt);
         }
 
 //        linkInfoEvent.setOnClickListener(new View.OnClickListener() {

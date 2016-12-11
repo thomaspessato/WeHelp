@@ -39,29 +39,55 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-            <!--android:text="O que precisam?"-->
-            <!--android:id="@+id/textView7"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:layout_marginBottom="5dp"-->
-            <!--android:textColor="@color/colorPrimary" />-->
-
-            <!--<LinearLayout-->
-            <!--android:orientation="vertical"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:id="@+id/event_requirements_layout"-->
-            <!--android:padding="15dp"></LinearLayout>-->
+            <TextView
+                android:text="O evento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtDescription"
+                android:layout_marginTop="10dp"
+                android:textSize="18sp" />
 
             <TextView
                 android:text="TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/event_timeline_description"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:textSize="14sp" />
+
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="O que precisam?"
+            android:id="@+id/textView7"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/colorPrimary" />
+
+            <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/event_requirements_layout"
+            android:padding="15dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Você vai ajudar com"
+                android:id="@+id/tv_helpwith"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/colorPrimary" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/event_user_requirements_layout"
+                android:padding="15dp"/>
 
             <TextView
                 android:text="Numero de participantes"

@@ -13,6 +13,8 @@
 
     <color name="PriceTextColor">#a3000000</color>
 
+    <color name="checkedRequirement">#00B200</color>
+
 
     <color name="tabBackgroundColor">#444</color>
     <color name="tabsScrollColor">#536DFE</color>

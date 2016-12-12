@@ -133,6 +133,7 @@ public class AbandonEventActivity extends AppCompatActivity {
 
     }
 
+
     private class AbandonEventTask extends AsyncTask<Void, Void, Boolean> {
 
         @Override

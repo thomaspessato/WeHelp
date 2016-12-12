@@ -238,8 +238,6 @@ public class FragmentMap extends Fragment {
                                 double latitude = listEvents.get(i).getLat();
                                 LatLng test = new LatLng(latitude, longitude);
 
-
-
                                 Marker newMarker = googleMap.addMarker(new MarkerOptions()
                                         .icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_music))
                                         .position(test)
@@ -247,6 +245,7 @@ public class FragmentMap extends Fragment {
                                         .snippet(listEvents.get(i).getCategoria().getDescricao()));
 
                                 String categoria = listEvents.get(i).getCategoria().getDescricao();
+
                                 switch(categoria) {
                                     case "comida":
                                         newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_food));

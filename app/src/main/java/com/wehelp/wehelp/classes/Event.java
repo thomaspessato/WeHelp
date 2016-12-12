@@ -32,6 +32,8 @@ public class Event implements Serializable {
     private String cep;
     private String nome;
     private int numero_participantes;
+    private boolean isParticipating;
+    private boolean isComplete;
 
 
     public int getId() {
@@ -202,7 +204,13 @@ public class Event implements Serializable {
         this.usuario = usuario;
     }
 
+    public boolean isParticipating() {
+        return isParticipating;
+    }
 
+    public void setParticipating(boolean participating) {
+        isParticipating = participating;
+    }
 
     public Category getCategoria() {
         return categoria;
@@ -221,6 +229,13 @@ public class Event implements Serializable {
         this.requisitos = requisitos;
     }
 
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public void setComplete(boolean complete) {
+        isComplete = complete;
+    }
 
     public String getCep() {
         return cep;

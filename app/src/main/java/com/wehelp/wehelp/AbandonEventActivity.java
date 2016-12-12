@@ -6,7 +6,9 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -56,7 +58,8 @@ public class AbandonEventActivity extends AppCompatActivity {
         final ListView lvRequirementsCheckbox = (ListView)findViewById(R.id.listview_requirements_checkbox);
         final ArrayList<EventRequirement> requirementList = new ArrayList<>();
         final ArrayList<EventRequirement> checkedRequirementList = new ArrayList<>();
-        RequirementCheckboxAdapter checkboxAdapter = new RequirementCheckboxAdapter(this,R.layout.row_checkbox_requirement,requirementList);
+        event.setParticipating(true);
+        RequirementCheckboxAdapter checkboxAdapter = new RequirementCheckboxAdapter(this,R.layout.row_checkbox_requirement,requirementList, "AbandonEvent", event);
 
 
         String address = event.getCidade()+" / "+event.getRua()+" - "+event.getNumero()+", "+event.getComplemento();
@@ -84,13 +87,11 @@ public class AbandonEventActivity extends AppCompatActivity {
         }
 
         lvRequirementsCheckbox.setAdapter(checkboxAdapter);
-
-        for(int i = 0; i< event.getRequisitos().size(); i++) {
-            EventRequirement requirement = event.getRequisitos().get(i);
-            requirementList.add(requirement);
-        }
+        requirementList.addAll(event.getRequisitos());
 
         checkboxAdapter.notifyDataSetChanged();
+
+        setListViewHeightBasedOnChildren(lvRequirementsCheckbox);
 
         assert helpRegisterButton != null;
         helpRegisterButton.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +107,29 @@ public class AbandonEventActivity extends AppCompatActivity {
                 new AbandonEventTask().execute();
             }
         });
+
+    }
+
+
+    private void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+
+            return;
+        }
+
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight
+                + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
 
     }
 

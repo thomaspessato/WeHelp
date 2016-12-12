@@ -11,6 +11,7 @@ import com.wehelp.wehelp.MyEventsActivity;
 import com.wehelp.wehelp.ParticipateEventActivity;
 import com.wehelp.wehelp.TabbedActivity;
 import com.wehelp.wehelp.adapters.ParticipatingEventAdapter;
+import com.wehelp.wehelp.adapters.RequirementCheckboxAdapter;
 import com.wehelp.wehelp.adapters.TimelineEventAdapter;
 import com.wehelp.wehelp.controllers.UserController;
 import com.wehelp.wehelp.tabs.FragmentMap;
@@ -41,4 +42,5 @@ public interface NetComponent {
     void inject(AbandonEventActivity activity);
     void inject(ParticipatingEventAdapter adapter);
     void inject(TimelineEventAdapter adapter);
+    void inject(RequirementCheckboxAdapter adapter);
 }

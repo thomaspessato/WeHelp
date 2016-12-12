@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.wehelp.wehelp.adapters.RequirementCheckboxAdapter;
 import com.wehelp.wehelp.classes.Event;
 import com.wehelp.wehelp.classes.EventRequirement;
@@ -51,7 +52,12 @@ public class HelpEventActivity extends AppCompatActivity {
 
         setTitle("Quero ajudar");
         event = (Event)getIntent().getSerializableExtra("event");
-        System.out.println("REQUISITOS: "+event.getRequisitos().size());
+
+        Gson gson = new Gson();
+        String eventToString = gson.toJson(event);
+
+        System.out.println("Detalhe do evento: "+eventToString);
+
         TextView eventName = (TextView) findViewById(R.id.help_event_name);
         TextView eventDescription = (TextView) findViewById(R.id.help_event_description);
         TextView eventDate = (TextView) findViewById(R.id.event_help_date);
@@ -66,7 +72,6 @@ public class HelpEventActivity extends AppCompatActivity {
         final ArrayList<EventRequirement> requirementList = new ArrayList<>();
         checkedRequirementList = new ArrayList<>();
         RequirementCheckboxAdapter checkboxAdapter = new RequirementCheckboxAdapter(this,R.layout.row_checkbox_requirement,requirementList, "HelpEvent", event);
-
 
         String address = event.getCidade()+" / "+event.getRua()+" - "+event.getNumero()+", "+event.getComplemento();
         String date = new SimpleDateFormat("dd/mm/yyyy / hh:mm").format(event.getDataInicio());
@@ -93,7 +98,6 @@ public class HelpEventActivity extends AppCompatActivity {
             eventParticipants.setText("Não há nenhuma pessoa participando no momento. Seja a primeira!");
         }
 
-
         requirementList.addAll(event.getRequisitos());
         lvRequirementsCheckbox.setAdapter(checkboxAdapter);
         checkboxAdapter.notifyDataSetChanged();
@@ -112,9 +116,6 @@ public class HelpEventActivity extends AppCompatActivity {
                 }
             }
         }
-
-
-
 
         setListViewHeightBasedOnChildren(lvRequirementsCheckbox);
 

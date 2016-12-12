@@ -37,6 +37,7 @@ public class HelpEventActivity extends AppCompatActivity {
 
     public Event event;
     RelativeLayout loadingPanel;
+    boolean userIsParticipating;
 
 
     public ArrayList<EventRequirement> checkedRequirementList;
@@ -64,11 +65,12 @@ public class HelpEventActivity extends AppCompatActivity {
         final ListView lvRequirementsCheckbox = (ListView)findViewById(R.id.listview_requirements_checkbox);
         final ArrayList<EventRequirement> requirementList = new ArrayList<>();
         checkedRequirementList = new ArrayList<>();
-        RequirementCheckboxAdapter checkboxAdapter = new RequirementCheckboxAdapter(this,R.layout.row_checkbox_requirement,requirementList);
+        RequirementCheckboxAdapter checkboxAdapter = new RequirementCheckboxAdapter(this,R.layout.row_checkbox_requirement,requirementList, "HelpEvent", event);
 
 
         String address = event.getCidade()+" / "+event.getRua()+" - "+event.getNumero()+", "+event.getComplemento();
         String date = new SimpleDateFormat("dd/mm/yyyy / hh:mm").format(event.getDataInicio());
+        userIsParticipating = false;
 
         assert eventName != null;
         assert eventDescription != null;
@@ -91,9 +93,28 @@ public class HelpEventActivity extends AppCompatActivity {
             eventParticipants.setText("Não há nenhuma pessoa participando no momento. Seja a primeira!");
         }
 
+
         requirementList.addAll(event.getRequisitos());
         lvRequirementsCheckbox.setAdapter(checkboxAdapter);
         checkboxAdapter.notifyDataSetChanged();
+
+        int userId = ((WeHelpApp)application).getUser().getId();
+        int userRequirementId;
+        for(int i = 0; i < requirementList.size(); i++) {
+            for(int j = 0; j < requirementList.get(i).getUsuariosRequisito().size(); j++) {
+                userRequirementId = requirementList.get(i).getUsuariosRequisito().get(j).getId();
+                if(userId == userRequirementId) {
+                    userIsParticipating = true;
+                    event.setParticipating(true);
+                    helpRegisterButton.setText("Você já está participando!");
+                    helpRegisterButton.setBackgroundColor(getResources().getColor(R.color.DividerColor));
+                    helpRegisterButton.setTextColor(getResources().getColor(R.color.PriceTextColor));
+                }
+            }
+        }
+
+
+
 
         setListViewHeightBasedOnChildren(lvRequirementsCheckbox);
 
@@ -101,16 +122,19 @@ public class HelpEventActivity extends AppCompatActivity {
         helpRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkedRequirementList = new ArrayList<EventRequirement>();
-                for(int i = 0; i < requirementList.size(); i++) {
-                    if(requirementList.get(i).isSelected()) {
-                        checkedRequirementList.add(requirementList.get(i));
-                        System.out.println("CHECKED ITEM: "+requirementList.get(i).getDescricao().toString());
+                if(!event.isParticipating()) {
+                    checkedRequirementList = new ArrayList<EventRequirement>();
+                    for(int i = 0; i < requirementList.size(); i++) {
+                        if(requirementList.get(i).isSelected()) {
+                            checkedRequirementList.add(requirementList.get(i));
+                            System.out.println("CHECKED ITEM: "+requirementList.get(i).getDescricao().toString());
+                        }
                     }
+                    new ParticipateEventsTask().execute();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Você já está participando do evento", Toast.LENGTH_LONG).show();
                 }
 
-
-                new ParticipateEventsTask().execute();
             }
         });
 
@@ -172,6 +196,7 @@ public class HelpEventActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), eventController.errorMessages.toString(), Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(getApplicationContext(), "Você está participando do evento!", Toast.LENGTH_LONG).show();
+                finish();
             }
             loadingPanel.setVisibility(View.GONE);
         }

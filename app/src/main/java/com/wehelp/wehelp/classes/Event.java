@@ -32,6 +32,7 @@ public class Event implements Serializable {
     private String cep;
     private String nome;
     private int numero_participantes;
+    private boolean isParticipating;
 
 
     public int getId() {
@@ -202,7 +203,13 @@ public class Event implements Serializable {
         this.usuario = usuario;
     }
 
+    public boolean isParticipating() {
+        return isParticipating;
+    }
 
+    public void setParticipating(boolean participating) {
+        isParticipating = participating;
+    }
 
     public Category getCategoria() {
         return categoria;

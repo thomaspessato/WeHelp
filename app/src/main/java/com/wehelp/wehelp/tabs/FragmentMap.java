@@ -50,6 +50,7 @@ import com.wehelp.wehelp.classes.Category;
 import com.wehelp.wehelp.classes.Event;
 import com.wehelp.wehelp.classes.EventRequirement;
 import com.wehelp.wehelp.classes.User;
+import com.wehelp.wehelp.classes.UserRequirement;
 import com.wehelp.wehelp.classes.WeHelpApp;
 import com.wehelp.wehelp.controllers.EventController;
 
@@ -234,35 +235,100 @@ public class FragmentMap extends Fragment {
                         if (listEvents != null && listEvents.size() > 0) {
 
                             for (int i = 0; i < listEvents.size(); i++) {
-                                double longitude = listEvents.get(i).getLng();
-                                double latitude = listEvents.get(i).getLat();
+
+                                Event event = listEvents.get(i);
+                                double longitude = event.getLng();
+                                double latitude = event.getLat();
                                 LatLng test = new LatLng(latitude, longitude);
 
                                 Marker newMarker = googleMap.addMarker(new MarkerOptions()
                                         .icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_music))
                                         .position(test)
-                                        .title(listEvents.get(i).getNome())
-                                        .snippet(listEvents.get(i).getCategoria().getDescricao()));
+                                        .title(event.getNome())
+                                        .snippet(event.getCategoria().getDescricao()));
 
-                                String categoria = listEvents.get(i).getCategoria().getDescricao();
+                                String categoria = event.getCategoria().getDescricao();
+                                int userId = ((WeHelpApp)getContext().getApplicationContext()).getUser().getId();
+                                int userRequirementId;
+                                int quantRequisitosComp = 0;
+
+                                for(int j = 0; j< event.getRequisitos().size(); j++) {
+                                    double quantidadeRequisito = event.getRequisitos().size();
+                                    quantRequisitosComp = 0;
+                                    for(int z = 0; z < event.getRequisitos().get(j).getUsuariosRequisito().size(); z++){
+
+                                        UserRequirement userRequirement = event.getRequisitos().get(j).getUsuariosRequisito().get(z);
+                                        userRequirementId = userRequirement.getId();
+                                        quantidadeRequisito -= userRequirement.getQuant();
+
+                                        if(quantidadeRequisito <= 0) {
+                                            quantRequisitosComp++;
+                                        }
+                                        if(userRequirementId == userId) {
+                                            event.setParticipating(true);
+                                        }
+                                    }
+                                }
 
                                 switch(categoria) {
                                     case "comida":
-                                        newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_food));
+                                        if(event.isParticipating()) {
+                                            newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_user_food));
+                                            if(quantRequisitosComp == event.getRequisitos().size()) {
+                                                newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_food_user_complete));
+                                            }
+                                        } else {
+                                            newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_food));
+                                            if(quantRequisitosComp == event.getRequisitos().size()) {
+                                                newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_food_complete));
+                                            }
+                                        }
                                         break;
                                     case "músicas":
-                                        newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_music));
+                                        if(event.isParticipating()) {
+                                            newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_user_music));
+                                            if(quantRequisitosComp == event.getRequisitos().size()) {
+                                                newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_music_user_complete));
+                                            }
+                                        } else {
+                                            newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_music));
+                                            if(quantRequisitosComp == event.getRequisitos().size()) {
+                                                newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_music_complete));
+                                            }
+                                        }
                                         break;
                                     case "educação":
-                                        newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_school));
+                                        if(event.isParticipating()) {
+                                            newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_user_school));
+                                            if(quantRequisitosComp == event.getRequisitos().size()) {
+                                                newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_school_user_complete));
+                                            }
+                                        } else {
+                                            newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_school));
+                                            if(quantRequisitosComp == event.getRequisitos().size()) {
+                                                newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_school_complete));
+                                            }
+                                        }
+
                                         break;
                                     case "saúde":
-                                        newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_health));
+                                        if(event.isParticipating()) {
+                                            newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_user_health));
+                                            if(quantRequisitosComp == event.getRequisitos().size()) {
+                                                newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_health_user_complete));
+                                            }
+                                        } else {
+                                            newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_health));
+                                            if(quantRequisitosComp == event.getRequisitos().size()) {
+                                                newMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_health_complete));
+                                            }
+                                        }
+
                                         break;
                                     default:
                                         break;
                                 }
-                                newMarker.setTag(listEvents.get(i));
+                                newMarker.setTag(event);
                             }
                         }
 
@@ -284,7 +350,6 @@ public class FragmentMap extends Fragment {
                         e.printStackTrace();
                     }
 
-//
 
                     // ISSO FUNCIONA
                     CameraPosition cameraPosition = new CameraPosition.Builder().target(marker).zoom(12).build();

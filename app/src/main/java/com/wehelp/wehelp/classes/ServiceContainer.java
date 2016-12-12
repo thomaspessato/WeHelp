@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -109,6 +110,7 @@ public class ServiceContainer {
             }
 
         };
+        postRequest.setRetryPolicy(new DefaultRetryPolicy( 50000, 2, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         this.addToRequestQueue(postRequest);
     }
 
@@ -147,6 +149,7 @@ public class ServiceContainer {
             }
 
         };
+        postRequest.setRetryPolicy(new DefaultRetryPolicy( 50000, 2, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         this.addToRequestQueue(postRequest);
     }
 
@@ -185,6 +188,7 @@ public class ServiceContainer {
             }
 
         };
+        getRequest.setRetryPolicy(new DefaultRetryPolicy( 50000, 2, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         this.addToRequestQueue(getRequest);
     }
 
@@ -219,6 +223,7 @@ public class ServiceContainer {
             }
 
         };
+        getRequest.setRetryPolicy(new DefaultRetryPolicy( 50000, 2, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         this.addToRequestQueue(getRequest);
     }
 

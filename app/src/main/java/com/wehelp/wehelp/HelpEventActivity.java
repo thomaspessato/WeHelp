@@ -72,19 +72,20 @@ public class HelpEventActivity extends AppCompatActivity {
         TextView eventAddress = (TextView) findViewById(R.id.event_help_address);
         TextView eventParticipants = (TextView) findViewById(R.id.event_help_participants);
         TextView txtParticipating = (TextView) findViewById(R.id.txt_participating);
-        loadingPanel = (RelativeLayout) findViewById(R.id.loadingPanel);
-        assert loadingPanel != null;
-        loadingPanel.setVisibility(View.GONE);
-
         Button helpRegisterButton = (Button)findViewById(R.id.btn_register_help);
         Button abandonButton = (Button)findViewById(R.id.btn_register_abandon);
-        final ListView lvRequirementsCheckbox = (ListView)findViewById(R.id.listview_requirements_checkbox);
-        final ArrayList<EventRequirement> requirementList = new ArrayList<>();
-        checkedRequirementList = new ArrayList<>();
-        RequirementCheckboxAdapter checkboxAdapter = new RequirementCheckboxAdapter(this,R.layout.row_checkbox_requirement,requirementList, "HelpEvent", event);
 
         String address = event.getCidade()+" / "+event.getRua()+" - "+event.getNumero()+", "+event.getComplemento();
         String date = new SimpleDateFormat("dd/MM/yyyy / HH:mm").format(event.getDataInicio());
+
+        loadingPanel = (RelativeLayout) findViewById(R.id.loadingPanel);
+        checkedRequirementList = new ArrayList<>();
+
+        final ListView lvRequirementsCheckbox = (ListView)findViewById(R.id.listview_requirements_checkbox);
+        final ArrayList<EventRequirement> requirementList = new ArrayList<>();
+
+        RequirementCheckboxAdapter checkboxAdapter = new RequirementCheckboxAdapter(this,R.layout.row_checkbox_requirement,requirementList, "HelpEvent", event);
+
         userIsParticipating = false;
 
         assert eventName != null;
@@ -92,15 +93,19 @@ public class HelpEventActivity extends AppCompatActivity {
         assert eventAddress != null;
         assert eventDate != null;
         assert eventParticipants != null;
+        assert helpRegisterButton != null;
         assert lvRequirementsCheckbox != null;
         assert abandonButton != null;
         assert txtParticipating != null;
+        assert loadingPanel != null;
+
         eventName.setText(event.getNome());
         eventDescription.setText(event.getDescricao());
         eventAddress.setText(address);
         eventDate.setText(date);
         abandonButton.setVisibility(View.GONE);
         txtParticipating.setVisibility(View.GONE);
+        loadingPanel.setVisibility(View.GONE);
 
         if(event.getNumeroParticipantes() > 0) {
             eventParticipants.setText(event.getNumeroParticipantes()+" pessoas irão participar deste evento.");
@@ -150,7 +155,6 @@ public class HelpEventActivity extends AppCompatActivity {
                 for(int i = 0; i < requirementList.size(); i++) {
                     if(requirementList.get(i).isSelected()) {
                         checkedRequirementList.add(requirementList.get(i));
-                        System.out.println("CHECKED ITEM: "+requirementList.get(i).getDescricao().toString());
                     }
                 }
                 new ParticipateEventsTask().execute();
@@ -207,6 +211,11 @@ public class HelpEventActivity extends AppCompatActivity {
         protected Boolean doInBackground(Void... params) {
 
             try {
+                Gson gson = new Gson();
+                String json = gson.toJson(checkedRequirementList);
+                System.out.println("checked requirement list:");
+                for(int i = 0; i< checkedRequirementList.size(); i++)
+                    System.out.println("checked"+ checkedRequirementList.get(i));
                 eventController.addUser(event,((WeHelpApp)application).getUser(), checkedRequirementList);
                 while (!eventController.addUserOk && !eventController.errorService){}
                 if (eventController.errorService) {

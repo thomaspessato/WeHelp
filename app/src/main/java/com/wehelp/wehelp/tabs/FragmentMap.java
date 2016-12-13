@@ -260,7 +260,6 @@ public class FragmentMap extends Fragment {
 
                                 for(int j = 0; j< event.getRequisitos().size(); j++) {
                                     double quantidadeRequisito = event.getRequisitos().get(j).getQuant();
-                                    quantRequisitosComp = 0;
                                     for(int z = 0; z < event.getRequisitos().get(j).getUsuariosRequisito().size(); z++){
 
                                         UserRequirement userRequirement = event.getRequisitos().get(j).getUsuariosRequisito().get(z);

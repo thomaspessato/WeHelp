@@ -95,14 +95,13 @@ public class RequirementCheckboxAdapter extends ArrayAdapter<EventRequirement> {
             if(requirementList.get((position)) != null) {
                 requirement = requirementList.get(position);
                 holder.code.setText("");
-
                 quantidadeFaltante = requirement.getQuant();
                 ArrayList<UserRequirement> userRequirements = requirementList.get(position).getUsuariosRequisito();
 
                 if(userRequirements.size() > 0) {
-
                     int userId = ((WeHelpApp)getContext().getApplicationContext()).getUser().getId();
                     double userHelpingQtd = 0;
+                    double userRequirementQnt;
 
                     for(int i = 0; i<userRequirements.size(); i++) {
                         UserRequirement userRequirement = userRequirements.get(i);
@@ -112,16 +111,13 @@ public class RequirementCheckboxAdapter extends ArrayAdapter<EventRequirement> {
                             userIsHelping = true;
                             userHelpingQtd = userRequirement.getQuant();
                         }
-                        double userRequirementQnt = userRequirements.get(i).getQuant();
+                        userRequirementQnt = userRequirements.get(i).getQuant();
                         quantidadeFaltante -= userRequirementQnt;
                     }
 
                     if(userIsHelping) {
-                        userIsHelping = true;
                         holder.helpQtd.setText("Você irá ajudar com "+ userHelpingQtd+" "+ requirement.getUn());
                         requirement.setSelected(true);
-                    } else {
-                        userIsHelping = false;
                     }
 
                     if(quantidadeFaltante <= 0) {
@@ -137,20 +133,19 @@ public class RequirementCheckboxAdapter extends ArrayAdapter<EventRequirement> {
                     holder.name.setChecked(requirement.isSelected());
                 }
 
-
+                requirement.setQuantidadeFaltante(quantidadeFaltante);
                 holder.name.setTag(requirement);
             }
 
 
 
             final ViewHolder finalHolder = holder;
-            final ViewHolder finalHolder1 = holder;
+
             final EventRequirement finalRequirement = requirement;
 
 
             assert finalRequirement != null;
 
-            final double finalQuantidade = quantidadeFaltante;
             convertView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
 
@@ -160,10 +155,9 @@ public class RequirementCheckboxAdapter extends ArrayAdapter<EventRequirement> {
                     }
 
                     final TextView tvDialogRequirement = (TextView)dialogLayout.findViewById(R.id.dialog_requirement);
-                    String quantidade = Double.toString(quantidadeFaltante);
                     String unidade = finalRequirement.getUn();
                     String descricao = finalRequirement.getDescricao();
-                    tvDialogRequirement.setText(quantidade +" "+unidade+" "+descricao);
+                    tvDialogRequirement.setText(finalRequirement.getQuant()+" "+finalRequirement.getUn()+" "+finalRequirement.getDescricao()+" (faltam "+finalRequirement.getQuantidadeFaltante()+")");
 
                     builder.setView(dialogLayout)
                             .setPositiveButton("CONFIRMAR", new DialogInterface.OnClickListener() {
@@ -176,7 +170,7 @@ public class RequirementCheckboxAdapter extends ArrayAdapter<EventRequirement> {
                                     if(finalRequirement.getUn() == null) {
                                         finalRequirement.setUn("unidade");
                                     }
-                                    finalHolder1.helpQtd.setText("Você irá ajudar com "+ helpQtd.getText()+" "+ finalRequirement.getUn());
+                                    finalHolder.helpQtd.setText("Você irá ajudar com "+ helpQtd.getText()+" "+ finalRequirement.getUn());
                                     finalHolder.name.setChecked(true);
                                     finalRequirement.setSelected(true);
                                     finalRequirement.setSelectedQuant(Double.parseDouble(helpQtd.getText().toString()));
@@ -186,7 +180,7 @@ public class RequirementCheckboxAdapter extends ArrayAdapter<EventRequirement> {
                         public void onClick(DialogInterface dialogInterface, int i) {
                             EditText helpQtd = (EditText)dialogLayout.findViewById(R.id.requirement_help_qtd);
                             helpQtd.setText("");
-                            finalHolder1.helpQtd.setText("");
+                            finalHolder.helpQtd.setText("");
                             finalRequirement.setSelected(false);
                             finalHolder.name.setChecked(false);
 

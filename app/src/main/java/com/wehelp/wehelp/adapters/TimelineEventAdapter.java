@@ -189,7 +189,7 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
         if(timelineEvent.getParticipantes().size() == 1) {
             eventParticipants.setText(timelineEvent.getParticipantes().size()+" pessoa irá participar deste evento.");
         }
-        if(timelineEvent.getParticipantes().size()== 0){
+        if(timelineEvent.getParticipantes().size() == 0){
             eventParticipants.setText("Não há nenhuma pessoa participando no momento. Seja a primeira!");
         }
 

@@ -78,7 +78,7 @@ public class HelpEventActivity extends AppCompatActivity {
         TextView txtEmailResponsable = (TextView)findViewById(R.id.txt_email_responsable);
         Button helpRegisterButton = (Button)findViewById(R.id.btn_register_help);
         Button abandonButton = (Button)findViewById(R.id.btn_register_abandon);
-        
+
         String creatorEmail = event.getUsuario().getEmail();
         txtEmailResponsable.setText(Html.fromHtml("<a href=\"mailto:"+creatorEmail+"\">"+creatorEmail+"</a>"));
         txtEmailResponsable.setMovementMethod(LinkMovementMethod.getInstance());

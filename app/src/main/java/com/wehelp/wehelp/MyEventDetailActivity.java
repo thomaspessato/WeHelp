@@ -118,7 +118,7 @@ public class MyEventDetailActivity extends AppCompatActivity {
             eventParticipants.setText(event.getParticipantes().size()+" pessoa irá participar deste evento.");
         }
         if(event.getParticipantes().size() == 0){
-            eventParticipants.setText("Não há nenhuma pessoa participando no momento. Seja a primeira!");
+            eventParticipants.setText("Ninguém está participando do seu evento ainda. Divulgue!");
         }
 
         requirementList.addAll(event.getRequisitos());

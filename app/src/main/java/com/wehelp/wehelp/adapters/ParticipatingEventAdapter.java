@@ -182,11 +182,11 @@ public class ParticipatingEventAdapter extends ArrayAdapter<Event>{
 
 //        System.out.println("EMAIL DO CRIADOR: "+timelineEvent.getUsuario().getPessoa().getNome());
 
-        if(timelineEvent.getParticipantes().size() > 0) {
-            eventParticipants.setText("Você e mais "+timelineEvent.getParticipantes().size()+" pessoas irão participar deste evento.");
+        if(timelineEvent.getParticipantes().size() == 1) {
+            eventParticipants.setText("1 pessoa está participando deste evento");
         }
-        if(timelineEvent.getParticipantes().size() == 0) {
-            eventParticipants.setText("Apenas você está participando deste projeto. Divulgue!");
+        if(timelineEvent.getParticipantes().size() > 0) {
+            eventParticipants.setText(timelineEvent.getParticipantes().size()+" pessoas irão participar deste evento.");
         }
 
         return convertView;

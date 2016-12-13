@@ -199,7 +199,7 @@ public class MyEventAdapter extends ArrayAdapter<Event> {
             eventParticipants.setText(timelineEvent.getParticipantes().size()+" pessoa irá participar deste evento.");
         }
         if(timelineEvent.getParticipantes().size() == 0){
-            eventParticipants.setText("");
+            eventParticipants.setText("Ninguém está participando do seu evento ainda. Divulgue!");
         }
         return convertView;
     }

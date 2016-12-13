@@ -91,14 +91,14 @@ public class AbandonEventActivity extends AppCompatActivity {
         txtEmailResponsable.setMovementMethod(LinkMovementMethod.getInstance());
 
 
-        if(event.getNumeroParticipantes() > 0) {
-            eventParticipants.setText(event.getNumeroParticipantes()+" pessoas irão participar deste evento.");
+        if(event.getParticipantes().size() > 0) {
+            eventParticipants.setText(event.getParticipantes().size()+" pessoas irão participar deste evento.");
         }
-        if(event.getNumeroParticipantes() == 1) {
-            eventParticipants.setText(event.getNumeroParticipantes()+" pessoa irá participar deste evento.");
+        if(event.getParticipantes().size() == 1) {
+            eventParticipants.setText(event.getParticipantes().size()+" pessoa irá participar deste evento.");
         }
-        if(event.getNumeroParticipantes() == 0){
-            eventParticipants.setText("Não há nenhuma pessoa participando no momento. Seja a primeira!");
+        if(event.getParticipantes().size() == 0){
+            eventParticipants.setText("Não há nenhuma pessoa participando no momento.");
         }
 
         lvRequirementsCheckbox.setAdapter(checkboxAdapter);

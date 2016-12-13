@@ -131,14 +131,6 @@
         android:layout_marginTop="15dp" />
 
 
-    <TextView
-        android:text="Como funciona a comunicação?"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView8"
-        android:textSize="18sp"
-        android:textColor="@color/colorPrimary" />
-
             <TextView
                 android:text="Como funciona a comunicação?"
                 android:layout_width="match_parent"

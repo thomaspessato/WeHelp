@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -109,6 +110,7 @@ public class ServiceContainer {
             }
 
         };
+        postRequest.setRetryPolicy(new DefaultRetryPolicy( 50000, 2, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         this.addToRequestQueue(postRequest);
     }
 
@@ -147,6 +149,7 @@ public class ServiceContainer {
             }
 
         };
+        postRequest.setRetryPolicy(new DefaultRetryPolicy( 50000, 2, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         this.addToRequestQueue(postRequest);
     }
 
@@ -185,6 +188,7 @@ public class ServiceContainer {
             }
 
         };
+        getRequest.setRetryPolicy(new DefaultRetryPolicy( 50000, 2, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         this.addToRequestQueue(getRequest);
     }
 
@@ -219,6 +223,46 @@ public class ServiceContainer {
             }
 
         };
+        getRequest.setRetryPolicy(new DefaultRetryPolicy( 50000, 2, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        this.addToRequestQueue(getRequest);
+    }
+
+    public void DeleteRequest(String url, final IServiceResponseCallback responseCallback, final IServiceErrorCallback errorCallback) {
+        String resource = this.baseUrl + url;
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.DELETE, resource, null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("WeHelpWS", response.toString());
+                        responseCallback.execute(response);
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("WeHelpWs.Error", error.toString());
+                        errorCallback.execute(error);
+                    }
+                }
+        ) {
+
+            @Override
+            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                int mStatusCode = response.statusCode;
+                return super.parseNetworkResponse(response);
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + GetAccessToken());
+                return params;
+            }
+
+        };
+        getRequest.setRetryPolicy(new DefaultRetryPolicy( 50000, 2, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         this.addToRequestQueue(getRequest);
     }
 

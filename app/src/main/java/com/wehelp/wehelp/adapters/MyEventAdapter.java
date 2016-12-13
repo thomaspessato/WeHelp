@@ -188,4 +188,6 @@ public class MyEventAdapter extends ArrayAdapter<Event> {
         }
         return convertView;
     }
+
+
 }

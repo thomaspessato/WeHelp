@@ -75,9 +75,10 @@ public class FragmentTimeline extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
+
             TabbedActivity tab = (TabbedActivity)getActivity();
             eventList = tab.listEvents != null ? tab.listEvents : new ArrayList<Event>();
-
+            System.out.println("FRAGMENT TIMELINE / SIZE OF EVENTS: "+eventList.size());
             if(eventList.size() == 0) {
                 noEventsPanel.setVisibility(View.VISIBLE);
             } else {
@@ -126,19 +127,6 @@ public class FragmentTimeline extends Fragment {
             public void onRefresh() {
 //                eventArrayAdapter.clear();
                 System.out.println("No events!");
-                /*
-                eventController.getEvents(-30.0381669,-51.214949,50);
-                while (eventController.getListEvents() == null && !eventController.errorService){}
-                if (eventController.errorService) {
-                    System.out.println("No events!");
-                }
-                ArrayList<Event> listEvents = eventController.getListEvents();
-                eventController.setListEvents(null);
-                System.out.println("EVENTS! "+listEvents);
-                swipeRefreshLayout.setRefreshing(false);
-
-                eventArrayAdapter.notifyDataSetChanged();
-                */
                 new ListEventsTask().execute();
             }
         });

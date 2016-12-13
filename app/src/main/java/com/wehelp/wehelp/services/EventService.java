@@ -78,7 +78,7 @@ public class EventService {
         json.put("lat", event.getLat());
         json.put("lng", event.getLng());
         json.put("certificado", event.isCertificado() ? "1" : "0");
-        json.put("data_inicio",  new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(event.getDataInicio()));
+        json.put("data_inicio",  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(event.getDataInicio()));
 
         if (event.getRequisitos().size() > 0) {
             JSONArray jsonArray = new JSONArray();

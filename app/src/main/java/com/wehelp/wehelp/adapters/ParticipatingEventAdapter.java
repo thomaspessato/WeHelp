@@ -65,6 +65,7 @@ public class ParticipatingEventAdapter extends ArrayAdapter<Event>{
         TextView eventTitle = (TextView)convertView.findViewById(R.id.event_timeline_title);
         TextView eventDescription = (TextView)convertView.findViewById(R.id.event_timeline_description);
         TextView eventParticipants = (TextView)convertView.findViewById(R.id.event_timeline_participating);
+        TextView tvHelpWith = (TextView)convertView.findViewById(R.id.tv_helpwith);
         Button btnAbandon = (Button)convertView.findViewById(R.id.btn_abandon);
         LinearLayout requirementsLayout = (LinearLayout)convertView.findViewById(R.id.event_requirements_layout);
         LinearLayout userRequirementsLayout = (LinearLayout)convertView.findViewById(R.id.event_user_requirements_layout);
@@ -80,64 +81,76 @@ public class ParticipatingEventAdapter extends ArrayAdapter<Event>{
         ArrayList requisitos = timelineEvent.getRequisitos();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
                 android.R.layout.simple_list_item_1, android.R.id.text1);
-
+        tvHelpWith.setVisibility(View.GONE);
         requirementsLayout.removeAllViews();
         userRequirementsLayout.removeAllViews();
 
-        for(int i = 0; i< requisitos.size() ; i++) {
-            Object objRequisito = requisitos.get(i);
-            EventRequirement requisito = (EventRequirement) objRequisito;
+        TextView tvNeed = (TextView)convertView.findViewById(R.id.txt_need);
+        tvNeed.setVisibility(View.GONE);
+        if(requisitos.size() > 0) {
+            tvNeed.setVisibility(View.VISIBLE);
+            for(int i = 0; i< requisitos.size() ; i++) {
+                Object objRequisito = requisitos.get(i);
+                EventRequirement requisito = (EventRequirement) objRequisito;
 
-            double quantidadeRequisito = requisito.getQuant();
+                double quantidadeRequisito = requisito.getQuant();
 
-            for(int j = 0; j < requisito.getUsuariosRequisito().size(); j++) {
+                for(int j = 0; j < requisito.getUsuariosRequisito().size(); j++) {
 
-                UserRequirement userRequirement = requisito.getUsuariosRequisito().get(j);
-                int userId = ((WeHelpApp)getContext().getApplicationContext()).getUser().getId();
-                int userIdRequisito = userRequirement.getId();
-                if(userId == userIdRequisito){
-                    String requisitoUserString;
-                    if(userRequirement.getUn().equalsIgnoreCase("")) {
-                        requisitoUserString = userRequirement.getQuant()+" "+requisito.getDescricao();
-                    } else {
-                        requisitoUserString = userRequirement.getQuant()+" "+userRequirement.getUn()+" de "+requisito.getDescricao();
+                    UserRequirement userRequirement = requisito.getUsuariosRequisito().get(j);
+                    int userId = ((WeHelpApp)getContext().getApplicationContext()).getUser().getId();
+                    int userIdRequisito = userRequirement.getId();
+                    if(userId == userIdRequisito){
+                        tvHelpWith.setVisibility(View.VISIBLE);
+                        userRequirementsLayout.setVisibility(View.VISIBLE);
+                        String requisitoUserString;
+                        if(userRequirement.getUn().equalsIgnoreCase("")) {
+                            requisitoUserString = userRequirement.getQuant()+" "+requisito.getDescricao();
+                        } else {
+                            requisitoUserString = userRequirement.getQuant()+" "+userRequirement.getUn()+" de "+requisito.getDescricao();
+                        }
+
+                        TextView requirementUserTxt = new TextView(getContext());
+                        requirementUserTxt.setTextColor(context.getResources().getColor(R.color.colorAccent));
+                        requirementUserTxt.setTextSize(14);
+                        requirementUserTxt.setPadding(5, 0, 0 ,0);
+                        requirementUserTxt.setText(requisitoUserString);
+                        userRequirementsLayout.addView(requirementUserTxt);
                     }
+                    System.out.println("USER ID: "+((WeHelpApp)getContext().getApplicationContext()).getUser().getId());
 
-                    TextView requirementUserTxt = new TextView(getContext());
-                    requirementUserTxt.setTextColor(context.getResources().getColor(R.color.colorAccent));
-                    requirementUserTxt.setTextSize(14);
-                    requirementUserTxt.setPadding(5, 0, 0 ,0);
-                    requirementUserTxt.setText(requisitoUserString);
-                    userRequirementsLayout.addView(requirementUserTxt);
+                    quantidadeRequisito -= userRequirement.getQuant();
                 }
-                System.out.println("USER ID: "+((WeHelpApp)getContext().getApplicationContext()).getUser().getId());
 
-                quantidadeRequisito -= userRequirement.getQuant();
+                String requisitoString;
+
+                if(requisito.getUn().equalsIgnoreCase("")) {
+                    requisitoString = requisito.getQuant()+" "+requisito.getDescricao();
+                } else {
+                    requisitoString = requisito.getQuant()+" "+requisito.getUn()+" de "+requisito.getDescricao();
+                }
+
+                TextView requirementTxt = new TextView(getContext());
+
+                if(quantidadeRequisito <= 0) {
+                    requirementTxt.setText(requisitoString +" - Quantidade atingida!");
+                    requirementTxt.setTextColor(context.getResources().getColor(R.color.checkedRequirement));
+                } else {
+                    requirementTxt.setText(requisitoString +" (ainda faltam "+quantidadeRequisito+")");
+                    requirementTxt.setTextColor(context.getResources().getColor(R.color.colorAccent));
+                }
+
+                requirementTxt.setTextSize(14);
+                requirementTxt.setPadding(0, 0, 0 ,0);
+                requirementsLayout.addView(requirementTxt);
             }
 
-            String requisitoString;
 
-            if(requisito.getUn().equalsIgnoreCase("")) {
-                requisitoString = requisito.getQuant()+" "+requisito.getDescricao();
-            } else {
-                requisitoString = requisito.getQuant()+" "+requisito.getUn()+" de "+requisito.getDescricao();
-            }
-
-            TextView requirementTxt = new TextView(getContext());
-
-            if(quantidadeRequisito <= 0) {
-                requirementTxt.setText(requisitoString +" - Quantidade atingida!");
-                requirementTxt.setTextColor(context.getResources().getColor(R.color.checkedRequirement));
-            } else {
-                requirementTxt.setText(requisitoString +" (ainda faltam "+quantidadeRequisito+")");
-                requirementTxt.setTextColor(context.getResources().getColor(R.color.colorAccent));
-            }
-
-
-
-            requirementTxt.setTextSize(14);
-            requirementTxt.setPadding(0, 0, 0 ,0);
-            requirementsLayout.addView(requirementTxt);
+        } else {
+            tvNeed.setVisibility(View.GONE);
+            tvHelpWith.setVisibility(View.GONE);
+            userRequirementsLayout.setVisibility(View.GONE);
+            requirementsLayout.setVisibility(View.GONE);
         }
 
 

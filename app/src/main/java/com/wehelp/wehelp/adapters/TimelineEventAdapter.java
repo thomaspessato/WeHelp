@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +64,6 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
 
         TextView eventAddress = (TextView)convertView.findViewById(R.id.event_timeline_date);
         TextView eventHour = (TextView)convertView.findViewById(R.id.event_timeline_hour);
-        TextView eventCreator = (TextView)convertView.findViewById(R.id.event_timeline_creator);
         TextView eventCategory = (TextView)convertView.findViewById(R.id.event_timeline_category);
         TextView eventTitle = (TextView)convertView.findViewById(R.id.event_timeline_title);
         TextView eventDescription = (TextView)convertView.findViewById(R.id.event_timeline_description);
@@ -74,8 +75,10 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
         tvHelpWith.setVisibility(View.GONE);
         userRequirementsLayout.setVisibility(View.GONE);
 
-
-
+        TextView tvCreator = (TextView)convertView.findViewById(R.id.event_timeline_creator);
+        String creatorEmail = timelineEvent.getUsuario().getEmail();
+        tvCreator.setText(Html.fromHtml("<a href=\"mailto:"+creatorEmail+"\">"+creatorEmail+"</a>"));
+        tvCreator.setMovementMethod(LinkMovementMethod.getInstance());
 
         String address = "Endereço: "+timelineEvent.getCidade()+" / "+timelineEvent.getRua()+" - "+timelineEvent.getNumero()+", "+timelineEvent.getComplemento();
         String hour = "Data: "+new SimpleDateFormat("dd/MM/yyyy / HH:mm").format(timelineEvent.getDataInicio());
@@ -179,15 +182,14 @@ public class TimelineEventAdapter extends ArrayAdapter<Event>{
         eventCategory.setText(categoria);
         eventAddress.setText(address);
         eventHour.setText(hour);
-        eventCreator.setText("CRIADOR");
         eventDescription.setText(timelineEvent.getDescricao());
-        if(timelineEvent.getNumeroParticipantes() > 0) {
-            eventParticipants.setText(timelineEvent.getNumeroParticipantes()+" pessoas irão participar deste evento.");
+        if(timelineEvent.getParticipantes().size() > 0) {
+            eventParticipants.setText(timelineEvent.getParticipantes().size()+" pessoas irão participar deste evento.");
         }
-        if(timelineEvent.getNumeroParticipantes() == 1) {
-            eventParticipants.setText(timelineEvent.getNumeroParticipantes()+" pessoa irá participar deste evento.");
+        if(timelineEvent.getParticipantes().size() == 1) {
+            eventParticipants.setText(timelineEvent.getParticipantes().size()+" pessoa irá participar deste evento.");
         }
-        if(timelineEvent.getNumeroParticipantes() == 0){
+        if(timelineEvent.getParticipantes().size()== 0){
             eventParticipants.setText("Não há nenhuma pessoa participando no momento. Seja a primeira!");
         }
 

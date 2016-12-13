@@ -3,6 +3,8 @@ package com.wehelp.wehelp.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +74,10 @@ public class ParticipatingEventAdapter extends ArrayAdapter<Event>{
 
         String address = "Endereço: "+timelineEvent.getCidade()+" / "+timelineEvent.getRua()+" - "+timelineEvent.getNumero()+", "+timelineEvent.getComplemento();
         String hour = "Data: "+new SimpleDateFormat("dd/MM/yyyy / HH:mm").format(timelineEvent.getDataInicio());
-
+        TextView tvCreator = (TextView)convertView.findViewById(R.id.event_timeline_creator);
+        String creatorEmail = timelineEvent.getUsuario().getEmail();
+        tvCreator.setText(Html.fromHtml("<a href=\"mailto:"+creatorEmail+"\">"+creatorEmail+"</a>"));
+        tvCreator.setMovementMethod(LinkMovementMethod.getInstance());
         Category category = timelineEvent.getCategoria();
 
         String categoria = category.getDescricao();
@@ -173,13 +178,14 @@ public class ParticipatingEventAdapter extends ArrayAdapter<Event>{
         eventCategory.setText(categoria);
         eventAddress.setText(address);
         eventHour.setText(hour);
-        eventCreator.setText("CRIADOR");
         eventDescription.setText(timelineEvent.getDescricao());
 
-        if(timelineEvent.getNumeroParticipantes() > 0) {
-            eventParticipants.setText("Você e mais +"+(timelineEvent.getNumeroParticipantes()-1)+" pessoas irão participar deste evento.");
+//        System.out.println("EMAIL DO CRIADOR: "+timelineEvent.getUsuario().getPessoa().getNome());
+
+        if(timelineEvent.getParticipantes().size() > 0) {
+            eventParticipants.setText("Você e mais "+timelineEvent.getParticipantes().size()+" pessoas irão participar deste evento.");
         }
-        if(timelineEvent.getNumeroParticipantes() == 0) {
+        if(timelineEvent.getParticipantes().size() == 0) {
             eventParticipants.setText("Apenas você está participando deste projeto. Divulgue!");
         }
 

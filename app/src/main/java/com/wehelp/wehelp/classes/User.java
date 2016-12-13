@@ -16,6 +16,7 @@ public class User implements Serializable{
     private Person pessoa;
     private Ong ong;
     private String password;
+    private String nome;
 
 
     public int getId() {
@@ -84,6 +85,14 @@ public class User implements Serializable{
 
     public String getPassword() {
         return password;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public void setPassword(String password) {

@@ -3,6 +3,8 @@ package com.wehelp.wehelp.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.vision.text.Text;
 import com.wehelp.wehelp.AbandonEventActivity;
 import com.wehelp.wehelp.HelpEventActivity;
 import com.wehelp.wehelp.R;
@@ -60,8 +63,8 @@ public class MyEventAdapter extends ArrayAdapter<Event> {
         LinearLayout requirementsLayout = (LinearLayout)convertView.findViewById(R.id.event_requirement_layout);
         LinearLayout userRequirementsLayout = (LinearLayout)convertView.findViewById(R.id.event_user_requirements_layout);
         TextView tvHelpWith = (TextView)convertView.findViewById(R.id.tv_helpwith);
+        LinearLayout emailParticipantsLayout = (LinearLayout)convertView.findViewById(R.id.email_participants);
         tvHelpWith.setVisibility(View.GONE);
-
         String address = "Endereço: "+timelineEvent.getCidade()+" / "+timelineEvent.getRua()+" - "+timelineEvent.getNumero()+", "+timelineEvent.getComplemento();
         String hour = "Data: "+new SimpleDateFormat("dd/MM/yyyy / HH:mm").format(timelineEvent.getDataInicio());
 
@@ -76,6 +79,10 @@ public class MyEventAdapter extends ArrayAdapter<Event> {
 
         requirementsLayout.removeAllViews();
         userRequirementsLayout.removeAllViews();
+        emailParticipantsLayout.removeAllViews();
+
+
+
 
         TextView tvNeed = (TextView)convertView.findViewById(R.id.txt_need);
         tvNeed.setVisibility(View.GONE);
@@ -145,6 +152,14 @@ public class MyEventAdapter extends ArrayAdapter<Event> {
             requirementsLayout.setVisibility(View.GONE);
         }
 
+        for( int z = 0; z < timelineEvent.getParticipantes().size(); z++) {
+            TextView tvEmail = new TextView(getContext());
+            String email = timelineEvent.getParticipantes().get(z).getEmail();
+            tvEmail.setText(Html.fromHtml("<a href=\"mailto:"+email+"\">"+email+"</a>"));
+            tvEmail.setMovementMethod(LinkMovementMethod.getInstance());
+            emailParticipantsLayout.addView(tvEmail);
+        }
+
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,14 +177,14 @@ public class MyEventAdapter extends ArrayAdapter<Event> {
         eventAddress.setText(address);
         eventHour.setText(hour);
         eventDescription.setText(timelineEvent.getDescricao());
-        if(timelineEvent.getNumeroParticipantes() > 0) {
-            eventParticipants.setText(timelineEvent.getNumeroParticipantes()+" pessoas irão participar deste evento.");
+        if(timelineEvent.getParticipantes().size() > 0) {
+            eventParticipants.setText(timelineEvent.getParticipantes().size()+" pessoas irão participar deste evento.");
         }
-        if(timelineEvent.getNumeroParticipantes() == 1) {
-            eventParticipants.setText(timelineEvent.getNumeroParticipantes()+" pessoa irá participar deste evento.");
+        if(timelineEvent.getParticipantes().size() == 1) {
+            eventParticipants.setText(timelineEvent.getParticipantes().size()+" pessoa irá participar deste evento.");
         }
-        if(timelineEvent.getNumeroParticipantes() == 0){
-            eventParticipants.setText("Não há nenhuma pessoa participando no momento. Seja a primeira!");
+        if(timelineEvent.getParticipantes().size() == 0){
+            eventParticipants.setText("");
         }
         return convertView;
     }

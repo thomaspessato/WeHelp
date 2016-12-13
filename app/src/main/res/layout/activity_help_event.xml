@@ -142,17 +142,18 @@
             android:textColor="@color/colorPrimary" />
 
         <TextView
-            android:text="Assim que enviar a confirmação, um e-mail será enviado para o criador do evento, informando que você irá fazer parte do evento."
+            android:text="Para se comunicar com o responsável pelo evento, envie um e-mail para o endereço abaixo."
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView7" />
 
         <TextView
-            android:text="A partir daí, é necessário manter contato por outros meios."
+            android:text="email@email.com"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView9"
-            android:layout_marginBottom="10dp" />
+            android:id="@+id/txt_email_responsable"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="10dp" />
 
         <Button
             android:text="CONFIRMAR PARTICIPAÇÃO"

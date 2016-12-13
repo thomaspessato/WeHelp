@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -82,6 +84,12 @@ public class AbandonEventActivity extends AppCompatActivity {
         eventDate.setText(date);
         abandonButton.setVisibility(View.GONE);
         txtParticipating.setVisibility(View.GONE);
+
+        TextView txtEmailResponsable = (TextView)findViewById(R.id.txt_email_responsable);
+        String creatorEmail = event.getUsuario().getEmail();
+        txtEmailResponsable.setText(Html.fromHtml("<a href=\"mailto:"+creatorEmail+"\">"+creatorEmail+"</a>"));
+        txtEmailResponsable.setMovementMethod(LinkMovementMethod.getInstance());
+
 
         if(event.getNumeroParticipantes() > 0) {
             eventParticipants.setText(event.getNumeroParticipantes()+" pessoas irão participar deste evento.");

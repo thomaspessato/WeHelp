@@ -213,12 +213,15 @@ public class FragmentMap extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(), "Não foi possível atualizar os eventos. Tente novamente.", Toast.LENGTH_LONG).show();
             } else {
                 listEvents = events;
+
                 //Toast.makeText(getActivity().getApplicationContext(), "Retorno: OK", Toast.LENGTH_LONG).show();
                 // Adiciona lista de eventos a Activity principal
 
             }
             TabbedActivity tab = (TabbedActivity)getActivity();
             tab.listEvents = tab != null && tab.listEvents != null ? listEvents : new ArrayList<Event>();
+            tab.listEvents = listEvents;
+
 
             mMapView.getMapAsync(new OnMapReadyCallback() {
                 @Override

@@ -46,8 +46,6 @@ public class MyEventsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_events);
 
-
-
         loadingPanel = (RelativeLayout) findViewById(R.id.loadingPanel);
         noEventsPanel = (RelativeLayout) findViewById(R.id.no_events_panel);
         assert noEventsPanel != null;

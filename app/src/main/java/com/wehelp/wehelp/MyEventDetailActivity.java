@@ -9,7 +9,6 @@ import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -17,7 +16,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.vision.text.Text;
 import com.google.gson.Gson;
 import com.wehelp.wehelp.adapters.RequirementCheckboxAdapter;
 import com.wehelp.wehelp.classes.Event;
@@ -32,7 +30,7 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-public class HelpEventActivity extends AppCompatActivity {
+public class MyEventDetailActivity extends AppCompatActivity {
 
     @Inject
     EventController eventController;
@@ -52,9 +50,9 @@ public class HelpEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ((WeHelpApp) getApplication()).getNetComponent().inject(this);
         userId = ((WeHelpApp)application).getUser().getId();
-        setContentView(R.layout.activity_help_event);
+        setContentView(R.layout.activity_my_event_detail);
 
-        setTitle("Quero ajudar");
+        setTitle("Meu evento");
         event = (Event)getIntent().getSerializableExtra("event");
 
         Gson gson = new Gson();
@@ -75,13 +73,9 @@ public class HelpEventActivity extends AppCompatActivity {
         TextView eventAddress = (TextView) findViewById(R.id.event_help_address);
         TextView eventParticipants = (TextView) findViewById(R.id.event_help_participants);
         TextView txtParticipating = (TextView) findViewById(R.id.txt_participating);
-        TextView txtEmailResponsable = (TextView)findViewById(R.id.txt_email_responsable);
-        Button helpRegisterButton = (Button)findViewById(R.id.btn_register_help);
-        Button abandonButton = (Button)findViewById(R.id.btn_register_abandon);
-        
-        String creatorEmail = event.getUsuario().getEmail();
-        txtEmailResponsable.setText(Html.fromHtml("<a href=\"mailto:"+creatorEmail+"\">"+creatorEmail+"</a>"));
-        txtEmailResponsable.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView txtEmailResponsable = (TextView)findViewById(R.id.txt_email_participants);
+        LinearLayout emailsLayout = (LinearLayout)findViewById(R.id.layout_email_participants);
+        Button deleteBtn = (Button)findViewById(R.id.btn_register_help);
 
         String address = event.getCidade()+" / "+event.getRua()+" - "+event.getNumero()+", "+event.getComplemento();
         String date = new SimpleDateFormat("dd/MM/yyyy / HH:mm").format(event.getDataInicio());
@@ -101,9 +95,9 @@ public class HelpEventActivity extends AppCompatActivity {
         assert eventAddress != null;
         assert eventDate != null;
         assert eventParticipants != null;
-        assert helpRegisterButton != null;
+
         assert lvRequirementsCheckbox != null;
-        assert abandonButton != null;
+
         assert txtParticipating != null;
         assert loadingPanel != null;
 
@@ -111,12 +105,11 @@ public class HelpEventActivity extends AppCompatActivity {
         eventDescription.setText(event.getDescricao());
         eventAddress.setText(address);
         eventDate.setText(date);
+        txtEmailResponsable.setVisibility(View.GONE);
+        emailsLayout.setVisibility(View.GONE);
 
-        abandonButton.setVisibility(View.GONE);
         txtParticipating.setVisibility(View.GONE);
         loadingPanel.setVisibility(View.GONE);
-
-
 
         if(event.getParticipantes().size() > 0) {
             eventParticipants.setText(event.getParticipantes().size()+" pessoas irão participar deste evento.");
@@ -132,7 +125,6 @@ public class HelpEventActivity extends AppCompatActivity {
         lvRequirementsCheckbox.setAdapter(checkboxAdapter);
         checkboxAdapter.notifyDataSetChanged();
 
-
         int userRequirementId;
         for(int i = 0; i < requirementList.size(); i++) {
             for(int j = 0; j < requirementList.get(i).getUsuariosRequisito().size(); j++) {
@@ -140,26 +132,26 @@ public class HelpEventActivity extends AppCompatActivity {
                 if(userId == userRequirementId) {
                     userIsParticipating = true;
                     event.setParticipating(true);
-                    helpRegisterButton.setText("Atualizar participação");
-                    abandonButton.setVisibility(View.VISIBLE);
                     txtParticipating.setVisibility(View.VISIBLE);
                 }
             }
         }
 
-        for( int z = 0; z < event.getParticipantes().size(); z++) {
-            if(event.getParticipantes().get(z).getId() == userId) {
-                event.setParticipating(true);
-                helpRegisterButton.setText("Atualizar participação");
-                abandonButton.setVisibility(View.VISIBLE);
-                txtParticipating.setVisibility(View.VISIBLE);
+        if(event.getParticipantes().size() > 0) {
+            txtEmailResponsable.setVisibility(View.VISIBLE);
+            emailsLayout.setVisibility(View.VISIBLE);
+            for( int z = 0; z < event.getParticipantes().size(); z++) {
+                TextView tvEmail = new TextView(this);
+                String creatorEmail = event.getParticipantes().get(z).getEmail();
+                tvEmail.setText(Html.fromHtml("<a href=\"mailto:"+creatorEmail+"\">"+creatorEmail+"</a>"));
+                tvEmail.setMovementMethod(LinkMovementMethod.getInstance());
+                emailsLayout.addView(tvEmail);
             }
         }
 
         setListViewHeightBasedOnChildren(lvRequirementsCheckbox);
 
-        assert helpRegisterButton != null;
-        helpRegisterButton.setOnClickListener(new View.OnClickListener() {
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 checkedRequirementList = new ArrayList<EventRequirement>();
@@ -168,21 +160,7 @@ public class HelpEventActivity extends AppCompatActivity {
                         checkedRequirementList.add(requirementList.get(i));
                     }
                 }
-                new ParticipateEventsTask().execute();
-            }
-        });
-
-        abandonButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadingPanel.setVisibility(View.VISIBLE);
-                checkedRequirementList.clear();
-                for(int i = 0; i< requirementList.size(); i++) {
-                    if(requirementList.get(i).isSelected()) {
-                        checkedRequirementList.add(requirementList.get(i));
-                    }
-                }
-                new AbandonEventTask().execute();
+                new DeleteEventTask().execute();
             }
         });
 
@@ -208,49 +186,6 @@ public class HelpEventActivity extends AppCompatActivity {
         listView.setLayoutParams(params);
         listView.requestLayout();
 
-    }
-
-
-    private class ParticipateEventsTask extends AsyncTask<Void, Void, Boolean> {
-
-        @Override
-        protected void onPreExecute() {
-            loadingPanel.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-
-            try {
-                Gson gson = new Gson();
-                String json = gson.toJson(checkedRequirementList);
-                System.out.println("checked requirement list:");
-                for(int i = 0; i< checkedRequirementList.size(); i++)
-                    System.out.println("checked"+ checkedRequirementList.get(i));
-                eventController.addUser(event,((WeHelpApp)application).getUser(), checkedRequirementList);
-                while (!eventController.addUserOk && !eventController.errorService){}
-                if (eventController.errorService) {
-                    return false;
-                } else {
-                    return true;
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return false;
-            }
-
-        }
-
-
-        protected void onPostExecute(Boolean retorno) {
-            if (!retorno) {
-                Toast.makeText(getApplicationContext(), eventController.errorMessages.toString(), Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(getApplicationContext(), "Você está participando do evento!", Toast.LENGTH_LONG).show();
-                finish();
-            }
-            loadingPanel.setVisibility(View.GONE);
-        }
     }
 
     private class AbandonEventTask extends AsyncTask<Void, Void, Boolean> {
@@ -286,6 +221,41 @@ public class HelpEventActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(getApplicationContext(), "Você desistiu de participar do evento", Toast.LENGTH_LONG).show();
                 loadingPanel.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    private class DeleteEventTask extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            // loader
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            try {
+                eventController.deleteEvent(event);
+                while (!eventController.errorService){}
+                if (eventController.errorService) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return false;
+            }
+
+        }
+
+        protected void onPostExecute(Boolean retorno) {
+            if (!retorno) {
+                Toast.makeText(getApplicationContext(), eventController.errorMessages.toString(), Toast.LENGTH_LONG).show();
+            } else {
+                finish();
+                Toast.makeText(getApplicationContext(), "Evento deletado com sucesso!", Toast.LENGTH_LONG).show();
             }
         }
     }

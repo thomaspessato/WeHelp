@@ -7,9 +7,11 @@ import com.wehelp.wehelp.FirstScreenActivity;
 import com.wehelp.wehelp.HelpEventActivity;
 import com.wehelp.wehelp.LoginActivity;
 import com.wehelp.wehelp.MainActivity;
+import com.wehelp.wehelp.MyEventDetailActivity;
 import com.wehelp.wehelp.MyEventsActivity;
 import com.wehelp.wehelp.ParticipateEventActivity;
 import com.wehelp.wehelp.TabbedActivity;
+import com.wehelp.wehelp.adapters.MyEventAdapter;
 import com.wehelp.wehelp.adapters.ParticipatingEventAdapter;
 import com.wehelp.wehelp.adapters.RequirementCheckboxAdapter;
 import com.wehelp.wehelp.adapters.TimelineEventAdapter;
@@ -40,7 +42,9 @@ public interface NetComponent {
     void inject(HelpEventActivity activity);
     void inject(MyEventsActivity activity);
     void inject(AbandonEventActivity activity);
+    void inject(MyEventDetailActivity activity);
     void inject(ParticipatingEventAdapter adapter);
     void inject(TimelineEventAdapter adapter);
     void inject(RequirementCheckboxAdapter adapter);
+    void inject(MyEventAdapter adapter);
 }

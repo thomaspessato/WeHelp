@@ -151,7 +151,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="37dp"
-                    android:text="CANCELAR EVENTO"
+                    android:text="MAIS DETALHES"
                     android:id="@+id/btn_abandon"
                     android:layout_gravity="center_horizontal|right"
                     android:background="@color/colorPrimary"

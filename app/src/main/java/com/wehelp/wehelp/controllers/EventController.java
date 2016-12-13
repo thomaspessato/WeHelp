@@ -211,4 +211,23 @@ public class EventController {
             }
         });
     }
+
+    public void deleteEvent(final Event event) throws JSONException {
+        this.errorService = false;
+        this.errorMessages = null;
+        this.eventService.deleteEvent(event, new IServiceResponseCallback() {
+            @Override
+            public void execute(JSONObject response) {
+                Log.d("WeHelpWs", "Evento " + event.getId() + " deletado");
+                removeUserOk = true;
+            }
+        }, new IServiceErrorCallback() {
+            @Override
+            public void execute(VolleyError error) {
+                Log.d("WeHelpWS", "Error: " + error.getMessage());
+                errorService = true;
+                errorMessages = Util.ServiceErrorToJson(error);
+            }
+        });
+    }
 }

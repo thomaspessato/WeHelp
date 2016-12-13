@@ -134,4 +134,8 @@ public class EventService {
     }
 
 
+    public void deleteEvent(Event event, final IServiceResponseCallback serviceResponseCallback, final IServiceErrorCallback serviceErrorCallback) throws JSONException {
+        String url = "eventos/" + event.getId();
+        this.serviceContainer.DeleteRequest(url, serviceResponseCallback, serviceErrorCallback);
+    }
 }

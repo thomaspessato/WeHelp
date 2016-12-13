@@ -69,6 +69,14 @@ public class MyEventsActivity extends AppCompatActivity {
         });
 
         loadingPanel.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        super.onResume();
+        eventList.clear();
+        eventArrayAdapter.notifyDataSetChanged();
         new ListMyEventsTask().execute();
 
     }

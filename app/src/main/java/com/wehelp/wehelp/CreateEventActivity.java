@@ -332,7 +332,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 event.setCertificado(true);
                 event.setCidade("Porto Alegre");
                 event.setUf("RS");
-                SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+                SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 try {
                     //event.setDataFim(sdf1.parse(date));
                     event.setDataInicio(sdf1.parse(date + " " + hour + ":00"));

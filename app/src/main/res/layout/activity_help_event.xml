@@ -37,6 +37,15 @@
         android:padding="20dp">
 
         <TextView
+            android:text="Você está participando deste evento!"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_participating"
+            android:textSize="20sp"
+            android:layout_marginBottom="15dp"
+            android:textColor="@color/colorAccent" />
+
+        <TextView
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -151,6 +160,15 @@
             android:layout_height="wrap_content"
             android:id="@+id/btn_register_help"
             style="@style/Widget.AppCompat.Button.Colored" />
+
+        <Button
+            android:text="ABANDONAR EVENTO"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_register_abandon"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored" />
+
+
     </LinearLayout>
 
     </ScrollView>

@@ -44,6 +44,7 @@ public class RequirementCheckboxAdapter extends ArrayAdapter<EventRequirement> {
     EventController eventController;
     int userId;
     boolean userIsHelping;
+    double quantidadeFaltante;
 
     @Inject
     Application application;
@@ -76,7 +77,7 @@ public class RequirementCheckboxAdapter extends ArrayAdapter<EventRequirement> {
 
         ViewHolder holder = null;
         Log.v("ConvertView", String.valueOf(position));
-        double quantidade = 0;
+        quantidadeFaltante = 0;
         userIsHelping = false;
 
         if (convertView == null) {
@@ -94,14 +95,13 @@ public class RequirementCheckboxAdapter extends ArrayAdapter<EventRequirement> {
             if(requirementList.get((position)) != null) {
                 requirement = requirementList.get(position);
                 holder.code.setText("");
-
-                quantidade = requirement.getQuant();
+                quantidadeFaltante = requirement.getQuant();
                 ArrayList<UserRequirement> userRequirements = requirementList.get(position).getUsuariosRequisito();
 
                 if(userRequirements.size() > 0) {
-
                     int userId = ((WeHelpApp)getContext().getApplicationContext()).getUser().getId();
                     double userHelpingQtd = 0;
+                    double userRequirementQnt;
 
                     for(int i = 0; i<userRequirements.size(); i++) {
                         UserRequirement userRequirement = userRequirements.get(i);
@@ -111,91 +111,84 @@ public class RequirementCheckboxAdapter extends ArrayAdapter<EventRequirement> {
                             userIsHelping = true;
                             userHelpingQtd = userRequirement.getQuant();
                         }
-                        double userRequirementQnt = userRequirements.get(i).getQuant();
-                        quantidade -= userRequirementQnt;
+                        userRequirementQnt = userRequirements.get(i).getQuant();
+                        quantidadeFaltante -= userRequirementQnt;
                     }
 
                     if(userIsHelping) {
-                        userIsHelping = true;
                         holder.helpQtd.setText("Você irá ajudar com "+ userHelpingQtd+" "+ requirement.getUn());
                         requirement.setSelected(true);
-                    } else {
-                        userIsHelping = false;
                     }
 
-                    if(quantidade <= 0) {
+                    if(quantidadeFaltante <= 0) {
                         holder.name.setText(requirement.getQuant()+" "+requirement.getUn()+" "+requirement.getDescricao()+" (quantidade alcançada!)");
                         holder.name.setTextColor(getContext().getResources().getColor(R.color.checkedRequirement));
                         holder.name.setChecked(true);
                     } else{
                         holder.name.setChecked(requirement.isSelected());
-                        holder.name.setText(requirement.getQuant()+" "+requirement.getUn()+" "+requirement.getDescricao()+" (faltam "+quantidade+")");
+                        holder.name.setText(requirement.getQuant()+" "+requirement.getUn()+" "+requirement.getDescricao()+" (faltam "+quantidadeFaltante+")");
                     }
                 } else {
                     holder.name.setText(requirement.getQuant()+" "+requirement.getUn()+" "+requirement.getDescricao());
                     holder.name.setChecked(requirement.isSelected());
                 }
 
-
+                requirement.setQuantidadeFaltante(quantidadeFaltante);
                 holder.name.setTag(requirement);
             }
 
 
 
             final ViewHolder finalHolder = holder;
-            final ViewHolder finalHolder1 = holder;
+
             final EventRequirement finalRequirement = requirement;
 
 
             assert finalRequirement != null;
 
-            final double finalQuantidade = quantidade;
             convertView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    
-                    if(finalQuantidade > 0 && className.equalsIgnoreCase("HelpEvent") && !event.isParticipating()) {
-                        System.out.println("className: "+className);
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        if(dialogLayout.getParent() != null) {
-                            ((ViewGroup)dialogLayout.getParent()).removeView(dialogLayout);
-                        }
 
-                        final TextView tvDialogRequirement = (TextView)dialogLayout.findViewById(R.id.dialog_requirement);
-                        String quantidade = Double.toString(finalRequirement.getQuant());
-                        String unidade = finalRequirement.getUn();
-                        String descricao = finalRequirement.getDescricao();
-                        tvDialogRequirement.setText(quantidade +" "+unidade+" "+descricao);
-
-                        builder.setView(dialogLayout)
-                                .setPositiveButton("CONFIRMAR", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        EditText helpQtd = (EditText)dialogLayout.findViewById(R.id.requirement_help_qtd);
-                                        if(helpQtd.getText().toString().equalsIgnoreCase("")) {
-                                            helpQtd.setText("1");
-                                        }
-                                        if(finalRequirement.getUn() == null) {
-                                            finalRequirement.setUn("unidade");
-                                        }
-                                        finalHolder1.helpQtd.setText("Você irá ajudar com "+ helpQtd.getText()+" "+ finalRequirement.getUn());
-                                        finalHolder.name.setChecked(true);
-                                        finalRequirement.setSelected(true);
-                                        finalRequirement.setSelectedQuant(Double.parseDouble(helpQtd.getText().toString()));
-                                    }
-                                }).setNegativeButton("NÃO CONTRIBUIR", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                EditText helpQtd = (EditText)dialogLayout.findViewById(R.id.requirement_help_qtd);
-                                helpQtd.setText("");
-                                finalHolder1.helpQtd.setText("");
-                                finalHolder.name.setChecked(false);
-
-                            }
-                        });
-
-                        builder.create();
-                        builder.show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    if(dialogLayout.getParent() != null) {
+                        ((ViewGroup)dialogLayout.getParent()).removeView(dialogLayout);
                     }
+
+                    final TextView tvDialogRequirement = (TextView)dialogLayout.findViewById(R.id.dialog_requirement);
+                    String unidade = finalRequirement.getUn();
+                    String descricao = finalRequirement.getDescricao();
+                    tvDialogRequirement.setText(finalRequirement.getQuant()+" "+finalRequirement.getUn()+" "+finalRequirement.getDescricao()+" (faltam "+finalRequirement.getQuantidadeFaltante()+")");
+
+                    builder.setView(dialogLayout)
+                            .setPositiveButton("CONFIRMAR", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    EditText helpQtd = (EditText)dialogLayout.findViewById(R.id.requirement_help_qtd);
+                                    if(helpQtd.getText().toString().equalsIgnoreCase("")) {
+                                        helpQtd.setText("1");
+                                    }
+                                    if(finalRequirement.getUn() == null) {
+                                        finalRequirement.setUn("unidade");
+                                    }
+                                    finalHolder.helpQtd.setText("Você irá ajudar com "+ helpQtd.getText()+" "+ finalRequirement.getUn());
+                                    finalHolder.name.setChecked(true);
+                                    finalRequirement.setSelected(true);
+                                    finalRequirement.setSelectedQuant(Double.parseDouble(helpQtd.getText().toString()));
+                                }
+                            }).setNegativeButton("NÃO CONTRIBUIR", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            EditText helpQtd = (EditText)dialogLayout.findViewById(R.id.requirement_help_qtd);
+                            helpQtd.setText("");
+                            finalHolder.helpQtd.setText("");
+                            finalRequirement.setSelected(false);
+                            finalHolder.name.setChecked(false);
+
+                        }
+                    });
+
+                    builder.create();
+                    builder.show();
                     
                 }
             });

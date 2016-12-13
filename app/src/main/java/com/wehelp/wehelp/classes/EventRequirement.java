@@ -14,6 +14,7 @@ public class EventRequirement implements Serializable {
     private double quant;
     boolean selected = false;
     private double selectedQuant;
+    private double quantidadeFaltante;
     private ArrayList<UserRequirement> usuarios_requisito;
 
 
@@ -77,6 +78,13 @@ public class EventRequirement implements Serializable {
         this.selected = selected;
     }
 
+    public double getQuantidadeFaltante() {
+        return quantidadeFaltante;
+    }
+
+    public void setQuantidadeFaltante(double quantidadeFaltante) {
+        this.quantidadeFaltante = quantidadeFaltante;
+    }
 
     public ArrayList<UserRequirement> getUsuariosRequisito() {
         return usuarios_requisito;

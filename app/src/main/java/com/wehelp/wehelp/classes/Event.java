@@ -34,6 +34,7 @@ public class Event implements Serializable {
     private int numero_participantes;
     private boolean isParticipating;
     private boolean isComplete;
+    private ArrayList<User> participantes;
 
 
     public int getId() {
@@ -231,6 +232,14 @@ public class Event implements Serializable {
 
     public boolean isComplete() {
         return isComplete;
+    }
+
+    public ArrayList<User> getParticipantes() {
+        return participantes;
+    }
+
+    public void setParticipantes(ArrayList<User> participantes) {
+        this.participantes = participantes;
     }
 
     public void setComplete(boolean complete) {

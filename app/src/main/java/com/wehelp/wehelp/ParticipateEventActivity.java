@@ -66,8 +66,16 @@ public class ParticipateEventActivity extends AppCompatActivity {
 
 
         loadingPanel.setVisibility(View.VISIBLE);
-        new ListParticipatingEventsTask().execute();
+//        new ListParticipatingEventsTask().execute();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        eventList.clear();
+        eventArrayAdapter.notifyDataSetChanged();
+        new ListParticipatingEventsTask().execute();
     }
 
     private class ListParticipatingEventsTask extends AsyncTask<Void, Void, ArrayList<Event>> {

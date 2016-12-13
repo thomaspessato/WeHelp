@@ -39,35 +39,69 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-            <!--android:text="O que precisam?"-->
-            <!--android:id="@+id/textView7"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:layout_marginBottom="5dp"-->
-            <!--android:textColor="@color/colorPrimary" />-->
 
-            <!--<LinearLayout-->
-            <!--android:orientation="vertical"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:id="@+id/event_requirements_layout"-->
-            <!--android:padding="15dp"></LinearLayout>-->
+            <TextView
+                android:text="O evento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtDescription"
+                android:layout_marginTop="10dp"
+                android:textSize="18sp" />
 
             <TextView
                 android:text="TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/event_my_description"
-                android:layout_marginTop="10dp" />
+                android:id="@+id/event_timeline_description"
+                android:layout_marginTop="10dp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Os requisitos"
+                android:id="@+id/textView7"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/colorPrimary" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/event_requirement_layout"
+                android:padding="15dp">
+
+            </LinearLayout>
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Você vai ajudar com"
+                android:id="@+id/tv_helpwith"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/colorPrimary"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/event_user_requirements_layout"
+                android:padding="15dp"/>
+
+
 
             <TextView
                 android:text="Numero de participantes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/event_my_participating"
+                android:id="@+id/event_timeline_participating"
                 android:layout_marginTop="10dp" />
 
             <TextView
@@ -75,21 +109,21 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Data: 19/03/2016 - Avenida Assis Brasil, 393"
-                android:id="@+id/event_my_date"
+                android:id="@+id/event_timeline_date"
                 android:layout_marginTop="10dp" />
 
             <TextView
                 android:text="Horário: "
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/event_my_hour" />
+                android:id="@+id/event_timeline_hour" />
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="47dp"
                 android:layout_marginTop="10dp"
-                android:gravity="right">
+                android:gravity="right|center_vertical">
 
                 <!--<TextView-->
                 <!--android:layout_width="wrap_content"-->
@@ -106,10 +140,10 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="37dp"
-                    android:text="deletar evento"
-                    android:id="@+id/btn_delete"
+                    android:text="CANCELAR EVENTO"
+                    android:id="@+id/btn_abandon"
                     android:layout_gravity="center_horizontal|right"
-                    android:background="@color/colorAccent"
+                    android:background="@color/colorPrimary"
                     android:padding="10dp"
                     android:textColor="@android:color/white"
                     android:layout_below="@+id/linearLayout2"
@@ -139,7 +173,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Creche Moranguinho"
-                android:id="@+id/event_my_title"
+                android:id="@+id/event_timeline_title"
                 android:layout_gravity="bottom"
                 android:textColor="#ffffff"
                 android:textSize="18sp" />
@@ -149,10 +183,9 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="educação"
-                android:id="@+id/event_my_category"
+                android:id="@+id/event_timeline_category"
                 android:textColor="#ffffff"
                 android:padding="3dp" />
-
 
         </LinearLayout>
 

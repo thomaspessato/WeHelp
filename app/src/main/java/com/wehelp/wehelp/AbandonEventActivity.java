@@ -40,6 +40,7 @@ public class AbandonEventActivity extends AppCompatActivity {
     boolean userIsParticipating;
     int userId;
     public ArrayList<EventRequirement> checkedRequirementList;
+    String creatorEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,8 @@ public class AbandonEventActivity extends AppCompatActivity {
         loadingPanel = (RelativeLayout) findViewById(R.id.loadingPanel);
         assert loadingPanel != null;
         loadingPanel.setVisibility(View.GONE);
+
+        creatorEmail = event.getUsuario().getEmail();
 
         Button helpRegisterButton = (Button)findViewById(R.id.btn_register_help);
         Button abandonButton = (Button)findViewById(R.id.btn_register_abandon);
@@ -216,6 +219,24 @@ public class AbandonEventActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), eventController.errorMessages.toString(), Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(getApplicationContext(), "Você está participando do evento!", Toast.LENGTH_LONG).show();
+                Intent i = new Intent(Intent.ACTION_SEND);
+                String checkedItemsString = "";
+                for(int j = 0; j < checkedRequirementList.size(); j++) {
+                    String quantidade = Double.toString(checkedRequirementList.get(j).getQuant());
+                    String unidade = checkedRequirementList.get(j).getUn();
+                    checkedItemsString += quantidade+" "+unidade+" "+checkedRequirementList.get(j).getDescricao() + "\n";
+                }
+
+                i.setType("message/rfc822");
+                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{creatorEmail});
+                i.putExtra(Intent.EXTRA_SUBJECT, "[WeHelp] Participação no seu evento! "+event.getNome());
+                i.putExtra(Intent.EXTRA_TEXT   , "Olá! Irei ajudar com algumas coisas no seu evento!\n\n\n" +checkedItemsString+"\n\n" +
+                        "Espero que possamos fazer acontecer!");
+                try {
+                    startActivity(Intent.createChooser(i, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(AbandonEventActivity.this, "Você não tem nenhum client de e-mail instalado.", Toast.LENGTH_SHORT).show();
+                }
                 finish();
             }
             loadingPanel.setVisibility(View.GONE);
@@ -255,6 +276,28 @@ public class AbandonEventActivity extends AppCompatActivity {
                 loadingPanel.setVisibility(View.GONE);
             } else {
                 Toast.makeText(getApplicationContext(), "Você desistiu de participar do evento", Toast.LENGTH_LONG).show();
+
+
+                Intent i = new Intent(Intent.ACTION_SEND);
+                String checkedItemsString = "";
+                for(int j = 0; j < checkedRequirementList.size(); j++) {
+                    String quantidade = Double.toString(checkedRequirementList.get(j).getQuant());
+                    String unidade = checkedRequirementList.get(j).getUn();
+                    checkedItemsString += quantidade+" "+unidade+" "+checkedRequirementList.get(j).getDescricao() + "\n";
+                }
+
+                i.setType("message/rfc822");
+                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{creatorEmail});
+                i.putExtra(Intent.EXTRA_SUBJECT, "[WeHelp] Participação no seu evento! "+event.getNome());
+                i.putExtra(Intent.EXTRA_TEXT   , "Olá! Infelizmente não poderei mais participar do evento!\n\n\nIria levar:\n\n"+checkedItemsString+"\n\n" +
+                        "Qualquer item que eu tiver marcado, não poderei levar! \n\n\n Boa sorte com o evento!");
+                try {
+                    startActivity(Intent.createChooser(i, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(AbandonEventActivity.this, "Você não tem nenhum client de e-mail instalado.", Toast.LENGTH_SHORT).show();
+                }
+
+
                 loadingPanel.setVisibility(View.GONE);
             }
         }

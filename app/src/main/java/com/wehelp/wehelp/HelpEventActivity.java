@@ -1,6 +1,7 @@
 package com.wehelp.wehelp;
 
 import android.app.Application;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -44,6 +45,8 @@ public class HelpEventActivity extends AppCompatActivity {
     boolean userIsParticipating;
     int userId;
 
+    String creatorEmail;
+
 
     public ArrayList<EventRequirement> checkedRequirementList;
 
@@ -79,7 +82,7 @@ public class HelpEventActivity extends AppCompatActivity {
         Button helpRegisterButton = (Button)findViewById(R.id.btn_register_help);
         Button abandonButton = (Button)findViewById(R.id.btn_register_abandon);
 
-        String creatorEmail = event.getUsuario().getEmail();
+        creatorEmail = event.getUsuario().getEmail();
         txtEmailResponsable.setText(Html.fromHtml("<a href=\"mailto:"+creatorEmail+"\">"+creatorEmail+"</a>"));
         txtEmailResponsable.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -246,7 +249,29 @@ public class HelpEventActivity extends AppCompatActivity {
             if (!retorno) {
                 Toast.makeText(getApplicationContext(), eventController.errorMessages.toString(), Toast.LENGTH_LONG).show();
             } else {
+
                 Toast.makeText(getApplicationContext(), "Você está participando do evento!", Toast.LENGTH_LONG).show();
+
+                Intent i = new Intent(Intent.ACTION_SEND);
+                String checkedItemsString = "";
+                for(int j = 0; j < checkedRequirementList.size(); j++) {
+                    String quantidade = Double.toString(checkedRequirementList.get(j).getQuant());
+                    String unidade = checkedRequirementList.get(j).getUn();
+                    checkedItemsString += quantidade+" "+unidade+" "+checkedRequirementList.get(j).getDescricao() + "\n";
+                }
+
+                i.setType("message/rfc822");
+                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{creatorEmail});
+                i.putExtra(Intent.EXTRA_SUBJECT, "[WeHelp] Participação no seu evento! "+event.getNome());
+                i.putExtra(Intent.EXTRA_TEXT   , "Olá! Irei ajudar com algumas coisas no seu evento!\n\n\n" +checkedItemsString+"\n\n" +
+                        "Espero que possamos fazer acontecer!");
+                try {
+                    startActivity(Intent.createChooser(i, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(HelpEventActivity.this, "Você não tem nenhum client de e-mail instalado.", Toast.LENGTH_SHORT).show();
+                }
+
+
                 finish();
             }
             loadingPanel.setVisibility(View.GONE);
@@ -285,6 +310,26 @@ public class HelpEventActivity extends AppCompatActivity {
                 loadingPanel.setVisibility(View.GONE);
             } else {
                 Toast.makeText(getApplicationContext(), "Você desistiu de participar do evento", Toast.LENGTH_LONG).show();
+
+                Intent i = new Intent(Intent.ACTION_SEND);
+                String checkedItemsString = "";
+                for(int j = 0; j < checkedRequirementList.size(); j++) {
+                    String quantidade = Double.toString(checkedRequirementList.get(j).getQuant());
+                    String unidade = checkedRequirementList.get(j).getUn();
+                    checkedItemsString += quantidade+" "+unidade+" "+checkedRequirementList.get(j).getDescricao() + "\n";
+                }
+
+                i.setType("message/rfc822");
+                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{creatorEmail});
+                i.putExtra(Intent.EXTRA_SUBJECT, "[WeHelp] Participação no seu evento! "+event.getNome());
+                i.putExtra(Intent.EXTRA_TEXT   , "Olá! Infelizmente não poderei mais participar do evento!\n\n\nIria levar:\n\n"+checkedItemsString+"\n\n" +
+                        "Qualquer item que eu tiver marcado, não poderei levar! \n\n\n Boa sorte com o evento!");
+                try {
+                    startActivity(Intent.createChooser(i, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(HelpEventActivity.this, "Você não tem nenhum client de e-mail instalado.", Toast.LENGTH_SHORT).show();
+                }
+
                 loadingPanel.setVisibility(View.GONE);
             }
         }

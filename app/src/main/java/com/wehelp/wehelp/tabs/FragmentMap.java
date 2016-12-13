@@ -226,7 +226,7 @@ public class FragmentMap extends Fragment {
                     googleMap = mMap;
                     LatLng marker = new LatLng(-30.012054, -51.178840);
                     Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
-
+                    int userId = ((WeHelpApp)getContext().getApplicationContext()).getUser().getId();
                     mMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
                     googleMap.clear();
                     googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -241,6 +241,12 @@ public class FragmentMap extends Fragment {
                                 double latitude = event.getLat();
                                 LatLng test = new LatLng(latitude, longitude);
 
+                                for( int z = 0; z < event.getParticipantes().size(); z++) {
+                                    if(event.getParticipantes().get(z).getId() == userId) {
+                                        event.setParticipating(true);
+                                    }
+                                }
+
                                 Marker newMarker = googleMap.addMarker(new MarkerOptions()
                                         .icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_music))
                                         .position(test)
@@ -248,12 +254,12 @@ public class FragmentMap extends Fragment {
                                         .snippet(event.getCategoria().getDescricao()));
 
                                 String categoria = event.getCategoria().getDescricao();
-                                int userId = ((WeHelpApp)getContext().getApplicationContext()).getUser().getId();
+
                                 int userRequirementId;
                                 int quantRequisitosComp = 0;
 
                                 for(int j = 0; j< event.getRequisitos().size(); j++) {
-                                    double quantidadeRequisito = event.getRequisitos().size();
+                                    double quantidadeRequisito = event.getRequisitos().get(j).getQuant();
                                     quantRequisitosComp = 0;
                                     for(int z = 0; z < event.getRequisitos().get(j).getUsuariosRequisito().size(); z++){
 

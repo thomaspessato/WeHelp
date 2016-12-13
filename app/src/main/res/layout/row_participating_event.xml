@@ -132,7 +132,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="37dp"
-                    android:text="ABANDONAR"
+                    android:text="DETALHES"
                     android:id="@+id/btn_abandon"
                     android:layout_gravity="center_horizontal|right"
                     android:background="@color/colorAccent"

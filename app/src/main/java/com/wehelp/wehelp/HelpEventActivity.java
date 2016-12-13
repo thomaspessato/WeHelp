@@ -39,6 +39,7 @@ public class HelpEventActivity extends AppCompatActivity {
     public Event event;
     RelativeLayout loadingPanel;
     boolean userIsParticipating;
+    int userId;
 
 
     public ArrayList<EventRequirement> checkedRequirementList;
@@ -47,7 +48,7 @@ public class HelpEventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((WeHelpApp) getApplication()).getNetComponent().inject(this);
-
+        userId = ((WeHelpApp)application).getUser().getId();
         setContentView(R.layout.activity_help_event);
 
         setTitle("Quero ajudar");
@@ -57,24 +58,33 @@ public class HelpEventActivity extends AppCompatActivity {
         String eventToString = gson.toJson(event);
 
         System.out.println("Detalhe do evento: "+eventToString);
+        System.out.println("PARTICIPANTES: "+event.getParticipantes());
+
+        for(int i = 0; i < event.getParticipantes().size(); i++) {
+            if(event.getParticipantes().get(i).getId() == userId) {
+                userIsParticipating = true;
+            }
+        }
 
         TextView eventName = (TextView) findViewById(R.id.help_event_name);
         TextView eventDescription = (TextView) findViewById(R.id.help_event_description);
         TextView eventDate = (TextView) findViewById(R.id.event_help_date);
         TextView eventAddress = (TextView) findViewById(R.id.event_help_address);
         TextView eventParticipants = (TextView) findViewById(R.id.event_help_participants);
+        TextView txtParticipating = (TextView) findViewById(R.id.txt_participating);
         loadingPanel = (RelativeLayout) findViewById(R.id.loadingPanel);
         assert loadingPanel != null;
         loadingPanel.setVisibility(View.GONE);
 
         Button helpRegisterButton = (Button)findViewById(R.id.btn_register_help);
+        Button abandonButton = (Button)findViewById(R.id.btn_register_abandon);
         final ListView lvRequirementsCheckbox = (ListView)findViewById(R.id.listview_requirements_checkbox);
         final ArrayList<EventRequirement> requirementList = new ArrayList<>();
         checkedRequirementList = new ArrayList<>();
         RequirementCheckboxAdapter checkboxAdapter = new RequirementCheckboxAdapter(this,R.layout.row_checkbox_requirement,requirementList, "HelpEvent", event);
 
         String address = event.getCidade()+" / "+event.getRua()+" - "+event.getNumero()+", "+event.getComplemento();
-        String date = new SimpleDateFormat("dd/mm/yyyy / hh:mm").format(event.getDataInicio());
+        String date = new SimpleDateFormat("dd/MM/yyyy / HH:mm").format(event.getDataInicio());
         userIsParticipating = false;
 
         assert eventName != null;
@@ -83,10 +93,14 @@ public class HelpEventActivity extends AppCompatActivity {
         assert eventDate != null;
         assert eventParticipants != null;
         assert lvRequirementsCheckbox != null;
+        assert abandonButton != null;
+        assert txtParticipating != null;
         eventName.setText(event.getNome());
         eventDescription.setText(event.getDescricao());
         eventAddress.setText(address);
         eventDate.setText(date);
+        abandonButton.setVisibility(View.GONE);
+        txtParticipating.setVisibility(View.GONE);
 
         if(event.getNumeroParticipantes() > 0) {
             eventParticipants.setText(event.getNumeroParticipantes()+" pessoas irão participar deste evento.");
@@ -102,7 +116,7 @@ public class HelpEventActivity extends AppCompatActivity {
         lvRequirementsCheckbox.setAdapter(checkboxAdapter);
         checkboxAdapter.notifyDataSetChanged();
 
-        int userId = ((WeHelpApp)application).getUser().getId();
+
         int userRequirementId;
         for(int i = 0; i < requirementList.size(); i++) {
             for(int j = 0; j < requirementList.get(i).getUsuariosRequisito().size(); j++) {
@@ -110,10 +124,19 @@ public class HelpEventActivity extends AppCompatActivity {
                 if(userId == userRequirementId) {
                     userIsParticipating = true;
                     event.setParticipating(true);
-                    helpRegisterButton.setText("Você já está participando!");
-                    helpRegisterButton.setBackgroundColor(getResources().getColor(R.color.DividerColor));
-                    helpRegisterButton.setTextColor(getResources().getColor(R.color.PriceTextColor));
+                    helpRegisterButton.setText("Atualizar participação");
+                    abandonButton.setVisibility(View.VISIBLE);
+                    txtParticipating.setVisibility(View.VISIBLE);
                 }
+            }
+        }
+
+        for( int z = 0; z < event.getParticipantes().size(); z++) {
+            if(event.getParticipantes().get(z).getId() == userId) {
+                event.setParticipating(true);
+                helpRegisterButton.setText("Atualizar participação");
+                abandonButton.setVisibility(View.VISIBLE);
+                txtParticipating.setVisibility(View.VISIBLE);
             }
         }
 
@@ -123,19 +146,28 @@ public class HelpEventActivity extends AppCompatActivity {
         helpRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!event.isParticipating()) {
-                    checkedRequirementList = new ArrayList<EventRequirement>();
-                    for(int i = 0; i < requirementList.size(); i++) {
-                        if(requirementList.get(i).isSelected()) {
-                            checkedRequirementList.add(requirementList.get(i));
-                            System.out.println("CHECKED ITEM: "+requirementList.get(i).getDescricao().toString());
-                        }
+                checkedRequirementList = new ArrayList<EventRequirement>();
+                for(int i = 0; i < requirementList.size(); i++) {
+                    if(requirementList.get(i).isSelected()) {
+                        checkedRequirementList.add(requirementList.get(i));
+                        System.out.println("CHECKED ITEM: "+requirementList.get(i).getDescricao().toString());
                     }
-                    new ParticipateEventsTask().execute();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Você já está participando do evento", Toast.LENGTH_LONG).show();
                 }
+                new ParticipateEventsTask().execute();
+            }
+        });
 
+        abandonButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadingPanel.setVisibility(View.VISIBLE);
+                checkedRequirementList.clear();
+                for(int i = 0; i< requirementList.size(); i++) {
+                    if(requirementList.get(i).isSelected()) {
+                        checkedRequirementList.add(requirementList.get(i));
+                    }
+                }
+                new AbandonEventTask().execute();
             }
         });
 
@@ -174,8 +206,6 @@ public class HelpEventActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
 
-
-
             try {
                 eventController.addUser(event,((WeHelpApp)application).getUser(), checkedRequirementList);
                 while (!eventController.addUserOk && !eventController.errorService){}
@@ -200,6 +230,43 @@ public class HelpEventActivity extends AppCompatActivity {
                 finish();
             }
             loadingPanel.setVisibility(View.GONE);
+        }
+    }
+
+    private class AbandonEventTask extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            loadingPanel.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            try {
+                eventController.removeUser(event,((WeHelpApp)application).getUser());
+                while (!eventController.removeUserOk && !eventController.errorService){}
+                if (eventController.errorService) {
+                    return false;
+                } else {
+                    finish();
+                    return true;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return false;
+            }
+
+        }
+
+        protected void onPostExecute(Boolean retorno) {
+            if (!retorno) {
+                Toast.makeText(getApplicationContext(), eventController.errorMessages.toString(), Toast.LENGTH_LONG).show();
+                loadingPanel.setVisibility(View.GONE);
+            } else {
+                Toast.makeText(getApplicationContext(), "Você desistiu de participar do evento", Toast.LENGTH_LONG).show();
+                loadingPanel.setVisibility(View.GONE);
+            }
         }
     }
 }
